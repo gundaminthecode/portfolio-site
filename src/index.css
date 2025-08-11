@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +65,21 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+
+/* Reset + full-viewport layout */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+html, body { margin: 0; padding: 0; }
+
+/* Let the app stretch edge-to-edge */
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
+
+/* Optional: page structure */
+main { flex: 1; }
+
+/* Your styles can go below or import your own file */

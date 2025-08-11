@@ -1,5 +1,6 @@
-import './App.css';
-import Projects from "./components/Projects/Projects";
+import './styles/App.css';
+import "./styles/projects.css";
+import GithubProjects from "./components/Projects/GithubProjects.tsx";
 
 function App() {
   return (
@@ -32,7 +33,15 @@ function App() {
           </div>
         </section> */}
 
-        <Projects />
+        {/* <Projects /> */}
+
+        <GithubProjects 
+          username="gundaminthecode"
+          includeForks={false}
+          includeArchived={false}
+          sortBy="updated"   // or "stars"
+          // max={12}
+        />
 
         <section id="contact">
           <h2>Contact Me</h2>
