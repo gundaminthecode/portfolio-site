@@ -22,19 +22,7 @@ function formatDate(iso: string) {
 
 // Export the ProjectCard component
 export default function ProjectCard({ repo }: { repo: Repo }) {
-    // Try homepage from API first
-    let live = repo.homepage && repo.homepage.trim().length > 0 ? repo.homepage : undefined;
-
-    // If no homepage, guess GitHub Pages URL
-    if (!live) {
-    // Pages are usually at: https://<username>.github.io/<repo.name>/
-    // username is in repo.html_url after github.com/
-    const usernameMatch = repo.html_url.match(/github\.com\/([^/]+)/);
-    if (usernameMatch) {
-        const username = usernameMatch[1];
-        live = `https://${username}.github.io/${repo.name}/`;
-    }
-    }
+    const live = repo.homepage && repo.homepage.trim().length > 0 ? repo.homepage : undefined;
 
     return (
         <article className="project-card">
