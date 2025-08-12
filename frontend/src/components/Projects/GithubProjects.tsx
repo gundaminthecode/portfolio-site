@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ProjectCard, { type Repo } from "./ProjectCard.tsx";
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000"; // e.g. http://localhost:8000
+// const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000"; // e.g. http://localhost:8000
 
 type Props = {
   username: string;
@@ -28,17 +28,12 @@ export default function GithubProjects({
     setLoading(true);
     setError(null);
 
-    const url = new URL(`${API_BASE}/api/repos`);
-    url.searchParams.set("username", username);
-    url.searchParams.set("includeForks", String(includeForks));
-    url.searchParams.set("includeArchived", String(includeArchived));
-    url.searchParams.set("sortBy", sortBy);
-
-    fetch(url.toString())
+    const url = `/api/repos?username=${encodeURIComponent(username)}&includeForks=${includeForks}&includeArchived=${includeArchived}&sortBy=${sortBy}`;
+    fetch(url)
       .then(r => r.ok ? r.json() : Promise.reject(`${r.status} ${r.statusText}`))
-      .then((data: Repo[]) => { if (!cancelled) setRepos(data); })
-      .catch((e) => { if (!cancelled) setError(String(e)); })
-      .finally(() => { if (!cancelled) setLoading(false); });
+      .then((data: Repo[]) => setRepos(data))
+      .catch((e) => setError(String(e)))
+      .finally(() => setLoading(false));
 
     return () => { cancelled = true; };
   }, [username, includeForks, includeArchived, sortBy]);
