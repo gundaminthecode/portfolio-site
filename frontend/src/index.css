@@ -1,3 +1,53 @@
+:root {
+  /* Core palette */
+  --bg: #bab7ba;               /* near-black charcoal */
+  --bg-elev: #1e1e65;          /* elevated panels */
+  --text: #e0e0e0;             /* primary text */
+  --text-outline: #d3d3d3;     /* text outline for contrast */
+  --text-dim: #9e9e9e;         /* secondary text */
+  --hero-text: #fb9b05;        /* hero text color */ 
+
+  /* Accents (SWAPPED as requested) */
+  --accent: #fb9b05;           /* PRIMARY: highlight / CTAs / hover */
+  --accent-2: #1e1e65;         /* SECONDARY: icons / lines / minor emphasis */
+  --alert: #ff2a06;            /* ALERT/ERROR only */
+
+  /* Neutrals */
+  --line: #2a2b2d;             /* dividers */
+  --muted: #606060;            /* borders, subtle labels */
+
+  /* Effects */
+  --radius: 12px;
+  --shadow: 0 8px 24px rgba(0,0,0,0.25);
+  --speed: 180ms;
+}
+
+@font-face {
+  font-family: "EurostileX";
+  src: url("../public/fonts/EuroStyle\ Normal.woff") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EurostileX";
+  src: url("../public/fonts/eurostile.woff") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+.hero-text {
+  font-family: "EurostileX", sans-serif;
+  font-size: 4rem;
+  line-height: 1.2;
+  color: var(--hero-text);
+  margin: 0 auto;
+  -webkit-text-stroke: 3px var(--text-outline);
+  paint-order: stroke fill;
+}
+
 /* Reset + full-viewport layout */
 * { 
   box-sizing: border-box; 

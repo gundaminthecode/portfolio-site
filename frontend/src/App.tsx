@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <header>
-        <h1>Welcome to My Portfolio</h1>
+        <h1 className="hero-text" data-text="NICK MATHIASEN">NICK MATHIASEN</h1>
         <nav>
           <ul>
             <li><a href="#about">About Me</a></li>
