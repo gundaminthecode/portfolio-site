@@ -84,3 +84,8 @@
 .dark-mode .carousel__card { background: #222; box-shadow: none; }
 .dark-mode .carousel__meta { color: #ddd; }
 .dark-mode .carousel__links a { border-color: #444; }
+
+#repo-button, #site-button {
+    background: var(--accent);
+    color: white;
+}

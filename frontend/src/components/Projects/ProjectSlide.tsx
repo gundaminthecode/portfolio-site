@@ -17,8 +17,8 @@ export default function ProjectSlide({ repo }: { repo: Repo }) {
         <li>Updated {formatDate(repo.updated_at)}</li>
       </ul>
       <div className="carousel__links">
-        <a href={repo.html_url} target="_blank" rel="noopener noreferrer">View Repo</a>
-        {live && <a href={live} target="_blank" rel="noopener noreferrer">Live Site</a>}
+        <a href={repo.html_url} target="_blank" rel="noopener noreferrer" id="repo-button">View Repo</a>
+        {live && <a href={live} target="_blank" rel="noopener noreferrer" id="site-button">Live Site</a>}
       </div>
     </div>
   );

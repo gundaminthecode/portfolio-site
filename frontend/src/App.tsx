@@ -1,5 +1,4 @@
 import './styles/App.css';
-import "./styles/projects.css";
 import GithubProjects from "./components/Projects/GithubProjects.tsx";
 
 function App() {
