@@ -84,26 +84,31 @@ main {
     flex-direction: column;
 }
 
+section {
+    background-color: var(--bg-elev);
+    margin: 2rem;
+    padding: 2rem;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .content {
     flex: 3;
 }
 
 /* Project cards */
-.project-list {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-    padding: 0 7%;
+/* Use GRID for the cards container */
+.project-grid {
+  display: flex;  /* was: flex */
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0;     /* drop the 7% padding if you want edge-to-edge */
 }
-.project-card {
-    background: #fff;
-    padding: 1rem;
-    flex: 1 1 calc(33.333% - 1rem);
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-align: center;
-}
+
 
 /* Footer */
 footer {

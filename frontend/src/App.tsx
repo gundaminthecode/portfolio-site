@@ -17,10 +17,7 @@ function App() {
       </header>
 
       <main>
-        <section id="about">
-          <h2>About Me</h2>
-          <p>This is a brief introduction about myself.</p>
-        </section>
+        
 
         {/* <section id="projects">
           <h2>My Projects</h2>
@@ -42,6 +39,11 @@ function App() {
           sortBy="updated"   // or "stars"
           // max={12}
         />
+
+        <section id="about">
+          <h2>About Me</h2>
+          <p>This is a brief introduction about myself.</p>
+        </section>
 
         <section id="contact">
           <h2>Contact Me</h2>
