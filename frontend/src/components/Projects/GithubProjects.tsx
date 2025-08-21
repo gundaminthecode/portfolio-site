@@ -1,6 +1,8 @@
 // GithubProjects.tsx
 import { useEffect, useMemo, useState } from "react";
-import ProjectCard, { type Repo } from "./ProjectCard.tsx";
+import { type Repo } from "./ProjectCard.tsx";
+import ProjectCarouselInfinite from "./ProjectCarouselInfinite";
+
 
 // const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000"; // e.g. http://localhost:8000
 
@@ -51,11 +53,8 @@ export default function GithubProjects({
     <section id="projects">
       <h2>My Projects</h2>
       <p>Public GitHub repositories for @{username}</p>
-      <div className="project-grid">
-        {filtered.map(repo => (
-          <ProjectCard key={repo.id} repo={repo} />
-        ))}
-      </div>
+      
+      <ProjectCarouselInfinite repos={repos} autoplayMs={4000} startIndex={0} />
     </section>
   );
 }
