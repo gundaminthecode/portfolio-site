@@ -1,3 +1,5 @@
+/* project-carousel.css */
+
 /* Carousel container */
 .carousel {
   position: relative;
@@ -99,12 +101,6 @@
 }
 .carousel__dot[aria-current="true"] { background: #333; }
 
-/* Dark mode variants */
-.dark-mode .carousel__card { background: #222; box-shadow: none; }
-.dark-mode .carousel__meta { color: #ddd; }
-.dark-mode .carousel__links a { border-color: #444; }
-
-/* Optional CTA id hooks you were using */
 #repo-button, #site-button {
   background: var(--accent);
   color: white;

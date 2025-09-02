@@ -1,4 +1,5 @@
-/* Header / nav */
+/* app.css */
+
 header {
   background: #222;
   color: #fff;
@@ -22,7 +23,7 @@ main {
   flex-direction: column;
 }
 
-/* Use elevated panel color + your text token */
+/* Use elevated panel color + text token */
 section {
   background-color: color-mix(in srgb, var(--bg-elev) 80%, transparent);
   margin: 2rem;

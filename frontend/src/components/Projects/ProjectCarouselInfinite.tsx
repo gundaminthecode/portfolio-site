@@ -1,3 +1,5 @@
+// ProjectCarouselInfinite.tsx
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ProjectSlide from "./ProjectSlide";
 import type { Repo } from "./ProjectCard";

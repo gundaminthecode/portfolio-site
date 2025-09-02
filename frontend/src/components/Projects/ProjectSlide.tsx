@@ -1,3 +1,5 @@
+// ProjectSlide.tsx
+
 import type { Repo } from "./ProjectCard";
 
 function formatDate(iso: string) {

@@ -1,3 +1,5 @@
+// App.tsx
+
 import './styles/App.css';
 import GithubProjects from "./components/Projects/GithubProjects.tsx";
 
