@@ -3,6 +3,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  padding: 1rem 0.35rem;
 }
 
 /* Horizontal track */
@@ -36,13 +37,16 @@
 
 /* Card */
 .carousel__card {
-  background: #fff;
+  background: var(--bg-elev);
   border-radius: 14px;
+  border-color: var(--bg);
+  border-width: 2px;
+  border-style: solid;
   box-shadow: 0 10px 24px rgba(0,0,0,.07);
   padding: 1rem;
   min-height: 260px;
   display: grid;
-  gap: .75rem;
+  gap: 1rem;
 }
 
 /* Meta list */
@@ -79,8 +83,8 @@
   cursor: pointer;
   z-index: 2;
 }
-.carousel__navBtn--prev { left: .5rem; }
-.carousel__navBtn--next { right: .5rem; }
+.carousel__navBtn--prev { left: 0; }
+.carousel__navBtn--next { right: 0; }
 
 /* Dots */
 .carousel__dots {
