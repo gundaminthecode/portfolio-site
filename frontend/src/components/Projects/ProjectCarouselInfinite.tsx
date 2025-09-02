@@ -146,39 +146,117 @@ export default function ProjectCarouselInfinite({
   }, [prev, next]);
 
   // Swipe / drag
-  const onPointerDown = (e: React.PointerEvent) => {
+  const DRAG_THRESHOLD_PX = 6;
+
+  const pointerDown = useRef(false);
+  const activePointerId = useRef<number | null>(null);
+
+  const addDraggingClass = () => {
+    const vp = viewportRef.current;
+    if (vp) vp.classList.add('is-dragging');
+  };
+  const removeDraggingClass = () => {
+    const vp = viewportRef.current;
+    if (vp) vp.classList.remove('is-dragging');
+  };
+
+  const startDrag = (e: React.PointerEvent) => {
     const vp = viewportRef.current;
     if (!vp) return;
     isDragging.current = true;
+    activePointerId.current = e.pointerId;
+    vp.setPointerCapture(e.pointerId);
+    vp.style.transition = "none";
+    addDraggingClass();
+  };
+
+  const stopDrag = (_e?: React.PointerEvent) => {
+    const vp = viewportRef.current;
+    if (!vp) return;
+
+    // Release capture if we had it
+    if (activePointerId.current !== null) {
+      try { vp.releasePointerCapture(activePointerId.current); } catch {}
+    }
+    activePointerId.current = null;
+
+    isDragging.current = false;
+    pointerDown.current = false;
+    vp.style.transition = "";      // restore
+    removeDraggingClass();
+    deltaX.current = 0;
+  };
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    // If starting on a link/button, don't intercept (let it click)
+    const el = e.target as Element;
+    if (el.closest('a, button')) {
+      pointerDown.current = false;
+      isDragging.current = false;
+      return;
+    }
+
+    pointerDown.current = true;
     startX.current = e.clientX;
     deltaX.current = 0;
     setPaused(true);
-    vp.setPointerCapture(e.pointerId);
-    vp.style.transition = "none";
+    // IMPORTANT: do NOT setPointerCapture here yet (wait for threshold)
   };
+
   const onPointerMove = (e: React.PointerEvent) => {
     const vp = viewportRef.current;
-    if (!isDragging.current || !vp) return;
-    deltaX.current = e.clientX - startX.current;
+    if (!vp || !pointerDown.current) return;
+
+    const dx = e.clientX - startX.current;
+
+    // Not dragging yet? check threshold first
+    if (!isDragging.current) {
+      if (Math.abs(dx) < DRAG_THRESHOLD_PX) return;
+      startDrag(e);
+    }
+
+    // We are dragging now
+    deltaX.current = dx;
+    e.preventDefault(); // prevent text selection/scroll while dragging
 
     const pxToPct = (deltaX.current / vp.clientWidth) * 100;
     const leftmost = idx - 1;
     const base = -(leftmost * stepPct);
     vp.style.transform = `translateX(${base + pxToPct}%)`;
   };
+
   const onPointerUp = (e: React.PointerEvent) => {
     const vp = viewportRef.current;
     if (!vp) return;
-    vp.releasePointerCapture(e.pointerId);
-    vp.style.transition = ""; // restore css transition
-    isDragging.current = false;
 
+    // If we never started dragging (i.e., it was a click), do nothing special
+    if (!isDragging.current) {
+      pointerDown.current = false;
+      return;
+    }
+
+    // Finish a real drag
     const threshold = vp.clientWidth * 0.15;
     if (deltaX.current > threshold) prev();
     else if (deltaX.current < -threshold) next();
     else applyTransform();
 
-    deltaX.current = 0;
+    stopDrag(e);
+  };
+
+  const onPointerCancel = (e: React.PointerEvent) => {
+    if (!isDragging.current && !pointerDown.current) return;
+    applyTransform(); // snap back
+    stopDrag(e);
+  };
+
+  const onPointerLeave = (e: React.PointerEvent) => {
+    // If pointer leaves the viewport mid-drag, end the drag gracefully
+    if (!pointerDown.current) return;
+    if (isDragging.current) {
+      applyTransform();
+    }
+    stopDrag(e);
   };
 
   // Dots should refer to REAL indices (0..n-1)
@@ -206,7 +284,8 @@ export default function ProjectCarouselInfinite({
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
-        onPointerCancel={onPointerUp}
+        onPointerCancel={onPointerCancel}
+        onPointerLeave={onPointerLeave}
         role="group"
         aria-live="polite"
       >

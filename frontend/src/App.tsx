@@ -16,19 +16,6 @@ function App() {
       </header>
 
       <main>
-        
-
-        {/* <section id="projects">
-          <h2>My Projects</h2>
-          <p>Here are some of the projects I've worked on.</p>
-
-          <div className="project-list">
-            <div className="project-card">Project 1</div>
-            <div className="project-card">Project 2</div>
-            <div className="project-card">Project 3</div>
-          </div>
-        </section> */}
-
         {/* <Projects /> */}
 
         <GithubProjects 
