@@ -37,42 +37,6 @@
 .carousel__slide--side   { transform: scale(0.94);  opacity: .9; }
 .carousel__slide--center { transform: scale(1.04);  opacity: 1; filter: saturate(1.05); }
 
-/* Card */
-.carousel__card {
-  background: var(--bg-elev);
-  border-radius: 14px;
-  border-color: var(--bg);
-  border-width: 2px;
-  border-style: solid;
-  box-shadow: 0 10px 24px rgba(0,0,0,.07);
-  padding: 1rem;
-  min-height: 260px;
-  width: 100%;
-  display: grid;
-  gap: 1rem;
-}
-
-/* Meta list */
-.carousel__meta {
-  display: flex;
-  gap: .75rem;
-  flex-wrap: wrap;
-  color: #555;
-  font-size: .9rem;
-  margin: .25rem 0 .5rem;
-  list-style: none;
-  padding: 0;
-}
-
-/* Links row */
-.carousel__links { margin-top: auto; display: flex; gap: .75rem; }
-.carousel__links a {
-  text-decoration: none;
-  border: 1px solid #ddd;
-  padding: .45rem .7rem;
-  border-radius: 10px;
-}
-
 /* Prev/Next buttons */
 .carousel__navBtn {
   position: absolute;
@@ -94,7 +58,7 @@
   display: flex;
   gap: .4rem;
   justify-content: center;
-  margin-top: .5rem;
+  margin-top: 1.5rem;
 }
 .carousel__dot {
   width: 8px; height: 8px; border-radius: 50%;
@@ -102,10 +66,7 @@
 }
 .carousel__dot[aria-current="true"] { background: #333; }
 
-#repo-button, #site-button {
-  background: var(--accent);
-  color: white;
-}
+
 
 /* @media (max-width: 1000px) { .carousel { --cols: 2; } } */
 @media (max-width: 640px)  { .carousel { --cols: 1; } }

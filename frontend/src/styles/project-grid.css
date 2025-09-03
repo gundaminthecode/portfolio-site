@@ -9,8 +9,12 @@
 .project-card {
   flex: 0 1 calc(33.333% - 1rem); /* 3 columns */
   max-width: 320px; /* optional, keeps them from getting too wide */
+  min-height: 240px; /* optional, for consistent height */
   background: var(--bg-elev);
-  border-radius: var(--radius);
+  border-radius: 14px;
+  border-color: var(--bg);
+  border-width: 2px;
+  border-style: solid;
   padding: 1rem;
   box-shadow: var(--shadow);
   display: flex;
@@ -34,25 +38,18 @@
   padding: 0;
 }
 
-.project-links {
-  margin-top: auto;
-  display: flex;
-  gap: 0.75rem;
-  justify-content: flex-start;
-}
-
+/* Links row */
+.project-links { margin-top: auto; display: flex; gap: .75rem; }
 .project-links a {
   text-decoration: none;
-  font-weight: 600;
-  padding: 0.45rem 0.7rem;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #111;
-  transition: background 0.2s ease;
+  border: 1px solid #ddd;
+  padding: .45rem .7rem;
+  border-radius: 10px;
 }
 
-.project-links a:hover {
-  background: var(--accent-2);
+#repo-button, #site-button {
+  background: var(--accent);
+  color: white;
 }
 
 /* Mobile tweak */
