@@ -3,13 +3,13 @@
 /* Header / nav */
 header {
   position: sticky; top: 0; z-index: 50;
-  background: #222;
+  background: var(--banner-bg);
   color: #fff;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 6px solid var(--accent);
+  border-bottom: 6px solid var(--banner-accent);
 }
 
 header nav ul {
@@ -32,14 +32,43 @@ main {
   align-items: stretch;       /* stretch to full width */
 }
 
+#upper-content,
+#lower-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;   /* keeps children centered */
+  align-items: flex-start;
+  width: min(80%, 100%);  /* cap max width */
+  margin: 0 auto;            /* center in page */
+  gap: 2rem;                 /* spacing between sidebar and content */
+}
+
+.app-divs {
+  background-color: color-mix(in srgb, var(--bg-elev) 80%, transparent);
+  margin: 2rem;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+}
+
+#app-sidebar {
+  flex: 1;       /* fixed width sidebar */
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+#app-main-content {
+  flex: 3;               /* fill remaining space */
+  min-width: 0;          /* prevents flexbox overflow */
+}
+
+
 /* Section as a centered container, not a fixed 60% */
 section {
   /* center + max-width keeps things predictable across screens */
-  width: min(1500px, 100%);
+  width: min(1100px, 100%);
   margin: 2rem auto;
 
-  /* your original visual style */
-  background-color: color-mix(in srgb, var(--bg-elev) 80%, transparent);
   color: var(--text);
   border-radius: 2rem;
 
@@ -53,11 +82,10 @@ section {
   box-sizing: border-box;
 }
 
-/* Optional: variants if you want wider/narrower sections on some pages */
+/* Optional: variants, wider/narrower sections on some pages */
 section.section--wide  { width: min(1280px, 100%); }
 section.section--narrow{ width: min(900px, 100%);  }
 
-/* A content wrapper if you need inner centering */
 .content { 
   width: 100%;
   display: flex;
@@ -67,11 +95,12 @@ section.section--narrow{ width: min(900px, 100%);  }
 
 /* Footer */
 footer {
-  background: #222;
+  background: var(--banner-bg);
   color: #fff;
   text-align: center;
   padding: 1rem;
   margin-top: 2rem;
+  border-top: 6px solid var(--banner-accent);
 }
 
 /* Responsive tweaks */

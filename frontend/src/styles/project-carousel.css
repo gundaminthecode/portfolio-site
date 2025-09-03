@@ -1,5 +1,10 @@
 /* project-carousel.css */
 
+.projects-carousel-wrapper {
+  width: min(1500px, 100%);
+  margin: 0 auto;
+}
+
 /* Carousel container */
 .carousel {
   position: relative;
@@ -11,6 +16,7 @@
   --cols: 3;
   flex-direction: column;
 }
+
 
 /* Horizontal track */
 .carousel__viewport {

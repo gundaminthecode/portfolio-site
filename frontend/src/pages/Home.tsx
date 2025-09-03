@@ -7,8 +7,7 @@ export default function Home() {
       {/* Projects teaser on Home */}
       <section id="projects">
         <div className="content">
-          <div>My Projects</div>
-          <p className="hud">Public GitHub repositories for @gundaminthecode</p>
+            
 
           {/* show a few here or a carousel; full list is on Projects page */}
           <GithubProjects
