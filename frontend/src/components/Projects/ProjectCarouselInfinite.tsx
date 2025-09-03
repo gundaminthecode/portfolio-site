@@ -45,7 +45,22 @@ export default function ProjectCarouselInfinite({
   const startX = useRef(0);
   const deltaX = useRef(0);
 
-  const stepPct = 100 / PER_VIEW; // each slide width as percentage
+  // measure "one step" = slide width + the inter-slide gap
+  const getStepPx = useCallback(() => {
+    const vp = viewportRef.current;
+    if (!vp) return 0;
+
+    const cs = getComputedStyle(vp);
+    const gapStr = cs.columnGap || cs.gap || "0";
+    const gapPx = parseFloat(gapStr) || 0;
+
+    // pick a slide (any), but use clientWidth (layout width) to ignore transforms
+    const slide = vp.querySelector<HTMLElement>(".carousel__slide");
+    if (!slide) return 0;
+
+    const slideWidth = slide.clientWidth; // or slide.offsetWidth
+    return slideWidth + gapPx;
+  }, []);
 
   // Helpers to convert “real” index <0..n-1> to renderList index
   const toRenderIndex = useCallback((real: number) => {
@@ -85,14 +100,17 @@ export default function ProjectCarouselInfinite({
 
   // Apply transform whenever index changes
   const applyTransform = useCallback(() => {
-    const vp = viewportRef.current;
-    if (!vp) return;
-    // we want idx-centered (middle of 3-per view). The leftmost visible slide index is (idx - 1)
+  const vp = viewportRef.current;
+  if (!vp) return;
+    // leftmost visible index in a 3-up view is (idx - 1)
     const leftmost = idx - 1;
-    const offsetPct = -(leftmost * stepPct);
-    vp.style.transform = `translateX(${offsetPct}%)`;
+    const step = getStepPx();
+    const offsetPx = -(leftmost * step);
+
+    // Round to full pixels so sub-pixel error doesn't accumulate
+    vp.style.transform = `translateX(${Math.round(offsetPx)}px)`;
     vp.style.transition = anim ? "transform 400ms ease" : "none";
-  }, [idx, stepPct, anim]);
+  }, [idx, anim, getStepPx]);
 
   useEffect(() => { applyTransform(); }, [applyTransform]);
   useEffect(() => {
@@ -102,8 +120,7 @@ export default function ProjectCarouselInfinite({
   }, [applyTransform]);
 
   // Infinite “teleport” without visible jump:
-  // When we move into the cloned head/tail zones, after the animated slide completes,
-  // we jump to the equivalent real index with transitions disabled.
+  // move into the cloned head/tail zones, after the animated slide completes, jump to the equivalent real index with transitions disabled.
   useEffect(() => {
     if (!useInfinite) return;
     const vp = viewportRef.current;
@@ -211,40 +228,34 @@ export default function ProjectCarouselInfinite({
 
     const dx = e.clientX - startX.current;
 
-    // Not dragging yet? check threshold first
     if (!isDragging.current) {
       if (Math.abs(dx) < DRAG_THRESHOLD_PX) return;
       startDrag(e);
     }
 
-    // We are dragging now
     deltaX.current = dx;
-    e.preventDefault(); // prevent text selection/scroll while dragging
+    e.preventDefault();
 
-    const pxToPct = (deltaX.current / vp.clientWidth) * 100;
     const leftmost = idx - 1;
-    const base = -(leftmost * stepPct);
-    vp.style.transform = `translateX(${base + pxToPct}%)`;
+    const base = -(leftmost * getStepPx());
+    vp.style.transform = `translateX(${Math.round(base + deltaX.current)}px)`;
   };
 
   const onPointerUp = (e: React.PointerEvent) => {
     const vp = viewportRef.current;
     if (!vp) return;
 
-    // If we never started dragging (i.e., it was a click), do nothing special
-    if (!isDragging.current) {
-      pointerDown.current = false;
-      return;
-    }
+    if (!isDragging.current) { pointerDown.current = false; return; }
 
-    // Finish a real drag
-    const threshold = vp.clientWidth * 0.15;
+    const step = getStepPx();
+    const threshold = step * 0.35; // switch near 1/3 card
     if (deltaX.current > threshold) prev();
     else if (deltaX.current < -threshold) next();
     else applyTransform();
 
     stopDrag(e);
   };
+
 
   const onPointerCancel = (e: React.PointerEvent) => {
     if (!isDragging.current && !pointerDown.current) return;

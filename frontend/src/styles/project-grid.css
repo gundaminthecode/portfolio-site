@@ -1,0 +1,68 @@
+.project-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* centers the last row */
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  flex: 0 1 calc(33.333% - 1rem); /* 3 columns */
+  max-width: 320px; /* optional, keeps them from getting too wide */
+  background: var(--bg-elev);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.project-card h3 {
+  margin: 0;
+  font-family: "EurostileX", sans-serif;
+  color: var(--hero-text);
+}
+
+.project-card ul {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin: 0;
+  padding: 0;
+}
+
+.project-links {
+  margin-top: auto;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-start;
+}
+
+.project-links a {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #111;
+  transition: background 0.2s ease;
+}
+
+.project-links a:hover {
+  background: var(--accent-2);
+}
+
+/* Mobile tweak */
+@media (max-width: 768px) {
+  .project-card {
+    flex: 0 1 calc(50% - 1rem); /* 2 columns on tablets */
+  }
+}
+@media (max-width: 480px) {
+  .project-card {
+    flex: 0 1 100%; /* 1 column on phones */
+  }
+}

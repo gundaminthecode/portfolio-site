@@ -6,9 +6,8 @@ export default function Home() {
     <>
       {/* Projects teaser on Home */}
       <section id="projects">
-        <div className="panel--fx">
-          <div className="tape tape--cyan">My Projects</div>
-          <div className="chevrons" />
+        <div className="content">
+          <div>My Projects</div>
           <p className="hud">Public GitHub repositories for @gundaminthecode</p>
 
           {/* show a few here or a carousel; full list is on Projects page */}
@@ -23,17 +22,15 @@ export default function Home() {
       </section>
 
       <section id="about">
-        <div className="panel--fx">
-          <div className="tape tape--orange">About Me</div>
-          <div className="chevrons" />
+        <div>
+          <div>About Me</div>
           <p>This is a brief introduction about myself.</p>
         </div>
       </section>
-
+ 
       <section id="contact">
-        <div className="panel--fx">
-          <div className="tape tape--orange">Contact</div>
-          <div className="chevrons" />
+        <div>
+          <div>Contact</div>
           <p>
             You can reach me via email at{" "}
             <a href="mailto:nmath2211@outlook.com">nmath2211@outlook.com</a>

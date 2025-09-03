@@ -50,11 +50,11 @@ export default function GithubProjects({
   if (filtered.length === 0) return <p>No repositories to display.</p>;
 
   return (
-    <section id="projects">
+    <div id="projects" className="content">
       <h2>My Projects</h2>
       <p>Public GitHub repositories for @{username}</p>
       
       <ProjectCarouselInfinite repos={repos} autoplayMs={4000} startIndex={0} />
-    </section>
+    </div>
   );
 }

@@ -6,36 +6,36 @@
   width: 100%;
   overflow: hidden;
   padding: 1rem 0.35rem;
+  display: flex;
+  --gap: clamp(10px, 2vw, 22px);
+  --cols: 3;
+  flex-direction: column;
 }
 
 /* Horizontal track */
 .carousel__viewport {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: var(--gap); 
   will-change: transform;
   transition: transform 400ms ease;
   touch-action: pan-y;
-  padding: .5rem;
+  max-width: 100%;
+  padding: 0;
 }
 
 /* Slides (3 per view) */
 .carousel__slide {
-  flex: 0 0 calc(33.333% - .666rem);
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
   box-sizing: border-box;
   transform-origin: center bottom;
   transition: transform 300ms ease, opacity 300ms ease, filter 300ms ease;
   opacity: .7;
   filter: saturate(.9);
 }
-.carousel__slide--side {
-  transform: scale(0.94);
-  opacity: .9;
-}
-.carousel__slide--center {
-  transform: scale(1.04);
-  opacity: 1;
-  filter: saturate(1.05);
-}
+
+.carousel__slide--side   { transform: scale(0.94);  opacity: .9; }
+.carousel__slide--center { transform: scale(1.04);  opacity: 1; filter: saturate(1.05); }
 
 /* Card */
 .carousel__card {
@@ -47,6 +47,7 @@
   box-shadow: 0 10px 24px rgba(0,0,0,.07);
   padding: 1rem;
   min-height: 260px;
+  width: 100%;
   display: grid;
   gap: 1rem;
 }
@@ -105,3 +106,6 @@
   background: var(--accent);
   color: white;
 }
+
+/* @media (max-width: 1000px) { .carousel { --cols: 2; } } */
+@media (max-width: 640px)  { .carousel { --cols: 1; } }
