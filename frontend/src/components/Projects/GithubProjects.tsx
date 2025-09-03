@@ -27,7 +27,6 @@ export default function GithubProjects({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
     setLoading(true);
     setError(null);
 
@@ -38,7 +37,7 @@ export default function GithubProjects({
       .catch((e) => setError(String(e)))
       .finally(() => setLoading(false));
 
-    return () => { cancelled = true; };
+    return () => { };
   }, [username, includeForks, includeArchived, sortBy]);
 
   const filtered = useMemo(() => {
