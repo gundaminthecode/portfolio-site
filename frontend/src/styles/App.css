@@ -35,7 +35,7 @@ main {
 /* Section as a centered container, not a fixed 60% */
 section {
   /* center + max-width keeps things predictable across screens */
-  width: min(1100px, 100%);
+  width: min(1500px, 100%);
   margin: 2rem auto;
 
   /* your original visual style */
