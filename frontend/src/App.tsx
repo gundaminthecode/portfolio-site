@@ -7,7 +7,6 @@ function App() {
   return (
     <>
       <header>
-        <h1 className="hero-text" data-text="NICK MATHIASEN">NICK MATHIASEN</h1>
         <nav>
           <ul>
             <li><NavLink to="/" end>Home</NavLink></li>
@@ -20,6 +19,9 @@ function App() {
       </header>
 
       <main>
+        <div className="hero-banner">
+          <h1 className="hero-text" data-text="NICK MATHIASEN">NICK MATHIASEN</h1>
+        </div>
         <div id="upper-content" >
           <div id="app-sidebar">
             <div className="app-divs">
@@ -35,7 +37,13 @@ function App() {
         </div>
         <div id="lower-content">
           {/* Additional content can go here */}
-          <div className="app-divs">HI</div>
+            <div className="app-divs">
+              <div>Contact</div>
+              <p>
+                You can reach me via email at{" "}
+                <a href="mailto:nmath2211@outlook.com">nmath2211@outlook.com</a>
+              </p>
+            </div>
         </div>
         
       </main>

@@ -49,17 +49,5 @@ html, body { margin: 0; padding: 0; background-color: var(--bg); color: var(--te
 #root { min-height: 100%; display: flex; flex-direction: column; }
 main { flex: 1; }
 
-/* Shared typography */
-.hero-text {
-  font-family: "EurostileX", sans-serif;
-  font-size: 5rem;
-  font-weight: bold;
-  line-height: 1.2;
-  color: var(--hero-text);
-  margin: 0 auto;
-  -webkit-text-stroke: 4px var(--text-outline);
-  paint-order: stroke fill;
-}
-
 /* Utility */
 ul { list-style: none; padding: 0; }
