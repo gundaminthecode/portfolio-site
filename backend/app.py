@@ -8,13 +8,14 @@ CACHE_TTL = 600  # 10 minutes
 cache: Dict[str, Dict[str, Any]] = {}  # {key: {"ts": int, "data": list}}
 
 app = Flask(__name__)
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN")  # e.g. https://your-frontend.onrender.com
+FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN")
 CORS(app, resources={
     r"/api/*": {
         "origins": [
             "http://localhost:5173",
             "http://127.0.0.1:5173",
-            "https://portfolio-site-frontend-h6ci.onrender.com",  # ← your Render frontend
+            "https://portfolio-site-frontend-h6ci.onrender.com", 
+            FRONTEND_ORIGIN
         ]
     }
 })
