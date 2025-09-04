@@ -5,7 +5,7 @@ import { type Repo } from "./ProjectCard.tsx";
 import ProjectCarouselInfinite from "./ProjectCarouselInfinite";
 
 
-// const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000"; // e.g. http://localhost:8000
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
 type Props = {
   username: string;
@@ -30,7 +30,7 @@ export default function GithubProjects({
     setLoading(true);
     setError(null);
 
-    const url = `/api/repos?username=${encodeURIComponent(username)}&includeForks=${includeForks}&includeArchived=${includeArchived}&sortBy=${sortBy}`;
+    const url = `${API_BASE}/api/repos?username=${encodeURIComponent(username)}&includeForks=${includeForks}&includeArchived=${includeArchived}&sortBy=${sortBy}`;
     fetch(url)
       .then(r => r.ok ? r.json() : Promise.reject(`${r.status} ${r.statusText}`))
       .then((data: Repo[]) => setRepos(data))
