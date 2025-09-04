@@ -132,6 +132,15 @@ footer {
 
 /* Responsive tweaks */
 @media (max-width: 768px) {
-  main { padding: 2rem 0.75rem; }
   section { margin: 1.25rem auto; border-radius: 1.25rem; }
+}
+
+@media (max-width: 1200px) {
+  #upper-content, #lower-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #app-sidebar { max-width: none; width: 100%; }
+  #app-main-content { width: 100%; }
 }
