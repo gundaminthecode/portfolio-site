@@ -8,8 +8,13 @@ CACHE_TTL = 600  # 10 minutes
 cache: Dict[str, Dict[str, Any]] = {}  # {key: {"ts": int, "data": list}}
 
 app = Flask(__name__)
-# dev CORS (limit to your Vite URL)
-CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5173", "http://127.0.0.1:5173"]}})
+FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN")  # e.g. https://your-frontend.onrender.com
+CORS(app, resources={r"/api/*": {"origins": [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://portfolio-site-i5hj.onrender.com",
+    "https://your-frontend-domain.onrender.com"
+]}})
 
 def gh_headers() -> Dict[str, str]:
     h = {
