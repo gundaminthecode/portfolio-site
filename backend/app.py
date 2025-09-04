@@ -13,7 +13,7 @@ CORS(app, resources={r"/api/*": {"origins": [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://portfolio-site-i5hj.onrender.com",
-    "https://your-frontend-domain.onrender.com"
+    "https://portfolio-site-frontend-h6ci.onrender.com"
 ]}})
 
 def gh_headers() -> Dict[str, str]:
