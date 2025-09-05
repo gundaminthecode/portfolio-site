@@ -13,7 +13,7 @@ export default function ProjectSlide({ repo }: { repo: Repo }) {
     <div className="project-card" role="group" aria-label={repo.name}>
       <h3 style={{ margin: 0 }}>{repo.name}</h3>
       {repo.description && <p style={{ margin: 0 }}>{repo.description}</p>}
-      <ul>
+      <ul className="project-meta">
         {repo.language && <li>{repo.language}</li>}
         <li>★ {repo.stargazers_count}</li>
         <li>⑂ {repo.forks_count}</li>

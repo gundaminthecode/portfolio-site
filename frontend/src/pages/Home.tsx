@@ -1,6 +1,10 @@
 // src/pages/Home.tsx
 import GithubProjects from "../components/Projects/GithubProjects";
 
+import { CONFIG } from "../config";
+
+const username = CONFIG.GITHUB_USERNAME;
+
 export default function Home() {
   return (
     <>
@@ -11,7 +15,7 @@ export default function Home() {
 
           {/* show a few here or a carousel; full list is on Projects page */}
           <GithubProjects
-            username="gundaminthecode"
+            username= { username }
             includeForks={false}
             includeArchived={false}
             sortBy="updated"
@@ -24,16 +28,6 @@ export default function Home() {
         <div>
           <div>About Me</div>
           <p>This is a brief introduction about myself.</p>
-        </div>
-      </section>
- 
-      <section id="contact">
-        <div>
-          <div>Contact</div>
-          <p>
-            You can reach me via email at{" "}
-            <a href="mailto:nmath2211@outlook.com">nmath2211@outlook.com</a>
-          </p>
         </div>
       </section>
     </>

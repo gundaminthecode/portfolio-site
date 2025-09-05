@@ -1,8 +1,12 @@
-/* app.css */
+/* ===========================
+  App.css - Main Stylesheet
+  =========================== */
 
-/* Header / nav */
+/* ===== Header / Navigation ===== */
 header {
-  position: sticky; top: 0; z-index: 50;
+  position: sticky;
+  top: 0;
+  z-index: 50;
   background: var(--banner-bg);
   color: #fff;
   padding: 1rem;
@@ -13,16 +17,23 @@ header {
 }
 
 header nav ul {
-  margin: 0; padding: 0; list-style: none;
-  display: flex; gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
 }
 
 header nav a {
   color: #fff;
   text-decoration: none;
 }
-header nav a:hover { text-decoration: underline; }
 
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Hero Banner ===== */
 .hero-banner {
   background: var(--accent);
   text-align: center;
@@ -34,7 +45,7 @@ header nav a:hover { text-decoration: underline; }
   justify-content: center; /* Vertically center content */
 }
 
-/* Shared typography */
+/* ===== Hero Typography ===== */
 .hero-text {
   font-family: "EurostileX", sans-serif;
   font-size: 5rem;
@@ -46,30 +57,32 @@ header nav a:hover { text-decoration: underline; }
   paint-order: stroke fill;
 }
 
-/* Main & sections */
+/* ===== Main Layout ===== */
 main {
   /* Let children control their own width; avoids fighting the carousel */
   padding-bottom: 3rem;
   display: flex;
   flex-direction: column;
-  align-items: stretch;       /* stretch to full width */
+  align-items: stretch; /* Stretch to full width */
 }
 
+/* ===== Content Containers ===== */
 #upper-content,
 #lower-content {
   display: flex;
   flex-direction: row;
-  justify-content: center;   /* keeps children centered */
+  justify-content: center;   /* Keeps children centered */
   align-items: flex-start;
-  width: min(80%, 100%);  /* cap max width */
-  margin: 0 auto;            /* center in page */
-  gap: 2rem;                 /* spacing between sidebar and content */
+  width: min(80%, 100%);     /* Cap max width */
+  margin: 0 auto;            /* Center in page */
+  gap: 2rem;                 /* Spacing between sidebar and content */
 }
 
-#lower-content .app-divs{
+#lower-content .app-divs {
   width: 100%;
 }
 
+/* ===== App Divs (Elevated Panels) ===== */
 .app-divs {
   background-color: color-mix(in srgb, var(--bg-elev) 80%, transparent);
   margin: 2rem;
@@ -77,50 +90,52 @@ main {
   border-radius: var(--radius);
 }
 
+/* ===== Sidebar ===== */
 #app-sidebar {
-  flex: 1;       /* fixed width sidebar */
+  flex: 1;             /* Fixed width sidebar */
   max-width: 300px;
   display: flex;
   flex-direction: column;
 }
 
+/* ===== Main Content Area ===== */
 #app-main-content {
-  flex: 3;               /* fill remaining space */
-  min-width: 0;          /* prevents flexbox overflow */
+  flex: 3;             /* Fill remaining space */
+  min-width: 0;        /* Prevents flexbox overflow */
 }
 
-
-/* Section as a centered container, not a fixed 60% */
+/* ===== Section Container ===== */
 section {
-  /* center + max-width keeps things predictable across screens */
+  /* Center + max-width keeps things predictable across screens */
   width: min(1100px, 100%);
   margin: 2rem auto;
-
   color: var(--text);
   border-radius: 2rem;
-
-  /* responsive, not giant fixed paddings */
   padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1rem, 2.5vw, 2rem);
-
-  /* layout of inner content */
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
 }
 
-/* Optional: variants, wider/narrower sections on some pages */
-section.section--wide  { width: min(1280px, 100%); }
-section.section--narrow{ width: min(900px, 100%);  }
+/* ===== Section Variants ===== */
+section.section--wide {
+  width: min(1280px, 100%);
+}
 
-.content { 
+section.section--narrow {
+  width: min(900px, 100%);
+}
+
+/* ===== Content Utility Class ===== */
+.content {
   width: 100%;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
 }
 
-/* Footer */
+/* ===== Footer ===== */
 footer {
   background: var(--banner-bg);
   color: #fff;
@@ -130,17 +145,30 @@ footer {
   border-top: 6px solid var(--banner-accent);
 }
 
-/* Responsive tweaks */
+/* ===== Responsive Tweaks ===== */
+
+/* --- Tablet and below --- */
 @media (max-width: 768px) {
-  section { margin: 1.25rem auto; border-radius: 1.25rem; }
+  section {
+   margin: 1.25rem auto;
+   border-radius: 1.25rem;
+  }
 }
 
+/* --- Desktop to Tablet --- */
 @media (max-width: 1200px) {
-  #upper-content, #lower-content {
-    flex-direction: column;
-    align-items: center;
+  #upper-content,
+  #lower-content {
+   flex-direction: column;
+   align-items: center;
   }
-  
-  #app-sidebar { max-width: none; width: 100%; }
-  #app-main-content { width: 100%; }
+
+  #app-sidebar {
+   max-width: none;
+   width: 100%;
+  }
+
+  #app-main-content {
+   width: 100%;
+  }
 }

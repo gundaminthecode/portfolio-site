@@ -1,78 +1,47 @@
-/* project-carousel.css */
+/* ===========================
+  Project Carousel Styles
+  =========================== */
 
+/* Wrapper for the entire carousel */
 .projects-carousel-wrapper {
-  width: min(1500px, 100%);
+  /* Center the carousel horizontally */
   margin: 0 auto;
+  /* Uncomment to restrict max width */
+  /* max-width: 1200px; */
 }
 
-/* Carousel container */
-.carousel {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  padding: 1rem 0.35rem;
-  display: flex;
-  --gap: clamp(10px, 2vw, 22px);
-  --cols: 3;
-  flex-direction: column;
-}
-
-
-/* Horizontal track */
+/* ===========================
+  Carousel Viewport (Row of Cards)
+  =========================== */
 .carousel__viewport {
-  display: flex;
-  align-items: center;
-  gap: var(--gap); 
-  will-change: transform;
-  transition: transform 400ms ease;
-  touch-action: pan-y;
-  max-width: 100%;
-  padding: 0;
+  display: flex;                /* Arrange cards in a row */
+  align-items: center;          /* Vertically center cards */
+  overflow-x: auto;             /* Enable horizontal scrolling */
+  overflow-y: hidden;           /* Prevent vertical scrolling */
+  scrollbar-width: none;        /* Hide scrollbar in Firefox */
+  -ms-overflow-style: none;     /* Hide scrollbar in IE/Edge legacy */
+  border: 1px solid rgb(43, 43, 43);  /* Light border around carousel */
+  border-radius: 8px;          /* Rounded corners */
 }
 
-/* Slides (3 per view) */
-.carousel__slide {
-  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
-  box-sizing: border-box;
-  transform-origin: center bottom;
-  transition: transform 300ms ease, opacity 300ms ease, filter 300ms ease;
-  opacity: .7;
-  filter: saturate(.9);
+/* Hide scrollbar in WebKit browsers (Chrome, Safari, Edge) */
+.carousel__viewport::-webkit-scrollbar {
+  display: none;
 }
 
-.carousel__slide--side   { transform: scale(0.94);  opacity: .9; }
-.carousel__slide--center { transform: scale(1.04);  opacity: 1; filter: saturate(1.05); }
-
-/* Prev/Next buttons */
-.carousel__navBtn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 0;
-  background: rgba(0,0,0,.55);
-  color: #fff;
-  padding: .55rem .75rem;
-  border-radius: 999px;
-  cursor: pointer;
-  z-index: 2;
+/* ===========================
+  Individual Carousel Slide/Card
+  =========================== */
+.carousel-slide {
+  display: flex;                /* Use flex layout for slide content */
+  flex-direction: row;          /* Arrange slide content in a row */
+  /* Animation, height, and padding intentionally removed */
 }
-.carousel__navBtn--prev { left: 0; }
-.carousel__navBtn--next { right: 0; }
 
-/* Dots */
-.carousel__dots {
-  display: flex;
-  gap: .4rem;
-  justify-content: center;
-  margin-top: 1.5rem;
+/* Card content inside each slide */
+.carousel-slide > div {
+  margin: 10px 3rem;            /* Space around each card */
+  max-width: 320px;             /* Limit card width */
+  min-width: 0;                 /* Allow shrinking in flexbox */
+  box-sizing: border-box;       /* Include padding/border in width */
 }
-.carousel__dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #ccc; border: 0; cursor: pointer;
-}
-.carousel__dot[aria-current="true"] { background: #333; }
-
-
-
-/* @media (max-width: 1000px) { .carousel { --cols: 2; } } */
-@media (max-width: 640px)  { .carousel { --cols: 1; } }

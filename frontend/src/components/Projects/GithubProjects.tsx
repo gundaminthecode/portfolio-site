@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { type Repo } from "./ProjectCard.tsx";
-import ProjectCarouselInfinite from "./ProjectCarouselInfinite";
+// import ProjectCarouselInfinite from "./ProjectCarouselInfinite";
+import ProjectCarouselSimple from "./ProjectCarouselSimple.tsx";
 
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
@@ -54,7 +55,7 @@ export default function GithubProjects({
       <h2 >My Projects</h2>
       <p>Public GitHub repositories for @{username}</p>
       
-      <ProjectCarouselInfinite repos={repos} autoplayMs={4000} startIndex={0} />
+      <ProjectCarouselSimple repos={repos}/>
     </div>
   );
 }

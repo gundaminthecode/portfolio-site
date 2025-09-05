@@ -62,6 +62,17 @@ export default function ProjectCarouselInfinite({
     return slideWidth + gapPx;
   }, []);
 
+  // inside ProjectCarouselInfinite
+  const getContainerPadLeft = useCallback(() => {
+    const vp = viewportRef.current;
+    if (!vp) return 0;
+    const container = vp.parentElement as HTMLElement | null; // .carousel
+    if (!container) return 0;
+    const pad = parseFloat(getComputedStyle(container).paddingLeft || "0");
+    return isNaN(pad) ? 0 : pad;
+  }, []);
+
+
   // Helpers to convert “real” index <0..n-1> to renderList index
   const toRenderIndex = useCallback((real: number) => {
     return useInfinite ? real + CLONES : real;
@@ -100,17 +111,18 @@ export default function ProjectCarouselInfinite({
 
   // Apply transform whenever index changes
   const applyTransform = useCallback(() => {
-  const vp = viewportRef.current;
-  if (!vp) return;
-    // leftmost visible index in a 3-up view is (idx - 1)
-    const leftmost = idx - 1;
-    const step = getStepPx();
-    const offsetPx = -(leftmost * step);
+    const vp = viewportRef.current;
+    if (!vp) return;
 
-    // Round to full pixels so sub-pixel error doesn't accumulate
+    const leftmost = idx - 1;            // 3-up view: leftmost index
+    const step = getStepPx();            // slide width + gap
+    const padL = getContainerPadLeft();  // NEW: compensate for left padding
+
+    const offsetPx = -(leftmost * step) + padL;
     vp.style.transform = `translateX(${Math.round(offsetPx)}px)`;
     vp.style.transition = anim ? "transform 400ms ease" : "none";
-  }, [idx, anim, getStepPx]);
+  }, [idx, anim, getStepPx, getContainerPadLeft]);
+
 
   useEffect(() => { applyTransform(); }, [applyTransform]);
   useEffect(() => {
