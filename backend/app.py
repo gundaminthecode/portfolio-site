@@ -15,7 +15,8 @@ CORS(app, resources={
             "http://localhost:5173",
             "http://127.0.0.1:5173",
             "https://portfolio-site-frontend-h6ci.onrender.com",
-            "https://nickmathiasen.dev/", 
+            "https://nickmathiasen.dev",
+            "https://www.nickmathiasen.dev",  
             FRONTEND_ORIGIN
         ]
     }
