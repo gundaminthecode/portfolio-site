@@ -133,7 +133,9 @@
   padding: 2rem;
   margin: 10px 10px; 
   max-width: 320px;
-  min-width: 0;   
+  min-width: 0;
+  display: flex;
+  flex-direction: column;   
 }
 
 /* Project card title */

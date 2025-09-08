@@ -2,6 +2,16 @@
   App.css - Main Stylesheet
   =========================== */
 
+#app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app-shell {
+  flex: 1;               /* Fill available vertical space */
+}
+
 /* ===== Header / Navigation ===== */
 header {
   position: sticky;
@@ -141,7 +151,6 @@ footer {
   color: #fff;
   text-align: center;
   padding: 1rem;
-  margin-top: 2rem;
   border-top: 6px solid var(--banner-accent);
 }
 

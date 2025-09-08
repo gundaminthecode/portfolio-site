@@ -17,7 +17,11 @@ export default function ProjectSlide({ repo }: { repo: Repo }) {
         {repo.language && <li>{repo.language}</li>}
         <li>★ {repo.stargazers_count}</li>
         <li>⑂ {repo.forks_count}</li>
-        <li>Updated {formatDate(repo.updated_at)}</li>
+      </ul>
+      <ul className="project-meta">
+        <li>Updated: {formatDate(repo.updated_at)}</li>
+        {repo.archived && <li>Archived</li>}
+        {repo.fork && <li>Forked</li>}
       </ul>
       <div className="project-links ">
         <a href={repo.html_url} target="_blank" rel="noopener noreferrer" id="repo-button">View Repo</a>
