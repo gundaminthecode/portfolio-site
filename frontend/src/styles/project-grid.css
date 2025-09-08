@@ -14,6 +14,8 @@
 /* Ensure projects section takes full width */
 #projects {
   width: 100%;
+  margin-top: 0;
+  padding: 0;
 }
 
 /* Section containing filters and project grid */
@@ -126,9 +128,12 @@
   width: 25rem;
   height: 20rem;
   box-sizing: border-box;
-  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
   border-radius: var(--radius);
   padding: 2rem;
+  margin: 10px 10px; 
+  max-width: 320px;
+  min-width: 0;   
 }
 
 /* Project card title */
@@ -192,3 +197,60 @@
    align-items: center;
   }
 }
+
+/* --- Visibility control --- */
+.filter-panel--desktop { display: block; }
+.filter-panel--mobile { display: none; }
+
+@media (max-width: 1200px) {
+  .projects-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Hide desktop sidebar, show mobile dropdown */
+  .filter-panel--desktop { display: none; }
+  .filter-panel--mobile { display: block; width: 100%; }
+}
+
+/* --- Mobile <details> styles --- */
+.filters-mobile {
+  width: 100%;
+  margin: 0.5rem 0 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.filters-mobile__summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 1rem;
+  font-weight: 600;
+  color: var(--text);
+  user-select: none;
+}
+
+.filters-mobile__summary::-webkit-details-marker { display: none; }
+
+/* Rotate chevron when open */
+.filters-mobile[open] .chev { transform: rotate(180deg); }
+.chev { transition: transform 200ms ease; }
+
+/* Content area */
+.filters-mobile__content {
+  padding: 0.75rem 1rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+/* Optional: remove sticky on small screens since it’s inside dropdown */
+@media (max-width: 1200px) {
+  .projects-filters { position: static; top: auto; }
+}
+
+/* Keep your existing styles below… */

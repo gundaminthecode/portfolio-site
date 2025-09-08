@@ -73,7 +73,7 @@ main {
   flex-direction: row;
   justify-content: center;   /* Keeps children centered */
   align-items: flex-start;
-  width: min(80%, 100%);     /* Cap max width */
+  width: min(95%, 100%);     /* Cap max width */
   margin: 0 auto;            /* Center in page */
   gap: 2rem;                 /* Spacing between sidebar and content */
 }

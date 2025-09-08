@@ -22,29 +22,7 @@ function App() {
         <div className="hero-banner">
           <h1 className="hero-text" data-text="NICK MATHIASEN">NICK MATHIASEN</h1>
         </div>
-        <div id="upper-content" >
-          <div id="app-sidebar">
-            <div className="app-divs">
-              <p>Welcome to my portfolio site! Explore my projects and learn more about me.</p>
-            </div>
-            <div className="app-divs">
-
-            </div>
-          </div>
-          <div id="app-main-content" className="app-divs">
-            <Outlet />
-          </div>
-        </div>
-        <div id="lower-content">
-          {/* Additional content can go here */}
-            <div className="app-divs">
-              <div>Contact</div>
-              <p>
-                You can reach me via email at{" "}
-                <a href="mailto:nmath2211@outlook.com">nmath2211@outlook.com</a>
-              </p>
-            </div>
-        </div>
+        <Outlet />
         
       </main>
 

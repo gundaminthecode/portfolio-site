@@ -34,14 +34,7 @@
   =========================== */
 .carousel-slide {
   display: flex;                /* Use flex layout for slide content */
-  flex-direction: row;          /* Arrange slide content in a row */
   /* Animation, height, and padding intentionally removed */
 }
 
-/* Card content inside each slide */
-.carousel-slide > div {
-  margin: 10px 3rem;            /* Space around each card */
-  max-width: 320px;             /* Limit card width */
-  min-width: 0;                 /* Allow shrinking in flexbox */
-  box-sizing: border-box;       /* Include padding/border in width */
-}
+
