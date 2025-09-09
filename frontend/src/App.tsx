@@ -3,11 +3,16 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
+import { Home, FolderGit2, User2, Mail } from "lucide-react";
+
 
 const swipeTransition: Transition = {
   duration: 0.35,
   ease: [0.22, 1, 0.36, 1] as const, // 👈 tuple, not number[]
 };
+
+const navClass = ({ isActive }: { isActive: boolean }) =>
+  isActive ? "sidebar-nav__link is-active" : "sidebar-nav__link";
 
 function App() {
   const location = useLocation();
@@ -15,16 +20,31 @@ function App() {
   return (
     <div id="app-container">
       <header>
-        <nav>
-          <ul>
-            <li><NavLink to="/" end>Home</NavLink></li>
-            <li><NavLink to="/projects">Projects</NavLink></li>
-            {/* These go to sections on the Home page */}
-            <li><a href="#/##about">About</a></li>
-            <li><a href="#/##contact">Contact</a></li>
-          </ul>
+        
+
+        <nav className="mobile-nav" aria-label="Primary (icons)">
+          <NavLink to="/" end className={navClass} aria-label="Home">
+            <Home size={22} />
+          </NavLink>
+          <NavLink to="/projects" className={navClass} aria-label="Projects">
+            <FolderGit2 size={22} />
+          </NavLink>
+          <a href="#/##about" className="mobile-nav__link" aria-label="About">
+            <User2 size={22} />
+          </a>
+          <a href="#/##contact" className="mobile-nav__link" aria-label="Contact">
+            <Mail size={22} />
+          </a>
         </nav>
       </header>
+
+       {/* Right-side icon rail (desktop only via CSS) */}
+      <nav className="sidebar-nav" aria-label="Primary">
+        <NavLink to="/" end className={navClass} aria-label="Home"><Home size={24} /></NavLink>
+        <NavLink to="/projects" className={navClass} aria-label="Projects"><FolderGit2 size={24} /></NavLink>
+        <a href="#/##about" className="sidebar-nav__link" aria-label="About"><User2 size={24} /></a>
+        <a href="#/##contact" className="sidebar-nav__link" aria-label="Contact"><Mail size={24} /></a>
+      </nav>
 
       <div className="hero-banner">
         <h1 className="hero-text" data-text="NICK MATHIASEN">NICK MATHIASEN</h1>

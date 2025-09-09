@@ -51,7 +51,7 @@
 
 /* Wrapper for the project grid */
 .project-grid-wrapper {
-  flex: 5;
+  flex: 7;
 }
 
 /* ===== Filter UI Elements ===== */
@@ -125,6 +125,7 @@
 .project-card {
   white-space: normal;      /* Allow text to wrap */
   word-break: break-word;   /* Break long words if needed */
+  background: var(--card-bg);
   width: 25rem;
   height: 20rem;
   box-sizing: border-box;
@@ -164,7 +165,7 @@
 }
 .project-links a {
   text-decoration: none;
-  border: 1px solid #ddd;
+  border: 1px solid var(--line);
   padding: .45rem .7rem;
   border-radius: 10px;
 }
@@ -201,7 +202,7 @@
 }
 
 /* --- Visibility control --- */
-.filter-panel--desktop { display: block; }
+.filter-panel--desktop { display: block; flex: 3;}
 .filter-panel--mobile { display: none; }
 
 @media (max-width: 1200px) {

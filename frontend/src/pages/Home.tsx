@@ -10,17 +10,13 @@ export default function Home() {
     <>
 
       <div id="upper-content" >
-          <div id="app-sidebar">
-            <div className="app-divs">
-              <p>Welcome to my portfolio site! Explore my projects and learn more about me.</p>
-            </div>
-            <div className="app-divs">
+          <div id="app-sidebar" className="app-divs">
+            <p>Welcome to my portfolio site! Explore my projects and learn more about me.</p>
 
-            </div>
           </div>
           <div id="app-main-content" className="app-divs">
             {/* Projects teaser on Home */}
-            <section id="projects">
+            <section id="projects" className="vh-section">
               <div className="content">
                   
 

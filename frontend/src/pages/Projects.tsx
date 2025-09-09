@@ -57,7 +57,7 @@ export default function Projects({
       <div id="upper-content">
         <section id="projects" className="projects-section">
           {/* Desktop: sticky sidebar */}
-          <aside className="filter-panel filter-panel--desktop">
+          <aside className="filter-panel filter-panel--desktop app-divs">
             <aside className="projects-filters">
               <ProjectFilters
                 languages={languages}
@@ -68,7 +68,7 @@ export default function Projects({
             </aside>
           </aside>
 
-          <div className="project-grid-wrapper">
+          <div className="project-grid-wrapper app-divs">
             <div className="projects-content">
               <h2>Projects</h2>
               <p className="hud">All public repositories for @{username}</p>
