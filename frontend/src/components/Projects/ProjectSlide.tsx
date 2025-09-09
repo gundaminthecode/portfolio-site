@@ -24,7 +24,7 @@ export default function ProjectSlide({ repo }: { repo: Repo }) {
         {repo.fork && <li>Forked</li>}
       </ul>
       <div className="project-links ">
-        <a href={repo.html_url} target="_blank" rel="noopener noreferrer" id="repo-button">View Repo</a>
+        <a href={repo.html_url} target="_blank" rel="noopener noreferrer" id="repo-button">View Repository</a>
         {live && <a href={live} target="_blank" rel="noopener noreferrer" id="site-button">Live Site</a>}
       </div>
     </div>

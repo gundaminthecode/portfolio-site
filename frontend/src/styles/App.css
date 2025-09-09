@@ -92,15 +92,15 @@ header {
 
 /* ===== Hero Typography ===== */
 .hero-text {
-  font-family: "EurostileX", sans-serif;
-  font-size: 5rem;
-  font-weight: bold;
-  line-height: 1.2;
+  font-family: var(--font-heading);
+  font-weight: 700;            /* or 600 if you prefer */
+  font-size: 10rem;
   color: var(--hero-text);
   margin: 0 auto;
-  -webkit-text-stroke: 4px var(--text-outline);
+  /* keep if you’re stroking the text elsewhere */
   paint-order: stroke fill;
 }
+
 
 /* ===== Main Layout ===== */
 main {
@@ -290,6 +290,7 @@ footer {
     width: 100%;
   }
   #app-main-content { width: 100%; }
+  .hero-text { font-size: 3rem; }
 }
 
 /* Desktop: hide mobile header icons, show right rail, pad content */

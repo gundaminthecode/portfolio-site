@@ -9,11 +9,11 @@
   /* Core palette */
   --bg: #fb9b05;               /* Page background */
   --bg-elev: #f4f4f4;          /* Elevated panels */
-  --text: #09091f;             /* Primary text */
+  --text: #1E1E65;             /* Primary text */
   --text-outline: #ffffff;     /* Outline for hero text */
   --text-dim: #9e9e9e;         /* Secondary text */
-  --hero-text: #D99E88;        /* Hero headline */
-  --banner-bg: #09091f;        /* Banner background */
+  --hero-text: #1E1E65;        /* Hero headline */
+  --banner-bg: #1E1E65;        /* Banner background */
   --card-bg: #fff;          /* Project card background */
   --banner-accent: #fb9b05;    /* Banner accent */
 
@@ -36,7 +36,10 @@
 
   --sidebar-w: 64px;         /* icon button size */
   --sidebar-gap: 12px;       /* spacing between buttons */
-  --hero-pad-y: clamp(2rem, 6vw, 4rem);   /* space above/below the text */
+  --hero-pad-y: clamp(1rem, 2vw, 2rem);   /* space above/below the text */
+
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+
 }
 
 /* ---------------------------
@@ -56,6 +59,8 @@
   font-style: normal;
   font-display: swap;
 }
+
+
 
 /* ---------------------------
   Global Reset & Base Styles
