@@ -4,8 +4,6 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { Home, FolderGit2, User2, Mail } from "lucide-react";
-import "./styles/embla.css"
-
 
 const swipeTransition: Transition = {
   duration: 0.35,
