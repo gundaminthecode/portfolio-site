@@ -2,9 +2,7 @@
   App.css - Main Stylesheet
   =========================== */
 
-@import 'swiper/css';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
+
 
 #app-container {
   min-height: 100vh;

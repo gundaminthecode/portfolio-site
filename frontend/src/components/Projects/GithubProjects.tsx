@@ -1,15 +1,8 @@
 // GithubProjects.tsx
 
 import { useMemo } from "react";
-// import { type Repo } from "./ProjectCard.tsx";
-// import ProjectCarouselInfinite from "./ProjectCarouselInfinite";
-// import ProjectCarouselSimple from "./ProjectCarouselSimple.tsx";
-// import EmblaCarousel from '../Carousel/EmblaCarousel.tsx'
 import SwiperCarousel from '../Carousel/SwiperCarousel.tsx'
 import { useGithubRepos } from "../../hooks/useGithubRepos";
-
-
-// const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
 type Props = {
   username: string;

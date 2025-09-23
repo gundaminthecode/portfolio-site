@@ -179,13 +179,6 @@
 
 /* ===== Responsive Styles ===== */
 
-/* Tablet: 2 columns */
-@media (max-width: 768px) {
-  .project-card {
-   flex: 0 1 calc(50% - 1rem);
-  }
-}
-
 /* Mobile: 1 column */
 @media (max-width: 480px) {
   .project-card {

@@ -1,6 +1,5 @@
 // Projects.tsx
 
-import { Outlet } from "react-router-dom";
 import { useGithubRepos } from "../hooks/useGithubRepos";
 // import type { Repo } from "../components/Projects/ProjectCard";
 import ProjectGrid from "../components/Projects/ProjectGrid";
@@ -88,7 +87,6 @@ export default function Projects({
           </div>
         </section>
       </div>
-      <Outlet context={{ repos }} />
     </div>
   );
 }

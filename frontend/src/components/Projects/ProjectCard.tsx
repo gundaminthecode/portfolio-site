@@ -12,5 +12,8 @@ export type Repo = {
   fork: boolean;
   archived: boolean;
   live_url?: string | null;
+  owner?: {
+    login?: string;
+  };
 };
 
