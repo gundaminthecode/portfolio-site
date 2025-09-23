@@ -3,7 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { type Repo } from "./ProjectCard.tsx";
 // import ProjectCarouselInfinite from "./ProjectCarouselInfinite";
-import ProjectCarouselSimple from "./ProjectCarouselSimple.tsx";
+// import ProjectCarouselSimple from "./ProjectCarouselSimple.tsx";
+import EmblaCarousel from '../Carousel/EmblaCarousel.tsx'
+import type { EmblaOptionsType } from 'embla-carousel'
 
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
@@ -26,6 +28,8 @@ export default function GithubProjects({
   const [repos, setRepos] = useState<Repo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const OPTIONS: EmblaOptionsType = { loop: true }
 
   useEffect(() => {
     setLoading(true);
@@ -55,7 +59,10 @@ export default function GithubProjects({
       <h2 >My Projects</h2>
       <p>Public GitHub repositories for @{username}</p>
       
-      <ProjectCarouselSimple repos={repos}/>
+      {/* <ProjectCarouselSimple repos={repos}/> */}
+
+      <EmblaCarousel repos={filtered} options={OPTIONS} />
+
     </div>
   );
 }

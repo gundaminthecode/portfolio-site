@@ -4,6 +4,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { Home, FolderGit2, User2, Mail } from "lucide-react";
+import "./styles/embla.css"
 
 
 const swipeTransition: Transition = {
@@ -20,8 +21,6 @@ function App() {
   return (
     <div id="app-container">
       <header>
-        
-
         <nav className="mobile-nav" aria-label="Primary (icons)">
           <NavLink to="/" end className={navClass} aria-label="Home">
             <Home size={22} />
