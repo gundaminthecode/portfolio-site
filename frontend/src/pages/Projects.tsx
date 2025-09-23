@@ -1,16 +1,15 @@
 // Projects.tsx
 
-import { useEffect, useMemo, useState } from "react";
-import type { Repo } from "../components/Projects/ProjectCard";
+import { Outlet } from "react-router-dom";
+import { useGithubRepos } from "../hooks/useGithubRepos";
+// import type { Repo } from "../components/Projects/ProjectCard";
 import ProjectGrid from "../components/Projects/ProjectGrid";
 import ProjectFilters, {
-  type FiltersState,
+  // type FiltersState,
   DEFAULT_FILTERS,
   applyFiltersAndSort,
   uniqueLanguages,
 } from "../components/Projects/ProjectFilters";
-
-const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
 
 type Props = {
   username: string;
@@ -26,28 +25,15 @@ export default function Projects({
   includeArchived = false,
   sortBy = "updated",
 }: Props) {
-  const [repos, setRepos] = useState<Repo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState<FiltersState>(DEFAULT_FILTERS);
-  const [error, setError] = useState<string | null>(null);
+  const { repos, loading, error } = useGithubRepos({
+    username,
+    includeForks,
+    includeArchived,
+    sortBy,
+  });
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    const url = `${API_BASE}/api/repos?username=${encodeURIComponent(
-      username
-    )}&includeForks=${includeForks}&includeArchived=${includeArchived}&sortBy=${sortBy}`;
-
-    fetch(url)
-      .then((r) => (r.ok ? r.json() : Promise.reject(`${r.status} ${r.statusText}`)))
-      .then((data: Repo[]) => setRepos(data))
-      .catch((e) => setError(String(e)))
-      .finally(() => setLoading(false));
-  }, [username, includeForks, includeArchived, sortBy]);
-
-  const languages = useMemo(() => uniqueLanguages(repos), [repos]);
-  const filtered = useMemo(() => applyFiltersAndSort(repos, filters), [repos, filters]);
+  const languages = uniqueLanguages(repos);
+  const filtered = applyFiltersAndSort(repos, DEFAULT_FILTERS);
 
   if (loading) return <p>Loading…</p>;
   if (error) return <p style={{ color: "crimson" }}>Error: {error}</p>;
@@ -61,9 +47,9 @@ export default function Projects({
             <aside className="projects-filters">
               <ProjectFilters
                 languages={languages}
-                value={filters}
-                onChange={setFilters}
-                onReset={() => setFilters(DEFAULT_FILTERS)}
+                value={DEFAULT_FILTERS}
+                onChange={() => {}}
+                onReset={() => {}}
               />
             </aside>
           </aside>
@@ -90,9 +76,9 @@ export default function Projects({
                 <div className="filters-mobile__content">
                   <ProjectFilters
                     languages={languages}
-                    value={filters}
-                    onChange={setFilters}
-                    onReset={() => setFilters(DEFAULT_FILTERS)}
+                    value={DEFAULT_FILTERS}
+                    onChange={() => {}}
+                    onReset={() => {}}
                   />
                 </div>
               </details>
@@ -102,6 +88,7 @@ export default function Projects({
           </div>
         </section>
       </div>
-    </div>  
+      <Outlet context={{ repos }} />
+    </div>
   );
 }

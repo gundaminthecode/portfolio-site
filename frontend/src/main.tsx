@@ -6,6 +6,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import NotFound from "./pages/NotFound";
+import ProjectInfoPage from "./pages/ProjectInfoPage";
 import "./styles/index.css";
 
 import { CONFIG } from "./config";
@@ -19,7 +20,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         {/* App is the layout (header/footer), pages render inside it */}
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          <Route path="projects" element={<Projects username = {username}/>} />
+          <Route path="projects" element={<Projects username={username} />} />
+          <Route path="project/:id" element={<ProjectInfoPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
