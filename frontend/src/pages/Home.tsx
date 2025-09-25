@@ -26,7 +26,7 @@ export default function Home() {
                   includeForks={false}
                   includeArchived={false}
                   sortBy="updated"
-                  max={5} 
+                  max={4} 
                 />
               </div>
             </section>

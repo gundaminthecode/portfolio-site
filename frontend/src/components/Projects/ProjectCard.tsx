@@ -15,5 +15,6 @@ export type Repo = {
   owner?: {
     login?: string;
   };
+  default_branch?: string;
 };
 
