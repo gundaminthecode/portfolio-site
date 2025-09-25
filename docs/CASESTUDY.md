@@ -1,9 +1,9 @@
 ---
-title: "Portfolio Site v2"
+title: "Portfolio Site"
 summary: "React + Vite rewrite; faster + cleaner IA."
 stage: "build" # idea | discovery | build | polish | shipped | maintenance
 stack: ["React","Vite","TypeScript","Swiper"]
-started: 2025-08-01
+started: 2025-08-12
 links:
  live: https://nickmathiasen.dev
 # hero: docs/hero.png

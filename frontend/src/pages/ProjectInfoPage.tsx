@@ -3,6 +3,8 @@ import { Link, useOutletContext, useParams } from "react-router-dom";
 import { useGithubRepos } from "../hooks/useGithubRepos";
 import type { Repo } from "../components/Projects/ProjectCard";
 import LivePreview from "../components/Projects/LivePreview";
+import CaseStudy from "../components/Projects/CaseStudy";
+import { useCaseStudy } from "../hooks/useCaseStudy";
 
 type OutletCtx = { repos?: Repo[] };
 
@@ -22,6 +24,9 @@ export default function ProjectInfoPage() {
 
   const repos = outlet?.repos ?? fetchedRepos;
   const project = repos.find((r) => String(r.id) === id);
+
+  // Load case study from repo (CASESTUDY.md, etc.)
+  const { loading: csLoading, markdown, frontmatter } = useCaseStudy(project);
 
   if (loading && !outlet?.repos) return <p>Loading…</p>;
   if (error && !outlet?.repos) return <p style={{ color: "crimson" }}>Error: {error}</p>;
@@ -90,6 +95,16 @@ export default function ProjectInfoPage() {
                   )}
                 </ul>
 
+                {/* Case Study */}
+                  {csLoading ? (
+                    <p className="hud">Loading case study…</p>
+                  ) : (
+                    <CaseStudy
+                      markdown={markdown}
+                      title={frontmatter?.title ? `Case Study — ${frontmatter.title}` : "Case Study"}
+                      hero={frontmatter?.hero}
+                    />
+                  )}
                   {/* Live preview (only if allowed) */}
                   {liveHref && (
                     <div>
