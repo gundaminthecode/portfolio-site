@@ -19,33 +19,29 @@ function App() {
   return (
     <div id="app-container">
       <header>
-        <nav className="mobile-nav" aria-label="Primary (icons)">
-          <NavLink to="/" end className={navClass} aria-label="Home">
-            <Home size={22} />
-          </NavLink>
-          <NavLink to="/projects" className={navClass} aria-label="Projects">
-            <FolderGit2 size={22} />
-          </NavLink>
-          <a href="#/##about" className="mobile-nav__link" aria-label="About">
-            <User2 size={22} />
-          </a>
-          <a href="#/##contact" className="mobile-nav__link" aria-label="Contact">
-            <Mail size={22} />
-          </a>
-        </nav>
+        {/* Knockout overlay */}
+        <svg className="header-cutout" aria-hidden="true" focusable="false">
+          <defs>
+            <mask id="header-cutout-mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+              <rect x="0" y="0" width="100%" height="100%" fill="white" />
+              <text x="32" y="50%" dy=".35em" fill="black" className="header-cutout__text">NICK.DEV</text>
+            </mask>
+          </defs>
+          <rect x="0" y="0" width="100%" height="100%" fill="var(--header-colour)" mask="url(#header-cutout-mask)" />
+        </svg>
+
+        <div id="logo-container">
+          <a href="/" className="logo" aria-label="Home">NICK.DEV</a>
+        </div>
+        <div id="nav-container">
+          <nav id="navBar" aria-label="Primary">
+            <NavLink to="/" end className={navClass} aria-label="Home"><Home size={24} /></NavLink>
+            <NavLink to="/projects" className={navClass} aria-label="Projects"><FolderGit2 size={24} /></NavLink>
+            <a href="#/##about" className="navBar__link" aria-label="About"><User2 size={24} /></a>
+            <a href="#/##contact" className="navBar__link" aria-label="Contact"><Mail size={24} /></a>
+          </nav>
+        </div>
       </header>
-
-       {/* Right-side icon rail (desktop only via CSS) */}
-      <nav className="sidebar-nav" aria-label="Primary">
-        <NavLink to="/" end className={navClass} aria-label="Home"><Home size={24} /></NavLink>
-        <NavLink to="/projects" className={navClass} aria-label="Projects"><FolderGit2 size={24} /></NavLink>
-        <a href="#/##about" className="sidebar-nav__link" aria-label="About"><User2 size={24} /></a>
-        <a href="#/##contact" className="sidebar-nav__link" aria-label="Contact"><Mail size={24} /></a>
-      </nav>
-
-      <div className="hero-banner">
-        <h1 className="hero-text" data-text="NICK MATHIASEN">NICK MATHIASEN</h1>
-      </div>
 
       <div id="app-shell">
         {/* Page transition wrapper */}
@@ -65,7 +61,7 @@ function App() {
       </div>
     
       <footer>
-        <p>2025 Nick Mathiasen.</p>
+
       </footer>
     </div>
   );
