@@ -6,6 +6,22 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;  /* anchor content */
+  z-index: 1;          /* content above bg */
+}
+
+/* fixed, full-viewport background layer */
+#site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;  /* don’t block clicks */
+  overflow: visible;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #site-bg { display: none; }
 }
 
 /* put header + main above the bg */
@@ -44,8 +60,16 @@ header {
 .header-cutout__text {
   font-family: "Audiowide", sans-serif;
   font-weight: 400;
-  font-size: 15rem;     /* match your .logo size */
-  /* Align with header padding (x="32" ≈ 2rem at 16px root) */
+  font-size: 15rem;
+  letter-spacing: 0.06em; /* match .logo spacing */
+}
+
+/* Scale the logo text and mask together under 1900px */
+@media (max-width: 1900px) {
+  header .logo,
+  .header-cutout__text {
+    font-size: clamp(6rem, 9vw, 15rem);
+  }
 }
 
 #logo-container {
@@ -156,8 +180,10 @@ header .logo {
 }
 
 /* Stack columns for all sub-desktop widths */
-@media (max-width: 1200px) {
-  
+@media (max-width: 1900px) {
+  header{
+    flex-direction: column;
+  }
 }
 
 /* Desktop: hide mobile header icons, show right rail, pad content */

@@ -7,10 +7,10 @@
 
     /* BrokenShapes Colours */
     --bs-col-stroke: var(--bg);
-    --bs-col-1: var(--bg);
-    --bs-col-2: #fbc726;
-    --bs-col-3: #ff2804;
-    --bs-col-4: #bab7ba;
+    --bs-col-1: hsla(220, 75%, 60%, 0.3);
+    --bs-col-2: hsl(270 70% 60% / 0.3);
+    --bs-col-3: hsl(200 80% 55% / 0.3);
+    --bs-col-4: hsl(190 75% 50% / 0.3);
 }
 
 body {

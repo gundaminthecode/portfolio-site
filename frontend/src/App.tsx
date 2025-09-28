@@ -4,6 +4,7 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { Home, FolderGit2, User2, Mail } from "lucide-react";
+import BrokenShapeEl from "./components/Background/BrokenShape";
 
 const swipeTransition: Transition = {
   duration: 0.35,
@@ -18,6 +19,17 @@ function App() {
 
   return (
     <div id="app-container">
+      {/* Site-wide animated background */}
+      <div id="site-bg" aria-hidden="true">
+        <BrokenShapeEl
+          cols={18}
+          rows={18}
+          amp={24}
+          speed={0.9}
+          colors="var(--bs-col-1) var(--bs-col-2) var(--bs-col-3) var(--bs-col-4)"
+        />
+      </div>
+
       <header>
         {/* Knockout overlay */}
         <svg className="header-cutout" aria-hidden="true" focusable="false">

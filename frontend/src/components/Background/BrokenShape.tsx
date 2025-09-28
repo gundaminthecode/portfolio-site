@@ -50,19 +50,20 @@ private cfg: Cfg = {
     display:block;
     inline-size:100%;
     block-size:100%;
-    contain: layout size;   /* was: contain: layout paint size */
-    overflow: visible;      /* allow drawing outside host box */
+    contain: layout size;
+    overflow: visible;
+    pointer-events: none;        /* never intercept clicks */
   }
   svg{
     inline-size:100%;
     block-size:100%;
     display:block;
-    overflow: visible;      /* disable SVG viewport clipping */
+    overflow: visible;
   }
   .shard{
     vector-effect: non-scaling-stroke;
     mix-blend-mode: var(--blend, normal);
-    stroke: var(--bs-col-stroke);
+    stroke: var(--bs-col-stroke);   /* fixed var name */
     stroke-width: var(--stroke-width, 1.2);
   }
     `;
