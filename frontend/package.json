@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "framer-motion": "^12.23.12",
+    "front-matter": "^4.0.2",
     "gray-matter": "^4.0.3",
     "keen-slider": "^6.8.6",
     "lucide-react": "^0.542.0",
