@@ -1,8 +1,9 @@
 // src/pages/Home.tsx
 import GithubProjects from "../components/Projects/GithubProjects";
-
+import "../styles/Home.css";
 
 import { CONFIG } from "../config";
+import DiagonalArrowBackground from "../components/Background/DiagonalBackgroundArrow";
 
 const username = CONFIG.GITHUB_USERNAME;
 
@@ -10,39 +11,40 @@ export default function Home() {
 
   return (
     <>
-      <div id="upper-content">
-        <div id="app-sidebar" className="app-divs">
-          <p>Welcome to my portfolio site! Explore my projects and learn more about me.</p>
-        </div>
-        <div id="app-main-content" className="app-divs">
-          <section id="projects" className="vh-section">
-            <div className="content">
-              <GithubProjects
-                username={username}
-                includeForks={false}
-                includeArchived={false}
-                sortBy="updated"
-                max={4}
-              />
-            </div>
-          </section>
-          <section id="about">
-            <div>
-              <div>About Me</div>
-              <p>This is a brief introduction about myself.</p>
-            </div>
-          </section>
+    <div id="content-stack">
+      <div className="content-slice" id="headshot-slice">
+        <div id="headshot-circle">
+          HI
         </div>
       </div>
-      <div id="lower-content">
-        <div className="app-divs">
-          <div>Contact</div>
-          <p>
-            You can reach me via email at{" "}
-            <a href="mailto:nmath2211@outlook.com">nmath2211@outlook.com</a>
-          </p>
+      <div className="content-slice" id="intro-slice">
+        <DiagonalArrowBackground route="BR_TL" zIndex={-1} />
+        <div className="slice-content">
+          <div id="intro-text" className="align-center-col">
+            <h1>Hi, I'm Nick</h1>
+            <p>I'm an emerging developer specializing in web applications and interactive experiences. Welcome to my portfolio site!</p>
+          </div>
         </div>
       </div>
+      <div className="content-slice" id="projects-slice">
+        <DiagonalArrowBackground route="BR_TL" zIndex={-1} />
+        <div className="slice-content">
+          <div id="project-previews">
+            <GithubProjects
+              username={username}
+              includeForks={false}
+              includeArchived={false}
+              sortBy="updated"
+              max={5}
+            />
+          </div>
+          <div id="this-project">
+            <h2>Want to learn more about this project?</h2>
+          </div>
+        </div>
+        
+      </div>
+    </div>
     </>
   );
 }

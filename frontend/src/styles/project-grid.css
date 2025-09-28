@@ -2,6 +2,8 @@
   Project Grid Styles
   =========================== */
 
+@import "../styles/index.css";
+
 /* Main grid layout for projects page */
 .projects-layout {
   
@@ -72,7 +74,11 @@
 
 /* Individual project card styling */
 .project-card {
-  
+  background-color: var(--header-colour);
+  width: 400px;
+  height: 400px;
+  padding: 2rem;
+  margin: 1rem;
 }
 
 /* Project card title */

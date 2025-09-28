@@ -1,7 +1,7 @@
 // GithubProjects.tsx
 
 import { useMemo } from "react";
-import SwiperCarousel from '../Carousel/SwiperCarousel.tsx'
+import KeenCarousel from '../Carousel/KeenCarousel.tsx'
 import { useGithubRepos } from "../../hooks/useGithubRepos";
 
 type Props = {
@@ -31,9 +31,7 @@ export default function GithubProjects(props: Props) {
 
   return (
     <div id="projects" className="projects-carousel-wrapper">
-      <h2>My Projects</h2>
-      <p>Public GitHub repositories for @{props.username}</p>
-      <SwiperCarousel repos={filtered} />
+      <KeenCarousel repos={filtered} />
     </div>
   );
 }

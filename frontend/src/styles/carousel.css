@@ -1,13 +1,56 @@
-@import 'swiper/css';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
+@import 'keen-slider/keen-slider.min.css';
 
-.project-slide { 
-  display: flex;
-  /* Let the content define width (clamped for responsiveness) */
-  width: clamp(260px, 28vw, 360px);
+body {
   margin: 0;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-.project-slide > * { width: 100%; }
-.project-slide .project-card { margin: 0; max-width: none; }
 
+/* Control max size in one place */
+:root {
+  --carousel-max-width: 500px;   /* cap width */
+  --carousel-height: 20vh;      /* face height */
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: var(--carousel-max-width);
+  height: var(--carousel-height);
+  margin: 0 auto;                /* center within its column */
+  perspective: 1000px;
+}
+
+/* The rotating ring (plugin sets inline transform) */
+.scene .carousel.keen-slider {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-style: preserve-3d;
+}
+
+/* Faces on the ring — make them fill the scene */
+.carousel.keen-slider > .keen-slider__slide.carousel__cell {
+  position: absolute;
+  top: 0;
+  left: 0;                       /* no 50% + negative margin tricks */
+  width: 100%;
+  height: 60%;
+  backface-visibility: hidden;
+  display: flex;                 /* optional: center card content */
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+/* Optional: card styling inside each face */
+.carousel-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  overflow: hidden;
+}

@@ -1,7 +1,9 @@
 :root {
     --header-colour: #001974;
 
-    --bg: #fff;
+    --bg: #dedede;
+
+    --r4-yellow: #fbc726;
 
     /* BrokenShapes Colours */
     --bs-col-stroke: var(--bg);
@@ -14,4 +16,12 @@
 body {
     margin: 0;
     background-color: var(--bg);
+}
+
+.align-center-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

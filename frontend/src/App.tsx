@@ -61,7 +61,7 @@ function App() {
       </div>
     
       <footer>
-
+        <p>Made by Nick - <a href="https://github.com/gundaminthecode">GitHub</a></p>
       </footer>
     </div>
   );
