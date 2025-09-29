@@ -1,3 +1,27 @@
+:root {
+  --fs-body: clamp(14px, 1.6vw, 17px);
+  --card-w: clamp(300px, 90vw, 600px);
+  --yellow: #ffc800;
+}
+
+/* The yellow projects column/section */
+.projects-section {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  background: var(--yellow);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+/* Cards should be fluid */
+.projects-section .card {
+  width: 100%;
+  max-width: var(--card-w);
+  height: auto;
+  margin-inline: auto;
+}
+
 #projects-hero-slice, #projects-grid-slice {
     background: var(--r4-yellow);
 }

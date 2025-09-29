@@ -31,7 +31,23 @@
     /* Base spacing and font sizing */
     --app-pad: 2rem;
     --fs-body: 16px;
+
+  /* Container */
+  --max-w: 80rem; /* ~1280px */
+
+  /* Fluid spacing scale */
+  --space-1: clamp(4px, 0.5vw, 8px);
+  --space-2: clamp(8px, 0.8vw, 12px);
+  --space-3: clamp(12px, 1.1vw, 16px);
+  --space-4: clamp(16px, 1.6vw, 24px);
+  --space-5: clamp(24px, 2.4vw, 36px);
+  --space-6: clamp(32px, 3.2vw, 48px);
+
+  /* Radius */
+  --radius-1: 8px;
+  --radius-2: 12px;
 }
+
 /* ====== Extra Small (portrait phones, <360px) ====== */
 @media (max-width: 359px) {
   :root {
@@ -172,6 +188,7 @@ main {
 }
 
 body {
+    width: 100%;
     margin: 0;
     background-color: var(--bg);
 
@@ -185,4 +202,47 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+/* Base + reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  line-height: 1.6;
+  font-size: clamp(16px, 1.1vw + 0.2rem, 18px);
+}
+img, picture, video, canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Layout helpers */
+.container { width: min(100% - 2rem, var(--max-w)); margin-inline: auto; }
+.section { padding-block: var(--space-6); }
+.grid { display: grid; gap: var(--space-4); }
+.grid.auto-fit { grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); }
+
+/* Fluid typography */
+h1 { font-size: clamp(2.25rem, 4.5vw, 3.5rem); line-height: 1.2; margin: 0 0 var(--space-4); }
+h2 { font-size: clamp(1.75rem, 3.2vw, 2.5rem);  line-height: 1.3; margin: 0 0 var(--space-3); }
+h3 { font-size: clamp(1.25rem, 2.2vw, 1.5rem);  line-height: 1.35; margin: 0 0 var(--space-2); }
+
+/* Prevent horizontal overflow and ensure full-width base */
+html, body { width: 100%; margin: 0; overflow-x: hidden; }
+
+/* Generic content wrapper for mobile-first centering */
+.content-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(12px, 4vw, 28px);
+}
+
+#app, #app-shell, main { width: 100%; }
+
+/* Motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }

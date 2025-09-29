@@ -144,12 +144,15 @@
 /* ===== Project Grid & Cards ===== */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(3, var(--card-w));
-  grid-auto-rows: var(--card-h);
-  gap: 1.25rem;
-  justify-content: center;
-  align-content: start;
-  padding: 1rem 0;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .project-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: var(--space-4, 16px);
+  }
 }
 
 /* 1 column below 1900px */
@@ -267,3 +270,20 @@
   display: grid;
   gap: .75rem;
 }
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-2);
+}
+
+.project-card img, .project-card picture {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-1);
+}
+
+.project-card .meta { margin-top: auto; }

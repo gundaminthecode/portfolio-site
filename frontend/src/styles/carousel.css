@@ -109,3 +109,29 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .project-slide.project-slide--carousel:hover { animation: none; }
 }
+
+.carousel { --slide-h: clamp(220px, 50vh, 520px); }
+.carousel__viewport { overflow: hidden; }
+.carousel__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: var(--space-3);
+  align-items: center;
+}
+.carousel__slide { position: relative; }
+.carousel__slide img, .carousel__slide picture {
+  width: 100%;
+  height: var(--slide-h);
+  object-fit: cover;
+}
+.carousel__nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+.carousel__button {
+  inline-size: clamp(36px, 4vw, 48px);
+  block-size: clamp(36px, 4vw, 48px);
+}
