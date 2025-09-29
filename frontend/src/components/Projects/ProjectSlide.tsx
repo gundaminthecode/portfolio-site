@@ -1,40 +1,85 @@
 // ProjectSlide.tsx
 
 import type { Repo } from "./ProjectCard";
+import { Link } from "react-router-dom";
+
 import "../../styles/project-grid.css";
-import { Link } from "react-router-dom"
 
+type Props = {
+  repo: Repo;
+  variant?: "carousel" | "grid";
+  className?: string;
+};
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString();
-}
-
-export default function ProjectSlide({ repo }: { repo: Repo }) {
+export default function ProjectSlide({
+  repo,
+  variant = "carousel",
+  className,
+}: Props) {
   const live = (repo.live_url ?? repo.homepage ?? "").trim() || undefined;
+  const updated =
+    repo.updated_at?.length === 0
+      ? ""
+      : new Date(repo.updated_at).toLocaleDateString();
+
   return (
-    <div className="project-card" role="group" aria-label={repo.name}>
-      <h3 style={{ margin: 0 }}>{repo.name}</h3>
-      {repo.description && <p style={{ margin: 0 }}>{repo.description}</p>}
-      <ul className="project-meta">
-        {repo.language && <li>{repo.language}</li>}
-        <li>★ {repo.stargazers_count}</li>
-        <li>⑂ {repo.forks_count}</li>
-      </ul>
-      <ul className="project-meta">
-        <li>Updated: {formatDate(repo.updated_at)}</li>
-        {repo.archived && <li>Archived</li>}
-        {repo.fork && <li>Forked</li>}
-      </ul>
-      <div className="project-links"> 
-        <Link to={`/project/${repo.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+    <article
+      className={`project-slide project-slide--${variant} ${className ?? ""}`.trim()}
+      role="group"
+      aria-label={repo.name}
+    >
+      <header className="project-slide__header">
+        <h3 className="project-slide__title" style={{ margin: 0 }}>
+          {repo.name}
+        </h3>
+      </header>
+      
+      {repo.language && (
+        <span className="project-slide__lang">{repo.language}</span>
+      )}
+      
+      {repo.description && (
+        <p className="project-slide__desc" style={{ margin: 0 }}>
+          {repo.description}
+        </p>
+      )}
+
+      <div className="project-slide__meta">
+        <span title="Stars">★ {repo.stargazers_count}</span>
+        <span title="Forks">⑂ {repo.forks_count}</span>
+        {updated && (
+          <span title="Last updated" style={{ marginLeft: "auto" }}>
+            ⏱ {updated}
+          </span>
+        )}
+      </div>
+
+      <footer className="project-slide__actions">
+        <Link
+          to={`/project/${repo.id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <h3 style={{ margin: 0 }}>View Project</h3>
         </Link>
-      </div>
-      
-      <div className="project-links ">
-        <a href={repo.html_url} target="_blank" rel="noopener noreferrer" id="repo-button">View Repository</a>
-        {live && <a href={live} target="_blank" rel="noopener noreferrer" id="site-button">Live Site</a>}
-      </div>
-    </div>
+        <a
+          href={repo.html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          id="repo-button"
+        >
+          View Repository
+        </a>
+        {live && (
+          <a
+            href={live}
+            target="_blank"
+            rel="noopener noreferrer"
+            id="site-button"
+          >
+            Live Site
+          </a>
+        )}
+      </footer>
+    </article>
   );
 }

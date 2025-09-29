@@ -1,0 +1,23 @@
+#projects-hero-slice, #projects-grid-slice {
+    background: var(--r4-yellow);
+}
+
+#projects-hero-slice { 
+    --slice-skew: 2deg; 
+    background: var(--r4-yellow); 
+    height: 15vh;
+    margin-top: 5vh;
+}
+
+#projects-grid-slice { 
+    --slice-skew: 2deg; 
+    background: var(--r4-yellow); 
+}
+
+#projects-grid-slice .slice-content {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    width: 80%;
+    margin: 0 auto;
+}

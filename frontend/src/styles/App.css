@@ -133,23 +133,38 @@ header .logo {
 #navBar .sidebar-nav__link:hover,
 #navBar .navBar__link:hover {
   background: var(--hex-bg-hover, hsl(223 50% 18%));
-  transform: scale(var(--hex-scale)) translateY(calc(var(--hex-offset) - 1px)); /* updated */
+  /* was: static transform; now a gentle bob */
+  animation: hex-bob 1.4s ease-in-out infinite;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
 }
 
-/* Active state unchanged */
-#navBar .sidebar-nav__link.is-active,
-#navBar .navBar__link.is-active {
-  background: var(--hex-bg-active, hsl(200 90% 45%));
-  color: #fff;
-  --hex-scale: 1.2;  /* make the active hex larger */
-  z-index: 1;        /* ensure it sits above neighbors when scaled */
+/* spin/wobble the icon while hovering */
+#navBar .sidebar-nav__link:hover svg,
+#navBar .navBar__link:hover svg {
+  animation: icon-wobble 0.9s ease-in-out infinite;
 }
 
-/* Make the Lucide icons scale nicely within the hex */
+/* ensure spin pivots at the center */
 #navBar svg {
   width: 56%;
   height: 56%;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* keyframes */
+@keyframes hex-bob {
+  0%, 100% {
+    transform: scale(var(--hex-scale)) translateY(calc(var(--hex-offset) - 1px));
+  }
+  50% {
+    transform: scale(var(--hex-scale)) translateY(calc(var(--hex-offset) - 6px));
+  }
+}
+@keyframes icon-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25%     { transform: rotate(6deg); }
+  75%     { transform: rotate(-6deg); }
 }
 
 /* Focus style */
@@ -161,17 +176,28 @@ header .logo {
 
 /* ===== Content Stack (desktop) ===== */
 
+/* Generic slice layout (used by all pages) */
 #content-stack {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 2rem;
 }
 
 .content-slice {
-  width: 100%;
-  margin: 0 auto 2rem;
-  box-sizing: border-box;
-  transform: skewY(2deg);
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  --slice-skew: 0deg;                 /* default */
+  transform: skewY(var(--slice-skew));
+  transform-origin: top left;
+}
+
+/* Cancel the skew for real content */
+.slice-content {
+  position: relative;
+  z-index: 1;
+  transform: skewY(calc(-1 * var(--slice-skew)));
+  transform-origin: top left;
 }
 
 /* Phone-specific polish (optional) */

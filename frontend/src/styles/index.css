@@ -7,15 +7,176 @@
 
     /* BrokenShapes Colours */
     --bs-col-stroke: var(--bg);
-    --bs-col-1: hsla(220, 75%, 60%, 0.3);
+    /* --bs-col-1: hsla(220, 75%, 60%, 0.3);
     --bs-col-2: hsl(270 70% 60% / 0.3);
     --bs-col-3: hsl(200 80% 55% / 0.3);
-    --bs-col-4: hsl(190 75% 50% / 0.3);
+    --bs-col-4: hsl(190 75% 50% / 0.3); */
+
+    --bs-col-1: hsla(0, 0%, 27%, 0.397);
+    --bs-col-2: hsla(0, 0%, 47%, 0.404);
+    --bs-col-3: hsla(0, 0%, 78%, 0.459);
+    --bs-col-4: hsla(0, 0%, 87%, 0.473);
+
+    /* fixed slide/card size */
+    --card-w: 600px;
+    --card-h: 450px;
+
+    /* Nav hex button */
+    --hex-size: 72px;
+
+    /* Project card/slide size (used by grid & carousels) */
+    --card-w: 300px;
+    --card-h: 200px;
+
+    /* Base spacing and font sizing */
+    --app-pad: 2rem;
+    --fs-body: 16px;
+}
+/* ====== Extra Small (portrait phones, <360px) ====== */
+@media (max-width: 359px) {
+  :root {
+    --hex-size: 36px;
+    --card-w: 240px;
+    --card-h: 160px;
+    --app-pad: 0.75rem;
+    --fs-body: 14px;
+  }
+}
+
+/* ====== Small (phones, 360–479px) ====== */
+@media (min-width: 360px) and (max-width: 479px) {
+  :root {
+    --hex-size: 40px;
+    --card-w: 260px;
+    --card-h: 170px;
+    --app-pad: 1rem;
+    --fs-body: 15px;
+  }
+}
+
+/* ====== Medium (large phones / phablets, 480–599px) ====== */
+@media (min-width: 480px) and (max-width: 599px) {
+  :root {
+    --hex-size: 48px;
+    --card-w: 280px;
+    --card-h: 180px;
+    --app-pad: 1rem;
+    --fs-body: 15px;
+  }
+}
+
+/* ====== Large (small tablets, 600–767px) ====== */
+@media (min-width: 600px) and (max-width: 767px) {
+  :root {
+    --hex-size: 52px;
+    --card-w: 290px;
+    --card-h: 185px;
+    --app-pad: 1.1rem;
+    --fs-body: 15px;
+  }
+}
+
+/* ====== Tablet / Small Laptop (768–1023px) ====== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --hex-size: 56px;
+    --card-w: 300px;
+    --card-h: 190px;
+    --app-pad: 1.25rem;
+    --fs-body: 16px;
+  }
+}
+
+/* ====== Medium Laptop (1024–1279px) ====== */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  :root {
+    --hex-size: 64px;
+    --card-w: 320px;
+    --card-h: 200px;
+    --app-pad: 1.5rem;
+    --fs-body: 16px;
+  }
+}
+
+/* ====== Large Laptop (1280–1439px) ====== */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  :root {
+    --hex-size: 72px;
+    --card-w: 340px;
+    --card-h: 220px;
+    --app-pad: 1.75rem;
+    --fs-body: 16px;
+  }
+}
+
+/* ====== Desktop (1440–1599px) ====== */
+@media (min-width: 1440px) and (max-width: 1599px) {
+  :root {
+    --hex-size: 80px;
+    --card-w: 380px;
+    --card-h: 250px;
+    --app-pad: 2rem;
+    --fs-body: 17px;
+  }
+}
+
+/* ====== Large Desktop (1600–1899px) ====== */
+@media (min-width: 1600px) and (max-width: 1899px) {
+  :root {
+    --hex-size: 88px;
+    --card-w: 420px;
+    --card-h: 300px;
+    --app-pad: 2.1rem;
+    --fs-body: 17px;
+  }
+}
+
+/* ====== UHD (1900–2559px) ====== */
+@media (min-width: 1900px) and (max-width: 2559px) {
+  :root {
+    --hex-size: 96px;
+    --card-w: 600px;
+    --card-h: 450px;
+    --app-pad: 2.25rem;
+    --fs-body: 17px;
+  }
+}
+
+/* ====== 4K+ (2560–3839px) ====== */
+@media (min-width: 2560px) and (max-width: 3839px) {
+  :root {
+    --hex-size: 120px;
+    --card-w: 720px;
+    --card-h: 520px;
+    --app-pad: 2.5rem;
+    --fs-body: 18px;
+  }
+}
+
+/* ====== 5K+ (3840px and up) ====== */
+@media (min-width: 3840px) {
+  :root {
+    --hex-size: 144px;
+    --card-w: 880px;
+    --card-h: 640px;
+    --app-pad: 3rem;
+    --fs-body: 19px;
+  }
+}
+
+main {
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--app-pad);
+  box-sizing: border-box;
 }
 
 body {
     margin: 0;
     background-color: var(--bg);
+
+  /* keep text readable across breakpoints */
+  font-size: var(--fs-body);
 }
 
 .align-center-col {

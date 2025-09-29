@@ -12,9 +12,9 @@ export default function SwiperCarousel({ repos }: Props) {
   return (
     <Swiper
       direction="vertical"
-      slidesPerView={1.2}             // a bit of the next/prev visible
+      slidesPerView="auto"         // respect fixed slide width/height
       spaceBetween={18}
-      centeredSlides
+      centeredSlides={false}
       loop
       // loopedSlides={repos.length}
       loopAdditionalSlides={2}
@@ -53,8 +53,8 @@ export default function SwiperCarousel({ repos }: Props) {
       className="rolodexSwiper"
     >
       {repos.map((repo) => (
-        <SwiperSlide key={repo.id} className="project-slide">
-          <ProjectSlide repo={repo} />
+        <SwiperSlide key={(repo as any).id ?? repo.name}>
+          <ProjectSlide repo={repo} variant="carousel" />
         </SwiperSlide>
       ))}
     </Swiper>

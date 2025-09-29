@@ -39,7 +39,7 @@ function App() {
               <text x="32" y="50%" dy=".35em" fill="black" className="header-cutout__text">NICK.DEV</text>
             </mask>
           </defs>
-          <rect x="0" y="0" width="100%" height="100%" fill="var(--header-colour)" mask="url(#header-cutout-mask)" />
+          <rect x="0" y="0" width="100%" height="100%" fill="color-mix(in oklab, var(--header-colour) 85%, transparent)" mask="url(#header-cutout-mask)" />
         </svg>
 
         <div id="logo-container">

@@ -1,5 +1,45 @@
 @import 'keen-slider/keen-slider.min.css';
 
+/* Center whatever you render inside each slide */
+.swiper-slide,
+.keen-slider__slide {
+  display: grid;
+  place-items: center;
+}
+
+/* FIX: force slide wrappers to fixed size */
+.swiper:not(.swiper-vertical) .swiper-slide {
+  width: var(--card-w) !important;
+  height: auto !important;
+}
+.swiper.swiper-vertical .swiper-slide {
+  height: var(--card-h) !important;
+  width: auto !important;
+}
+.keen-slider__slide {
+  width: var(--card-w) !important;
+  height: var(--card-h) !important;
+}
+
+/* Make the card itself fixed-size (overrides any previous 100% rules) */
+.project-slide.project-slide--carousel {
+  width: var(--card-w) !important;
+  height: var(--card-h) !important;
+  box-sizing: border-box;
+  border-radius: 12px;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--header-colour) 85%, transparent);
+  padding: 3rem;
+  color: #fff;
+  font-size: 1.5rem;
+  border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
+}
+
+/* Ensure the slide content fills its slide */
+.project-slide.project-slide--carousel { width: 100%; height: 100%; }
+
+/* If you previously clamped widths, remove/override those rules */
+
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
@@ -53,4 +93,19 @@ body {
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0,0,0,.18);
   overflow: hidden;
+}
+
+/* Defaults so the shared keyframes apply cleanly */
+.project-slide.project-slide--carousel {
+  --hex-scale: 1;
+  --hex-offset: 0px;
+}
+
+/* Hover bob inside carousels too */
+.project-slide.project-slide--carousel:hover {
+  animation: hex-bob 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-slide.project-slide--carousel:hover { animation: none; }
 }

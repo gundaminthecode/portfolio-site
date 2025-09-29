@@ -3,7 +3,7 @@ import GithubProjects from "../components/Projects/GithubProjects";
 import "../styles/Home.css";
 
 import { CONFIG } from "../config";
-import DiagonalArrowBackground from "../components/Background/DiagonalBackgroundArrow";
+import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 
 const username = CONFIG.GITHUB_USERNAME;
 
@@ -18,7 +18,7 @@ export default function Home() {
         </div>
       </div>
       <div className="content-slice" id="intro-slice">
-        <DiagonalArrowBackground route="BR_TL" zIndex={-1} />
+        <DiagonalHexBackground route="BR_TL" zIndex={-1} />
         <div className="slice-content">
           <div id="intro-text" className="align-center-col">
             <h1>Hi, I'm Nick</h1>
@@ -27,7 +27,7 @@ export default function Home() {
         </div>
       </div>
       <div className="content-slice" id="projects-slice">
-        <DiagonalArrowBackground route="BR_TL" zIndex={-1} />
+        <DiagonalHexBackground route="BR_TL" zIndex={-1} />
         <div className="slice-content">
           <div id="project-previews">
             <GithubProjects
