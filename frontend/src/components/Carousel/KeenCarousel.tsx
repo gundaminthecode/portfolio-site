@@ -13,27 +13,38 @@ const carousel: KeenSliderPlugin = (slider) => {
   let z = 300
 
   const layout = () => {
-    const n = slider.slides.length || 1
+    const n = Math.max(slider.slides.length, 1)
+    const container = slider.container as HTMLElement
+    const scene = container.parentElement as HTMLElement
+
+    // Measure actual face height so CSS media queries and JS stay in sync
     const first = slider.slides[0] as HTMLElement | undefined
-    if (first && n > 1) {
-      const h = first.clientHeight || 200 // use slide height for vertical ring
-      z = Math.round((h / 2) / Math.tan(Math.PI / n))
+    const faceH =
+      (first && first.clientHeight) ||
+      (scene?.clientHeight || container.clientHeight || 200) * 0.6
+
+    if (n > 1) {
+      z = Math.round((faceH / 2) / Math.tan(Math.PI / n))
     }
 
     const step = 360 / n
     slider.slides.forEach((el, idx) => {
       const node = el as HTMLElement
-      node.style.transform = `rotateX(${step * idx}deg) translateZ(${z}px)`  // rotate around X
+      node.style.transform = `translate(-50%, -50%) rotateX(${step * idx}deg) translateZ(${z}px)`
       node.style.transformOrigin = "50% 50%"
       node.style.backfaceVisibility = "hidden"
+      node.style.position = "absolute"
+      node.style.top = "50%"
+      node.style.left = "50%"
     })
     rotate()
   }
 
   const rotate = () => {
     const deg = 360 * slider.track.details.progress
-    slider.container.style.transform = `translateZ(-${z}px) rotateX(${deg}deg)` // was rotateX(${-deg}deg)
-    slider.container.style.transformStyle = "preserve-3d"
+    const container = slider.container as HTMLElement
+    container.style.transform = `translateZ(-${z}px) rotateX(${deg}deg)`
+    container.style.transformStyle = "preserve-3d"
   }
 
   slider.on("created", layout)

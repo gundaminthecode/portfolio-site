@@ -209,6 +209,28 @@ small, .hud { font-size: var(--fs-300); opacity: .9; }
   }
 }
 
+/* Compact type on small screens */
+@media (max-width: 600px) {
+  :root {
+    --fs-300: clamp(0.76rem, 0.25vw + 0.68rem, 0.9rem);
+    --fs-400: clamp(0.88rem, 0.35vw + 0.78rem, 1.0rem);
+    --fs-500: clamp(0.98rem, 0.5vw + 0.84rem, 1.12rem);
+    --fs-600: clamp(1.08rem, 0.8vw + 0.9rem, 1.28rem);
+    --fs-700: clamp(1.28rem, 1.2vw + 1.0rem, 1.58rem);
+    --fs-800: clamp(1.58rem, 1.8vw + 1.05rem, 2.0rem);
+    --fs-900: clamp(1.9rem, 2.6vw + 1.0rem, 2.5rem);
+  }
+  body { line-height: 1.55; }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --fs-400: clamp(0.84rem, 1vw + 0.6rem, 0.95rem);
+    --fs-700: clamp(1.2rem, 2vw + 0.8rem, 1.45rem);
+    --fs-900: clamp(1.7rem, 3vw + 0.8rem, 2.2rem);
+  }
+}
+
 main {
   width: 100%;
   margin: 0 auto;

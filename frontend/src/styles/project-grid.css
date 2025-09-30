@@ -22,7 +22,7 @@
   box-shadow: 0 6px 18px rgba(0,0,0,.12);
   backdrop-filter: blur(3px);
   width: 100%;
-  max-width: 320px;
+  max-width: 380px;       /* or remove this line for fully flexible width */
   box-sizing: border-box;
 }
 
@@ -84,14 +84,28 @@
 }
 .filters__reset:hover { transform: translateY(-2px); }
 
-/* Fluid card sizing */
-:root {
-  /* Card height scales with viewport; tune to your content */
-  --card-h: clamp(220px, 24vw, 360px);
-  --card-pad: clamp(0.75rem, 0.6vw + 0.4rem, 1rem);
+/* Fluid card sizing (scoped to grid only) */
+.projects-grid {
+  --card-h: clamp(180px, 20vw, 340px);          /* down from 220/24vw/360 */
+  --card-pad: clamp(0.6rem, 0.5vw + 0.35rem, 0.9rem);
 }
 
-/* Cards inside the grid: size + internal type */
+/* Extra reduction on very small screens */
+@media (max-width: 600px) {
+  .projects-grid {
+    --card-h: clamp(150px, 26vw, 260px);
+    --card-pad: clamp(0.5rem, 1vw, 0.75rem);
+  }
+}
+
+@media (max-width: 380px) {
+  .projects-grid {
+    --card-h: clamp(135px, 28vw, 220px);
+    --card-pad: 0.5rem;
+  }
+}
+
+/* Cards inside the grid use the scoped vars */
 .projects-grid .project-slide,
 .projects-grid .project-slide.project-slide--grid {
   width: 100% !important;             /* grid tracks control width */
@@ -104,7 +118,7 @@
   border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
 }
 
-/* Card typography scales with global variables */
+/* Ensure internal text respects compact scale */
 .project-slide__title { font-size: var(--fs-700); line-height: 1.15; }
 .project-slide__desc  { font-size: var(--fs-400); line-height: 1.4; }
 .project-slide__meta,
