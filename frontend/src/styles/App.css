@@ -2,6 +2,8 @@
   App.css - Main Stylesheet
   =========================== */
 
+@import "./scroll-reveal.css";
+
 .App { min-height: 100dvh; display: flex; flex-direction: column; }
 .App > main {
   flex: 1 1 auto;

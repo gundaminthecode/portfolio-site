@@ -10,6 +10,7 @@ import ProjectFilters, {
 import { useState } from "react";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 import "../styles/projects.css";
+import useScrollReveal from "../hooks/useScrollReveal";
 
 type Props = {
   username: string;
@@ -19,12 +20,16 @@ type Props = {
   sortBy?: "updated" | "stars";
 };
 
-export default function Projects({
-  username,
-  includeForks = false,
-  includeArchived = false,
-  sortBy = "updated",
-}: Props) {
+export default function Projects(props: Props) {
+  useScrollReveal(); // activates reveal on .content-slice .slice-content
+
+  const {
+    username,
+    includeForks = false,
+    includeArchived = false,
+    sortBy = "updated",
+  } = props;
+
   const { repos, loading, error } = useGithubRepos({
     username,
     includeForks,

@@ -1,0 +1,44 @@
+:root { --reveal-distance: 48px; }
+
+@media (max-width: 600px) {
+  :root { --reveal-distance: 24px; }
+}
+
+/* Apply to the inner content so skew transforms remain intact */
+.content-slice .slice-content.reveal-init {
+  opacity: 0;
+  /* use independent transform so we don’t override your skew */
+  translate: 0 var(--reveal-offset, 0);
+  transition:
+    translate 420ms cubic-bezier(.22,.61,.36,1),
+    opacity 420ms cubic-bezier(.22,.61,.36,1);
+  will-change: translate, opacity;
+}
+
+.content-slice .slice-content.reveal-init.is-revealed {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Entry direction */
+.content-slice .slice-content.from-bottom { --reveal-offset: var(--reveal-distance); }
+.content-slice .slice-content.from-top    { --reveal-offset: calc(-1 * var(--reveal-distance)); }
+
+/* Exit direction */
+.content-slice .slice-content.leaving-top {
+  opacity: 0;
+  --reveal-offset: calc(-1 * var(--reveal-distance));
+}
+.content-slice .slice-content.leaving-bottom {
+  opacity: 0;
+  --reveal-offset: var(--reveal-distance);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .content-slice .slice-content.reveal-init {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}

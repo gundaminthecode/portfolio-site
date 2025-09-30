@@ -4,10 +4,13 @@ import "../styles/Home.css";
 
 import { CONFIG } from "../config";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
+import useScrollReveal from "../hooks/useScrollReveal";
 
 const username = CONFIG.GITHUB_USERNAME;
 
 export default function Home() {
+  useScrollReveal();
+  
 
   return (
     <>

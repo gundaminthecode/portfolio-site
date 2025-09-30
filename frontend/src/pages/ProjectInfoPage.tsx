@@ -5,6 +5,7 @@ import type { Repo } from "../components/Projects/ProjectCard";
 import LivePreview from "../components/Projects/LivePreview";
 import CaseStudy from "../components/Projects/CaseStudy";
 import { useCaseStudy } from "../hooks/useCaseStudy";
+import useScrollReveal from "../hooks/useScrollReveal";
 import "../styles/project-info.css";
 
 type OutletCtx = { repos?: Repo[] };
@@ -16,6 +17,7 @@ function formatK(n: number | undefined) {
 }
 
 export default function ProjectInfoPage() {
+  useScrollReveal();
   const { id } = useParams<{ id: string }>();
 
   // Prefer repos from the Projects page via <Outlet context={{ repos }} />
