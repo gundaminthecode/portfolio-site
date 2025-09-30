@@ -24,8 +24,8 @@ function App() {
         <BrokenShapeEl
           cols={18}
           rows={18}
-          amp={24}
-          speed={0.9}
+          amp={15}
+          speed={0.5}
           colors="var(--bs-col-1) var(--bs-col-2) var(--bs-col-3) var(--bs-col-4)"
         />
       </div>
