@@ -6,14 +6,14 @@ export type SortBy = "updated" | "stars" | "name";
 export type UpdatedWindow = "any" | "7" | "30" | "90" | "365";
 
 export type FiltersState = {
-  languages: Set<string>;     // empty = all
+  languages: string[];       // CHANGED: use array instead of Set
   updatedWithin: UpdatedWindow;
   sortBy: SortBy;
   sortDir: "desc" | "asc";
 };
 
 export const DEFAULT_FILTERS: FiltersState = {
-  languages: new Set<string>(),
+  languages: [],             // CHANGED
   updatedWithin: "any",
   sortBy: "updated",
   sortDir: "desc",
@@ -38,7 +38,9 @@ function withinWindow(updatedISO: string, window: UpdatedWindow): boolean {
 // Filtering & sorting
 export function applyFiltersAndSort(repos: Repo[], f: FiltersState): Repo[] {
   let list = repos.filter((r) => {
-    const langOk = f.languages.size === 0 || (r.language ? f.languages.has(r.language) : false);
+    const langOk =
+      f.languages.length === 0 ||
+      (r.language ? f.languages.includes(r.language) : false); // CHANGED
     const timeOk = withinWindow(r.updated_at, f.updatedWithin);
     return langOk && timeOk;
   });
@@ -73,12 +75,12 @@ type Props = {
 };
 
 export default function ProjectFilters({ languages, value, onChange, onReset }: Props) {
-  const selectedLangs = useMemo(() => new Set(value.languages), [value.languages]);
-
   const toggleLang = (lang: string) => {
-    const next = new Set(selectedLangs);
-    next.has(lang) ? next.delete(lang) : next.add(lang);
-    onChange({ ...value, languages: next });
+    const has = value.languages.includes(lang);
+    const next = has
+      ? value.languages.filter((l) => l !== lang)
+      : [...value.languages, lang];
+    onChange({ ...value, languages: next }); // CHANGED
   };
 
   return (
@@ -97,7 +99,7 @@ export default function ProjectFilters({ languages, value, onChange, onReset }: 
                 <label className="filters__check">
                   <input
                     type="checkbox"
-                    checked={selectedLangs.has(lang)}
+                    checked={value.languages.includes(lang)}
                     onChange={() => toggleLang(lang)}
                   />
                   <span>{lang}</span>
@@ -106,7 +108,7 @@ export default function ProjectFilters({ languages, value, onChange, onReset }: 
             ))}
           </ul>
         )}
-        <button className="filters__chip" onClick={() => onChange({ ...value, languages: new Set() })}>
+        <button className="filters__chip" onClick={() => onChange({ ...value, languages: [] })}>
           All languages
         </button>
       </div>

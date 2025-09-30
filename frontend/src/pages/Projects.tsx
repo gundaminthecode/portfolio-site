@@ -7,7 +7,7 @@ import ProjectFilters, {
   applyFiltersAndSort,
   uniqueLanguages,
 } from "../components/Projects/ProjectFilters";
-
+import { useState } from "react";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 import "../styles/projects.css";
 
@@ -32,8 +32,10 @@ export default function Projects({
     sortBy,
   });
 
+  const [filters, setFilters] = useState({ ...DEFAULT_FILTERS });
   const languages = uniqueLanguages(repos);
-  const filtered = applyFiltersAndSort(repos, DEFAULT_FILTERS);
+
+  const filtered = applyFiltersAndSort(repos, filters);
 
   if (loading) return <p>Loading…</p>;
   if (error) return <p style={{ color: "crimson" }}>Error: {error}</p>;
@@ -49,18 +51,18 @@ export default function Projects({
         <div className="content-slice" id="projects-grid-slice">
           <DiagonalHexBackground route="BR_TL" zIndex={-1} />
           <div className="slice-content">
-            <div id="desktop-filters-container">
-              <aside className="filter-panel filter-panel--desktop app-divs">
-                <aside className="projects-filters">
-                  <ProjectFilters
-                    languages={languages}
-                    value={DEFAULT_FILTERS}
-                    onChange={() => {}}
-                    onReset={() => {}}
-                  />
-                </aside>
-              </aside>
-            </div>
+            {/* Make this the direct flex child so flex:1 applies */}
+            <aside
+              id="projects-filters"
+              className="projects-filters filter-panel filter-panel--desktop app-divs"
+            >
+              <ProjectFilters
+                languages={languages}
+                value={filters}
+                onChange={setFilters}
+                onReset={() => setFilters({ ...DEFAULT_FILTERS })}
+              />
+            </aside>
 
             <div className="projects-grid-container">
               <div className="project-grid-wrapper app-divs">
