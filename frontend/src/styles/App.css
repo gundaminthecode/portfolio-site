@@ -69,7 +69,7 @@ header {
 .header-cutout__text {
   font-family: "Audiowide", sans-serif;
   font-weight: 400;
-  font-size: 15rem;
+  font-size: 10rem;
   letter-spacing: 0.06em; /* match .logo spacing */
 }
 
@@ -77,7 +77,7 @@ header {
 @media (max-width: 1900px) {
   header .logo,
   .header-cutout__text {
-    font-size: clamp(6rem, 9vw, 15rem);
+    font-size: clamp(6rem, 9vw, 10rem);
   }
 }
 
@@ -199,6 +199,7 @@ header .logo {
   --slice-skew: 0deg;                 /* default */
   transform: skewY(var(--slice-skew));
   transform-origin: top left;
+  padding: 2rem 0;;
 }
 
 /* Cancel the skew for real content */
@@ -214,14 +215,60 @@ header .logo {
   
 }
 
+@media (max-width: 1050px) {
+  #app-shell {
+    margin: 0;
+    padding: 1rem;
+    max-width: 100%;
+  }
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  /* stack containers on mobile */
+  #logo-container,
+  #nav-container {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  #nav-container {
+    margin-left: 0;
+  }
+}
+
 /* Stack columns for all sub-desktop widths */
 @media (max-width: 1900px) {
-  header{
-    flex-direction: column;
+  #navBar .sidebar-nav__link,
+  #navBar .navBar__link {
+    --hex-size: clamp(5rem, 6.5vw, 8rem);
   }
 }
 
 /* Desktop: hide mobile header icons, show right rail, pad content */
-@media (min-width: 1200px) {
-  
+@media (min-width: 1901px) {
+  .header-cutout__text {
+    font-size: 13rem;
+  }
+}
+
+/* Desktop layout: make nav content-sized on the right */
+@media (min-width: 1051px) {
+  header {
+    flex-direction: row;
+    align-items: center;
+  }
+  #logo-container {
+    /* allow logo side to give space to nav when needed */
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  #nav-container {
+    /* make nav size to its content and stick right */
+    flex: 0 1 auto;
+    margin-left: auto;
+    justify-content: flex-end;
+    min-width: max-content;
+  }
 }

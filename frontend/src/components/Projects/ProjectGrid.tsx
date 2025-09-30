@@ -10,7 +10,7 @@ export default function ProjectGrid({ repos }: { repos: Repo[] }) {
     (r as any).id ?? (r as any).full_name ?? (r as any).name ?? (r as any).html_url;
 
   return (
-    <div className="project-grid">
+    <div className="projects-grid">
       {repos.map((repo) => (
         <ProjectSlide key={keyOf(repo)} repo={repo} variant="grid" />
       ))}

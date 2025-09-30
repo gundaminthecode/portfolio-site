@@ -1,27 +1,10 @@
 /* ===========================
-  Project Grid Styles
+  Project Grid Styles (UI-only; no layout columns here)
   =========================== */
 
 @import "../styles/index.css";
 
-/* Main grid layout for projects page */
-.projects-layout {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 2rem;
-}
-
-/* Ensure projects section takes full width */
-#projects {
-  width: 100%;
-}
-
-/* Section containing filters and project grid */
-.projects-section {
-  width: 100%;
-}
-
-/* Sticky sidebar for filters */
+/* Sticky sidebar + filter UI */
 .projects-filters {
   position: sticky;
   top: 1rem;
@@ -29,7 +12,6 @@
   gap: 1rem;
 }
 
-/* Filter panel styling */
 .filter-panel,
 .filter-panel.filter-panel--desktop {
   align-self: start;
@@ -44,15 +26,11 @@
   box-sizing: border-box;
 }
 
-/* ===== Filter UI Elements ===== */
+/* Filter UI elements */
 .filters,
 .projects-filters { gap: 1rem; }
 
-.filters__title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin: 0 0 .25rem 0;
-}
+.filters__title { font-size: 1.05rem; font-weight: 600; margin: 0 0 .25rem 0; }
 
 .filters__group {
   padding: .75rem;
@@ -61,46 +39,17 @@
   border: 1px solid color-mix(in oklab, var(--header-colour) 18%, transparent);
 }
 
-.filters__label {
-  display: block;
-  font-size: .9rem;
-  font-weight: 600;
-  margin-bottom: .5rem;
-  opacity: .9;
-}
+.filters__label { display: block; font-size: .9rem; font-weight: 600; margin-bottom: .5rem; opacity: .9; }
+.filters__hint { font-size: .8rem; opacity: .7; margin: .25rem 0 .5rem; }
 
-.filters__hint {
-  font-size: .8rem;
-  opacity: .7;
-  margin: .25rem 0 .5rem;
-}
+.filters__list { display: grid; grid-template-columns: 1fr; gap: .5rem; }
+.filters__check { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
 
-.filters__list {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: .5rem;
-}
-
-.filters__check {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  font-size: .95rem;
-}
-
-/* Use browser accent color for inputs */
 .filters input[type="checkbox"],
-.projects-filters input[type="checkbox"] {
-  accent-color: var(--r4-yellow);
-}
+.projects-filters input[type="checkbox"] { accent-color: var(--r4-yellow); }
 
-/* Chips/row layout (if your component renders chips) */
 .filters__chips,
-.filters__row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-}
+.filters__row { display: flex; flex-wrap: wrap; gap: .5rem; }
 
 .filters__chip {
   padding: .35rem .6rem;
@@ -112,7 +61,6 @@
   user-select: none;
   transition: transform 120ms ease, background 120ms ease;
 }
-
 .filters__chip:hover { transform: translateY(-2px); }
 .filters__chip.is-active {
   background: var(--r4-yellow);
@@ -136,154 +84,49 @@
 }
 .filters__reset:hover { transform: translateY(-2px); }
 
-/* Wrapper for the project grid */
-.project-grid-wrapper {
-  width: 100%;
+/* Fluid card sizing */
+:root {
+  /* Card height scales with viewport; tune to your content */
+  --card-h: clamp(220px, 24vw, 360px);
+  --card-pad: clamp(0.75rem, 0.6vw + 0.4rem, 1rem);
 }
 
-/* ===== Project Grid & Cards ===== */
-.project-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-@media (min-width: 768px) {
-  .project-grid {
-    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-    gap: var(--space-4, 16px);
-  }
-}
-
-/* 1 column below 1900px */
-@media (max-width: 1900px) {
-  .project-grid {
-    grid-template-columns: var(--card-w); /* same as repeat(1, var(--card-w)) */
-    justify-content: center;
-  }
-}
-
-/* HD desktop (1280–1899): 3 columns */
-@media (max-width: 1899px) {
-  .project-grid { grid-template-columns: repeat(3, var(--card-w)); }
-}
-
-/* Tablet/small laptop (768–1279): 2 columns */
-@media (max-width: 1279px) {
-  .project-grid { grid-template-columns: repeat(2, var(--card-w)); }
-}
-
-/* Mobile (<768): 1 column */
-@media (max-width: 767px) {
-  .project-grid { grid-template-columns: var(--card-w); }
-}
-
-/* Ensure cards fit tracks */
-.project-grid .project-slide,
-.project-grid .project-slide.project-slide--grid {
-  width: var(--card-w) !important;
-  height: var(--card-h) !important;
+/* Cards inside the grid: size + internal type */
+.projects-grid .project-slide,
+.projects-grid .project-slide.project-slide--grid {
+  width: 100% !important;             /* grid tracks control width */
+  height: var(--card-h) !important;   /* fluid height */
+  padding: var(--card-pad);
   box-sizing: border-box;
   border-radius: 12px;
   overflow: hidden;
-  /* was 85% — too dark; restore a subtle surface */
   background: color-mix(in oklab, var(--header-colour) 10%, transparent);
   border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
-  padding: 1rem;
 }
 
-/* Prevent child content from overflowing the fixed box */
-.project-slide__title,
-.project-slide__desc {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/* Card typography scales with global variables */
+.project-slide__title { font-size: var(--fs-700); line-height: 1.15; }
+.project-slide__desc  { font-size: var(--fs-400); line-height: 1.4; }
+.project-slide__meta,
+.project-slide__tags  { font-size: var(--fs-300); line-height: 1.35; }
+
+/* Tighten spacing on smaller screens */
+@media (max-width: 600px) {
+  .projects-grid .project-slide { border-radius: 10px; }
 }
 
-/* Give slides default vars so the shared hex-bob keyframes work */
-.project-grid .project-slide {
-  --hex-scale: 1;
-  --hex-offset: 0px;
-}
-
-/* Hover: gentle up–down bob like the nav links */
-.project-grid .project-slide:hover {
-  animation: hex-bob 1.4s ease-in-out infinite;
-}
-
-/* Respect reduced motion */
+/* Hover bob; respects reduced motion */
+.projects-grid .project-slide { --hex-scale: 1; --hex-offset: 0px; }
+.projects-grid .project-slide:hover { animation: hex-bob 1.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
-  .project-grid .project-slide:hover { animation: none; }
+  .projects-grid .project-slide:hover { animation: none; }
 }
 
-/* ===== Responsive Styles ===== */
-
-/* Mobile: 1 column */
-@media (max-width: 480px) {
-
-}
-
-/* Stack sidebar and grid vertically on smaller screens */
-@media (max-width: 1200px) {
-  .projects-layout {
-    grid-template-columns: 1fr;
-  }
-  .filter-panel.filter-panel--desktop {
-    position: relative;
-    top: 0;
-    max-width: 100%;
-  }
-}
-
-/* --- Visibility control --- */
+/* Visibility control for mobile filters */
 .filter-panel--desktop { display: block; }
-.filter-panel--mobile { display: none; }
+.filter-panel--mobile  { display: none; }
 
 @media (max-width: 1200px) {
   .filter-panel--desktop { display: none; }
-  .filter-panel--mobile { display: block; }
+  .filter-panel--mobile  { display: block; }
 }
-
-/* --- Mobile <details> styles --- */
-.filters-mobile {
-  border-radius: 12px;
-  border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
-  background: color-mix(in oklab, var(--header-colour) 8%, transparent);
-  padding: .5rem .75rem;
-}
-
-.filters-mobile__summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .75rem;
-  cursor: pointer;
-  list-style: none;
-  font-weight: 600;
-}
-
-.filters-mobile__summary::-webkit-details-marker { display: none; }
-
-/* Content area */
-.filters-mobile__content {
-  padding-top: .5rem;
-  display: grid;
-  gap: .75rem;
-}
-
-.project-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  border-radius: var(--radius-2);
-}
-
-.project-card img, .project-card picture {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: var(--radius-1);
-}
-
-.project-card .meta { margin-top: auto; }
