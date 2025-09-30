@@ -47,11 +47,12 @@
   padding: clamp(1rem, 1.2vw, 2rem);
   width: min(var(--projects-grid-max), var(--projects-grid-vw));
   margin-inline: auto;
+  box-sizing: border-box;
 }
 
 /* Panels: filters (1) and grid-container (4) */
 #projects-filters, .projects-filters {
-    flex: 1.2 1 0;        /* a touch wider filter panel */
+    flex: 1 1 0;        /* a touch wider filter panel */
     min-width: 220px;
     display: flex;
     flex-direction: column;
@@ -59,7 +60,7 @@
 }
 
 #projects-grid-container, .projects-grid-container {
-  flex: 4.8 1 0;        /* keep ~1:4 ratio while expanding total */
+  flex: 4 1 0;        /* keep ~1:4 ratio while expanding total */
   min-width: 0;                 /* allow grid to shrink */
   container-type: inline-size;  /* enables @container below */
 }

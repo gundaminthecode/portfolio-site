@@ -235,9 +235,12 @@ header .logo {
     flex: 0 0 auto;
     width: 100%;
   }
-  #nav-container {
-    margin-left: 0;
-  }
+}
+
+@media (min-width: 1051px) {
+  header { flex-direction: row; align-items: center; }
+  #logo-container { flex: 2 1 0%; }
+  #nav-container { flex: 1 1 0%; margin-left: auto; justify-content: flex-end; min-width: max-content; }
 }
 
 /* Stack columns for all sub-desktop widths */
