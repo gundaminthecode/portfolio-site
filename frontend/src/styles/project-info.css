@@ -1,0 +1,110 @@
+/* Project Info page layout to match slice-based pages */
+
+#project-info-hero-slice {
+  --slice-skew: 2deg;
+  background: var(--r4-yellow);
+  min-height: 12vh;
+  margin-top: 4vh;
+}
+
+#project-info-hero-slice .slice-content {
+  width: min(1200px, 95vw);
+  margin: 0 auto;
+  padding: clamp(0.75rem, 1vw, 1.25rem);
+  display: grid;
+  gap: 0.5rem;
+}
+
+/* Main slice */
+#project-info-slice {
+  --slice-skew: 2deg;
+  background: var(--r4-yellow);
+}
+
+#project-info-slice .slice-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: clamp(1rem, 1.5vw, 2rem);
+  padding: clamp(1rem, 1.2vw, 2rem);
+  width: min(1200px, 95vw);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Columns: summary (1) and main (4) */
+#project-info-slice .filter-panel {
+  flex: 1 1 0;
+  min-width: 220px;
+  align-self: start;
+}
+
+#project-info-slice .project-grid-wrapper {
+  flex: 4 1 0;
+  min-width: 0; /* allow to shrink */
+}
+
+/* Inner content layout */
+.projects-content {
+  display: grid;
+  gap: clamp(0.75rem, 1vw, 1.25rem);
+}
+
+.project-summary-card {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.project-stats {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.5rem;
+  display: grid;
+  gap: 0.35rem;
+  font-size: var(--fs-400);
+}
+
+.project-stats-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.project-desc {
+  margin-bottom: 0.5rem;
+}
+
+.live-preview-block {
+  display: grid;
+  gap: 0.5rem;
+}
+
+/* Mobile: stack and make summary panel landscape-style */
+@media (max-width: 1050px) {
+  #project-info-hero-slice { min-height: auto; }
+
+  #project-info-slice .slice-content {
+    flex-direction: column;
+  }
+
+  #project-info-slice .filter-panel {
+    order: 1;
+    width: 100%;
+  }
+
+  /* Reuse filters styling: horizontal/wrapping on mobile */
+  #project-info-slice .projects-filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+  }
+
+  #project-info-slice .project-grid-wrapper {
+    order: 2;
+    width: 100%;
+  }
+}

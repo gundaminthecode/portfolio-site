@@ -5,6 +5,7 @@ import type { Repo } from "../components/Projects/ProjectCard";
 import LivePreview from "../components/Projects/LivePreview";
 import CaseStudy from "../components/Projects/CaseStudy";
 import { useCaseStudy } from "../hooks/useCaseStudy";
+import "../styles/project-info.css";
 
 type OutletCtx = { repos?: Repo[] };
 
@@ -35,10 +36,21 @@ export default function ProjectInfoPage() {
   const liveHref = (project as any).live_url || (project as any).homepage || null;
 
   return (
-    <div>
-      <div id="upper-content">
-        <section id="projects" className="projects-section">
-          {/* Left rail: reuse filter panel styling for a neat summary card */}
+    <div id="content-stack">
+      <div className="content-slice" id="project-info-hero-slice">
+        <div className="slice-content">
+          <nav className="crumbs" style={{ marginBottom: ".5rem" }}>
+            <Link to="/projects">← Back to Projects</Link>
+          </nav>
+          <header className="project-header">
+            <h2>{project.name}</h2>
+          </header>
+        </div>
+      </div>
+
+      <div className="content-slice" id="project-info-slice">
+        <div className="slice-content">
+          {/* Left rail: summary card styled like filters panel */}
           <aside className="filter-panel filter-panel--desktop app-divs">
             <aside className="projects-filters">
               <div className="project-summary-card">
@@ -55,13 +67,9 @@ export default function ProjectInfoPage() {
                   </li>
                 </ul>
                 <div className="project-links" style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
-                  <a className="btn" href={project.html_url} target="_blank" rel="noopener noreferrer">
-                    GitHub
-                  </a>
+                  <a className="btn" href={project.html_url} target="_blank" rel="noopener noreferrer">GitHub</a>
                   {liveHref && (
-                    <a className="btn btn--ghost" href={liveHref} target="_blank" rel="noopener noreferrer">
-                      Live Site
-                    </a>
+                    <a className="btn btn--ghost" href={liveHref} target="_blank" rel="noopener noreferrer">Live Site</a>
                   )}
                 </div>
               </div>
@@ -71,20 +79,12 @@ export default function ProjectInfoPage() {
           {/* Main content */}
           <div className="project-grid-wrapper app-divs">
             <div className="projects-content">
-              <nav className="crumbs" style={{ marginBottom: ".75rem" }}>
-                <Link to="/projects">← Back to Projects</Link>
-              </nav>
-
-              <header className="project-header" style={{ marginBottom: "1rem" }}>
-                <h2>{project.name}</h2>
-              </header>
-
               <article className="project-body">
-                <p className="project-desc" style={{ marginBottom: "1rem" }}>
+                <p className="project-desc">
                   {project.description || "No description provided."}
                 </p>
 
-                <ul className="project-stats-list" style={{ display: "grid", gap: ".5rem", marginBottom: "1rem" }}>
+                <ul className="project-stats-list">
                   <li><strong>Default branch:</strong> {(project as any).default_branch ?? "main"}</li>
                   <li><strong>Visibility:</strong> {(project as any).private ? "Private" : "Public"}</li>
                   {(project as any).license?.name && (
@@ -95,28 +95,26 @@ export default function ProjectInfoPage() {
                   )}
                 </ul>
 
-                {/* Case Study */}
-                  {csLoading ? (
-                    <p className="hud">Loading case study…</p>
-                  ) : (
-                    <CaseStudy
-                      markdown={markdown}
-                      title={frontmatter?.title ? `Case Study — ${frontmatter.title}` : "Case Study"}
-                      hero={frontmatter?.hero}
-                    />
-                  )}
-                  {/* Live preview (only if allowed) */}
-                  {liveHref && (
-                    <div>
-                      <h3 style={{ marginBottom: ".5rem" }}>Live Preview</h3>
-                      <LivePreview url={liveHref} title={`${project.name} – Live Preview`} />
-                    </div>
-                  )}
-                
+                {csLoading ? (
+                  <p className="hud">Loading case study…</p>
+                ) : (
+                  <CaseStudy
+                    markdown={markdown}
+                    title={frontmatter?.title ? `Case Study — ${frontmatter.title}` : "Case Study"}
+                    hero={frontmatter?.hero}
+                  />
+                )}
+
+                {liveHref && (
+                  <div className="live-preview-block">
+                    <h3>Live Preview</h3>
+                    <LivePreview url={liveHref} title={`${project.name} – Live Preview`} />
+                  </div>
+                )}
               </article>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );
