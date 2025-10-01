@@ -58,6 +58,7 @@ header {
   display: flex;           /* restore flex layout */
   align-items: center;
   gap: 1rem;
+  flex-wrap: nowrap; /* NEW: prevents wrap that increases header height */
 }
 
 .header-cutout {
@@ -225,11 +226,6 @@ header .logo {
     padding: 1rem;
     max-width: 100%;
   }
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
 
   /* stack containers on mobile */
   #logo-container,
@@ -292,4 +288,75 @@ header .logo {
   #navBar .navBar__link {
     --hex-size: clamp(3rem, 18vw, 5rem);
   }
+}
+
+/* Keep header on a single row unless we're on true mobile */
+header {
+  /* existing props... */
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap; /* NEW: prevents wrap that increases header height */
+}
+
+/* Tablet (769–1050px): keep row layout, shrink padding, disable stagger drop */
+@media (max-width: 1050px) and (min-width: 769px) {
+  header { padding: 1.25rem; }
+
+  /* Ensure logo and nav stay on one row */
+  #logo-container { flex: 1 1 auto; min-width: 0; }
+  #nav-container  { flex: 0 0 auto; margin-left: auto; width: auto; }
+
+  /* Stop the even-item vertical drop that made the header tall */
+  #navBar > * { --hex-offset: 0 !important; }
+
+  /* Slightly smaller hex buttons on tablet */
+  #navBar .sidebar-nav__link,
+  #navBar .navBar__link {
+    --hex-size: clamp(3.75rem, 7.5vw, 5.25rem);
+    transform: scale(var(--hex-scale)) translateY(0);
+  }
+}
+
+/* Touch devices: don’t animate/bob on hover to avoid jank */
+@media (hover: none) {
+  #navBar .sidebar-nav__link:hover,
+  #navBar .navBar__link:hover {
+    animation: none;
+  }
+}
+
+/* Mobile (<768px): vertical floating rail on the right (kept) */
+@media (max-width: 768px) {
+  header { padding: 1rem; }
+
+  #nav-container {
+    position: fixed;
+    right: 0.75rem;
+    top: 0.75rem;
+    width: auto;
+    margin: 0;
+    z-index: 100;
+    pointer-events: auto;
+  }
+  #navBar {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+  }
+  /* No stagger in rail mode */
+  #navBar > * { --hex-offset: 0 !important; }
+
+  /* Smaller hex buttons on phones */
+  #navBar .sidebar-nav__link,
+  #navBar .navBar__link {
+    --hex-size: clamp(3rem, 14vw, 4.25rem);
+    transform: scale(var(--hex-scale)) translateY(0);
+  }
+}
+
+/* Very small phones: tiny nudge */
+@media (max-width: 420px) {
+  #nav-container { right: 0.5rem; top: 0.5rem; }
+  #navBar { gap: 0.5rem; }
 }
