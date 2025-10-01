@@ -3,9 +3,10 @@
   =========================== */
 
 :root {
-  --slice-gap: 2rem;            /* gap between slices */
-  --slice-bg: var(--r4-yellow); /* default slice background */
-  --slice-skew: 2deg;           /* default skew */
+  --slice-gap: 2rem;
+  --slice-bg: var(--r4-yellow);
+  --slice-skew: 2deg;
+  --slice-safe-bottom: 0px;   /* NEW: extra bottom space inside slices */
 }
 
 /* Vertical stack of slices */
@@ -25,15 +26,14 @@
   transform-origin: top left;
 }
 
-/* Real content cancels the skew and sits above bg */
+/* Real content sits above, never skewed */
 .content-slice > .slice-content {
   position: relative;
   z-index: 1;
-  transform: skewY(calc(-1 * var(--slice-skew)));
-  transform-origin: top left;
-  width: 85%;
-  margin: 3rem auto;
+  width: 100%;
   box-sizing: border-box;
+  transform: skewY(calc(-1 * var(--slice-skew)));
+  padding-block-end: var(--slice-safe-bottom);  /* NEW: reserve room for floating bg */
 }
 
 /* Compact gaps on small screens */
