@@ -1,12 +1,14 @@
 // ProjectInfoPage.tsx
-import { Link, useOutletContext, useParams } from "react-router-dom";
+import { Link, useOutletContext, useParams, useSearchParams} from "react-router-dom";
 import { useGithubRepos } from "../hooks/useGithubRepos";
 import type { Repo } from "../components/Projects/ProjectCard";
 import LivePreview from "../components/Projects/LivePreview";
 import CaseStudy from "../components/Projects/CaseStudy";
 import { useCaseStudy } from "../hooks/useCaseStudy";
 import useScrollReveal from "../hooks/useScrollReveal";
+import ProjectProgress from "../components/Progress/ProjectProgress";
 import "../styles/project-info.css";
+import { CONFIG } from "../config";
 
 type OutletCtx = { repos?: Repo[] };
 
@@ -18,6 +20,13 @@ function formatK(n: number | undefined) {
 
 export default function ProjectInfoPage() {
   useScrollReveal();
+
+  const [qp] = useSearchParams()
+  // Allow ?repo=owner/name to override; default to your portfolio repo
+  const repoParam = qp.get("repo")
+  const owner = repoParam?.split("/")[0] || CONFIG.GITHUB_USERNAME
+  const repo = repoParam?.split("/")[1] || "portfolio-site"
+
   const { id } = useParams<{ id: string }>();
 
   // Prefer repos from the Projects page via <Outlet context={{ repos }} />
@@ -39,6 +48,7 @@ export default function ProjectInfoPage() {
 
   return (
     <div id="content-stack">
+      {/* Hero */}
       <div className="content-slice" id="project-info-hero-slice">
         <div className="slice-content">
           <nav className="crumbs" style={{ marginBottom: ".5rem" }}>
@@ -50,9 +60,9 @@ export default function ProjectInfoPage() {
         </div>
       </div>
 
+      {/* Info slice (summary + body) */}
       <div className="content-slice" id="project-info-slice">
         <div className="slice-content">
-          {/* Left rail: summary card styled like filters panel */}
           <aside className="filter-panel filter-panel--desktop app-divs">
             <aside className="projects-filters">
               <div className="project-summary-card">
@@ -78,7 +88,6 @@ export default function ProjectInfoPage() {
             </aside>
           </aside>
 
-          {/* Main content */}
           <div className="project-grid-wrapper app-divs">
             <div className="projects-content">
               <article className="project-body">
@@ -115,6 +124,16 @@ export default function ProjectInfoPage() {
                 )}
               </article>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="content-slice" id="project-progress-slice">
+        <div className="slice-content">
+          <h1>Project Progress</h1>
+          <p>Commit activity and notes from progress.md for {project.owner?.login}/{project.name}</p>
+          <div className="project-grid-wrapper" style={{ width: "100%" }}>
+            <ProjectProgress owner={owner} repo={repo} />
           </div>
         </div>
       </div>

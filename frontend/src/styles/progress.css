@@ -1,0 +1,55 @@
+/* Heatmap */
+.progress-heatmap {
+  --cell: 12px;
+  --gap: 3px;
+  --col0: color-mix(in oklab, var(--header-colour) 4%, transparent);
+  --col1: color-mix(in oklab, var(--header-colour) 18%, transparent);
+  --col2: color-mix(in oklab, var(--header-colour) 32%, transparent);
+  --col3: color-mix(in oklab, var(--header-colour) 48%, transparent);
+  --col4: color-mix(in oklab, var(--header-colour) 64%, transparent);
+  display: flex;
+  gap: var(--gap);
+  align-items: flex-start;
+  overflow-x: auto;
+  padding: .25rem;
+  border-radius: 8px;
+}
+.progress-heatmap .week { display: grid; grid-auto-rows: var(--cell); gap: var(--gap); }
+.progress-heatmap .day {
+  width: var(--cell); height: var(--cell);
+  border: 0; border-radius: 2px; background: var(--col0);
+  cursor: pointer; padding: 0;
+}
+.progress-heatmap .day.lvl-0 { background: var(--col0); }
+.progress-heatmap .day.lvl-1 { background: var(--col1); }
+.progress-heatmap .day.lvl-2 { background: var(--col2); }
+.progress-heatmap .day.lvl-3 { background: var(--col3); }
+.progress-heatmap .day.lvl-4 { background: var(--col4); }
+
+.progress-heatmap .legend { display: flex; align-items: center; gap: .4rem; margin-left: .5rem; }
+.progress-heatmap .legend i { width: var(--cell); height: var(--cell); border-radius: 2px; display: inline-block; }
+.progress-heatmap .legend .lvl-0 { background: var(--col0); }
+.progress-heatmap .legend .lvl-1 { background: var(--col1); }
+.progress-heatmap .legend .lvl-2 { background: var(--col2); }
+.progress-heatmap .legend .lvl-3 { background: var(--col3); }
+.progress-heatmap .legend .lvl-4 { background: var(--col4); }
+
+/* Commit list panel */
+.commit-list {
+  display: grid;
+  gap: .75rem;
+}
+.commit {
+  border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
+  background: color-mix(in oklab, var(--header-colour) 8%, transparent);
+  border-radius: 10px;
+  padding: .75rem .9rem;
+}
+.commit h4 { margin: 0 0 .25rem 0; font-size: var(--fs-500); }
+.commit .meta { font-size: var(--fs-300); opacity: .8; }
+.commit .blurb { margin-top: .5rem; font-size: var(--fs-400); }
+
+/* Make sure heatmap doesn’t push width; enable its own scrolling */
+.progress-heatmap { max-width: 100%; overflow-x: auto; }
+/* Ensure commit list wraps within slice width */
+.commit-list, .commit, .commit * { max-width: 100%; overflow-wrap: anywhere; word-break: break-word; }

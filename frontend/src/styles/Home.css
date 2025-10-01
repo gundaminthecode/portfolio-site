@@ -61,7 +61,6 @@
 
 
 
-/* Example: give specific slices a skew without skewing their text */
 #intro-slice { --slice-skew: 2deg; background: var(--r4-yellow); }
 #projects-slice { --slice-skew: 2deg; background: var(--r4-yellow); }
 
@@ -77,6 +76,9 @@
 #projects-slice {
   --slice-safe-bottom: clamp(48px, 6vh, 96px);  /* extra room at bottom */
 }
-
-/* (optional) if any other slice has the same issue, set its var too */
-/* #intro-slice { --slice-safe-bottom: clamp(32px, 5vh, 80px); } */
+@media (max-width:1200px) {
+    #projects-slice > div{
+        flex-direction: column;
+        padding: 2rem 0;
+    }
+}
