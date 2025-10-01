@@ -8,81 +8,64 @@ export type Commit = {
   author: { name: string; date: string }
 }
 
-export type ProgressData = {
-  commitsByDate: Record<string, Commit[]>
-  countsByDate: Record<string, number>
-  blurbsBySha: Record<string, string>
-  loading: boolean
-  error?: string
-}
-
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "")
 
-async function fetchAllCommits(owner: string, repo: string, sinceISO: string): Promise<Commit[]> {
+async function fetchAllCommits(owner: string, repo: string, sinceISO: string) {
   const url = `${API_BASE}/api/commits?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}&since=${encodeURIComponent(sinceISO)}`
   const res = await fetch(url, { cache: "no-store" })
   if (!res.ok) throw new Error(await res.text())
-  return res.json()
+  return (await res.json()) as Commit[]
 }
 
 async function fetchProgressMd(owner: string, repo: string): Promise<string | null> {
   const url = `${API_BASE}/api/progress-md?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}`
   const res = await fetch(url, { cache: "no-store" })
-  if (res.status === 404) return null
+  if (res.status === 404) return null           // treat missing file as OK
   if (!res.ok) throw new Error(await res.text())
   const data = (await res.json()) as { path: string; content: string }
-  return data.content
+  return data.content || null
 }
 
 function parseBlurbs(md: string | null): Record<string, string> {
   if (!md) return {}
   const lines = md.split(/\r?\n/)
   const map: Record<string, string> = {}
-  // Pattern A: [sha] - text
-  // Pattern B: ## [sha] ...paragraph...
+
+  // Existing patterns
   const shaLine = /^\s*\[([0-9a-f]{7,40})\]\s*[-:]\s*(.+)\s*$/i
   const shaHeader = /^\s{0,3}#{2,6}\s*\[([0-9a-f]{7,40})\]\s*$/i
+  // NEW: headers like "## Title (abcdef1)"
+  const shaHeaderParen = /^\s{0,3}#{1,6}\s+.*\(([0-9a-f]{7,40})\)\s*$/i
 
-  let currentSha: string | null = null
+  let current: string | null = null
   let buf: string[] = []
   const flush = () => {
-    if (currentSha) {
-      const k = currentSha.toLowerCase()
+    if (current) {
+      const k = current.toLowerCase()
       const text = buf.join("\n").trim()
       if (text) map[k] = text
     }
-    currentSha = null
+    current = null
     buf = []
   }
 
   for (const line of lines) {
     const m1 = line.match(shaLine)
     const m2 = line.match(shaHeader)
-    if (m1) {
-      flush()
-      currentSha = m1[1]
-      buf.push(m1[2])
-      continue
-    }
-    if (m2) {
-      flush()
-      currentSha = m2[1]
-      continue
-    }
-    if (currentSha) buf.push(line)
+    const m3 = line.match(shaHeaderParen)
+    if (m1) { flush(); current = m1[1]; buf.push(m1[2]); continue }
+    if (m2) { flush(); current = m2[1]; continue }
+    if (m3) { flush(); current = m3[1]; continue }
+    if (current) buf.push(line)
   }
   flush()
   return map
 }
 
-function startOfDayUTC(date: Date) {
-  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()))
-}
-function fmt(d: Date) {
-  return startOfDayUTC(d).toISOString().slice(0, 10)
-}
+function startOfDayUTC(d: Date) { return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())) }
+function fmt(d: Date) { return startOfDayUTC(d).toISOString().slice(0, 10) }
 
-export default function useProgress(owner: string, repo: string, lookbackDays = 365): ProgressData {
+export default function useProgress(owner: string, repo: string, lookbackDays = 365) {
   const [commits, setCommits] = useState<Commit[]>([])
   const [blurbs, setBlurbs] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(true)
@@ -96,12 +79,16 @@ export default function useProgress(owner: string, repo: string, lookbackDays = 
         setError(undefined)
         const since = new Date()
         since.setUTCDate(since.getUTCDate() - lookbackDays)
-        const commits = await fetchAllCommits(owner, repo, since.toISOString())
-        const progressMd = await fetchProgressMd(owner, repo)
-        const blurbsMap = parseBlurbs(progressMd)
+
+        const [list, md] = await Promise.all([
+          fetchAllCommits(owner, repo, since.toISOString()),
+          // Never throw on missing progress.md
+          fetchProgressMd(owner, repo).catch(() => null),
+        ])
+
         if (!alive) return
-        setCommits(commits)
-        setBlurbs(blurbsMap)
+        setCommits(list)
+        setBlurbs(parseBlurbs(md))
       } catch (e: any) {
         if (!alive) return
         setError(e?.message || "Failed to load progress")
@@ -109,9 +96,7 @@ export default function useProgress(owner: string, repo: string, lookbackDays = 
         if (alive) setLoading(false)
       }
     })()
-    return () => {
-      alive = false
-    }
+    return () => { alive = false }
   }, [owner, repo, lookbackDays])
 
   const commitsByDate = useMemo(() => {
@@ -120,10 +105,7 @@ export default function useProgress(owner: string, repo: string, lookbackDays = 
       const d = fmt(new Date(c.author.date))
       ;(map[d] ||= []).push(c)
     }
-    // sort newest first within the day
-    for (const d of Object.keys(map)) {
-      map[d].sort((a, b) => (a.author.date > b.author.date ? -1 : 1))
-    }
+    for (const d of Object.keys(map)) map[d].sort((a, b) => (a.author.date > b.author.date ? -1 : 1))
     return map
   }, [commits])
 

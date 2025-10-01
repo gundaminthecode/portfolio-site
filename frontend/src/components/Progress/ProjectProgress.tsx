@@ -22,7 +22,11 @@ export default function ProjectProgress({ owner, repo }: Props) {
           <div className="hud">No commits on {selectedDate}</div>
         ) : (
           commits.map((c) => {
-            const blurb = blurbsBySha[c.sha.toLowerCase()] || blurbsBySha[c.sha.slice(0, 8).toLowerCase()]
+            const sha = c.sha.toLowerCase()
+            const blurb =
+              blurbsBySha[sha] ||
+              blurbsBySha[sha.slice(0, 7)] ||   // 7-char short SHAs in PROGRESS.md
+              blurbsBySha[sha.slice(0, 8)]
             return (
               <article key={c.sha} className="commit">
                 <h4>{c.message.split("\n")[0]}</h4>

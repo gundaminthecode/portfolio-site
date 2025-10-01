@@ -182,22 +182,32 @@ def progress_md():
     ck = f"progressmd:{owner}:{repo}"
     cached = cache.get(ck)
     if cached is not None:
-        return cache_hit_response(cached)
+        return with_cache_headers(jsonify(cached))
 
-    @cache.memoize(timeout=CACHE_TTL)
-    def _fetch(owner: str, repo: str) -> Dict[str, str]:
-        for path in ["progress.md", "Progress.md", "docs/progress.md"]:
-            url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
-            r = requests.get(url, headers=gh_headers({"Accept": "application/vnd.github.v3.raw"}), timeout=15)
-            if r.ok:
-                return {"path": path, "content": r.text}
-            if r.status_code == 403:
-                abort(403, "GitHub rate limit. Set GITHUB_TOKEN on the server.")
-        abort(404, "progress.md not found")
+    candidates = [
+        "progress.md", "Progress.md", "PROGRESS.md",
+        "docs/progress.md", "docs/Progress.md", "docs/PROGRESS.md",
+        ".github/progress.md", ".github/PROGRESS.md",
+    ]
 
-    data = _fetch(owner, repo)
-    result = data
-    return cache_miss_response(ck, result)
+    for path in candidates:
+        url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
+        r = requests.get(
+            url,
+            headers=gh_headers({"Accept": "application/vnd.github.v3.raw"}),
+            timeout=15,
+        )
+        if r.ok:
+            data = {"path": path, "content": r.text}
+            cache.set(ck, data, timeout=CACHE_TTL)
+            return with_cache_headers(jsonify(data))
+        if r.status_code == 403:
+            abort(403, "GitHub rate limit. Set GITHUB_TOKEN on the server.")
+
+    # Not found → return empty payload (avoid noisy 404)
+    data = {"path": None, "content": ""}
+    cache.set(ck, data, timeout=CACHE_TTL)
+    return with_cache_headers(jsonify(data))
 
 @app.get("/api/case-study")
 def case_study():
