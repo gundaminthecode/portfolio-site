@@ -106,3 +106,15 @@
 @media (max-width: 380px) {
   #projects-grid-slice .slice-content { padding: 0.6rem; gap: 0.6rem; }
 }
+
+/* ≥1080p/4K: widen the grid slice so content isn’t too narrow */
+@media (min-width: 1920px) {
+  :root {
+    --projects-grid-max: 2000px;  /* was 1600px */
+    --projects-grid-vw: 94vw;     /* breathe a bit more on the sides */
+  }
+  #projects-grid-slice .slice-content {
+    gap: clamp(1.25rem, 1vw, 2.5rem);
+    padding: clamp(1.25rem, 1.2vw, 2.25rem);
+  }
+}

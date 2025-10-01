@@ -6,7 +6,7 @@
   --slice-gap: 2rem;
   --slice-bg: var(--r4-yellow);
   --slice-skew: 2deg;
-  --slice-safe-bottom: 0px;   /* NEW: extra bottom space inside slices */
+  --slice-safe-bottom: 2rem;   /* NEW: extra bottom space inside slices */
 }
 
 /* Vertical stack of slices */
@@ -24,6 +24,7 @@
   background: var(--slice-bg);
   transform: skewY(var(--slice-skew));
   transform-origin: top left;
+  padding: 2rem;
 }
 
 /* Real content sits above, never skewed */
@@ -33,7 +34,7 @@
   width: 100%;
   box-sizing: border-box;
   transform: skewY(calc(-1 * var(--slice-skew)));
-  padding-block-end: var(--slice-safe-bottom);  /* NEW: reserve room for floating bg */
+  padding-block-end: var(--slice-safe-bottom);  /* NEW: reserve room for floating bg */;
 }
 
 /* Compact gaps on small screens */

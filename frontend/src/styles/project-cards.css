@@ -14,6 +14,19 @@
   .projects-grid { --card-h: clamp(135px, 28vw, 220px); --card-pad: 0.5rem; }
 }
 
+/* ≥1080p/4K: larger cards so two/three-up don’t feel tiny */
+@media (min-width: 1920px) {
+  .projects-grid {
+    --card-h: clamp(260px, 22vw, 420px);  /* up from 180–340 */
+    --card-pad: clamp(0.9rem, 0.6vw, 1.25rem);
+  }
+}
+
+/* Optional: allow a wider filter panel on big screens */
+@media (min-width: 1920px) {
+  .filter-panel, .filter-panel.filter-panel--desktop { max-width: 420px; }
+}
+
 /* Visual card styling + containment */
 .projects-grid .project-slide,
 .projects-grid .project-slide.project-slide--grid {

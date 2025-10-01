@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export default function AboutMe() {
     return (
         <div id='content-stack'>
-            <Link to="/">← Back to Home</Link>
+            <Link to="/" className='back-link'>← Back to Home</Link>
             <div className='content-slice'>
                 <div className='slice-content'>
                     <h1>About Me</h1>

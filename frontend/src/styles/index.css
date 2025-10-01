@@ -1,36 +1,19 @@
+/* Root variables (consolidated) */
 :root {
-    --header-colour: #001974;
+  --header-colour: #001974;
+  --bg: #dedede;
+  --r4-yellow: #fbc726;
 
-    --bg: #dedede;
+  /* BrokenShapes colours */
+  --bs-col-stroke: var(--bg);
+  --bs-col-1: hsla(0, 0%, 38%, 0.397);
+  --bs-col-2: hsla(0, 0%, 47%, 0.404);
+  --bs-col-3: hsla(0, 0%, 78%, 0.459);
+  --bs-col-4: hsla(0, 0%, 87%, 0.473);
 
-    --r4-yellow: #fbc726;
-
-    /* BrokenShapes Colours */
-    --bs-col-stroke: var(--bg);
-    /* --bs-col-1: hsla(220, 75%, 60%, 0.3);
-    --bs-col-2: hsl(270 70% 60% / 0.3);
-    --bs-col-3: hsl(200 80% 55% / 0.3);
-    --bs-col-4: hsl(190 75% 50% / 0.3); */
-
-    --bs-col-1: hsla(0, 0%, 38%, 0.397);
-    --bs-col-2: hsla(0, 0%, 47%, 0.404);
-    --bs-col-3: hsla(0, 0%, 78%, 0.459);
-    --bs-col-4: hsla(0, 0%, 87%, 0.473);
-
-    /* fixed slide/card size */
-    --card-w: 600px;
-    --card-h: 450px;
-
-    /* Nav hex button */
-    --hex-size: 72px;
-
-    /* Project card/slide size (used by grid & carousels) */
-    --card-w: 300px;
-    --card-h: 200px;
-
-    /* Base spacing and font sizing */
-    --app-pad: 2rem;
-    --fs-body: 16px;
+  /* UI sizing (fluid, no per-range overrides needed) */
+  --hex-size: clamp(56px, 6vw, 96px);
+  --app-pad: clamp(1rem, 2vw, 2.25rem);
 
   /* Container */
   --max-w: 80rem; /* ~1280px */
@@ -47,22 +30,31 @@
   --radius-1: 8px;
   --radius-2: 12px;
 
-  /* ========== Fluid type scale (global) ========== */
-  /* body/base */
+  /* Fluid type scale */
   --fs-300: clamp(0.82rem, 0.20vw + 0.78rem, 0.95rem);
-  --fs-400: clamp(0.95rem, 0.35vw + 0.86rem, 1.05rem); /* base */
+  --fs-400: clamp(0.95rem, 0.35vw + 0.86rem, 1.05rem);
   --fs-500: clamp(1.05rem, 0.55vw + 0.92rem, 1.20rem);
-
-  /* headings */
   --fs-600: clamp(1.20rem, 0.85vw + 1.00rem, 1.44rem);
   --fs-700: clamp(1.44rem, 1.25vw + 1.10rem, 1.80rem);
   --fs-800: clamp(1.80rem, 2.00vw + 1.10rem, 2.25rem);
   --fs-900: clamp(2.10rem, 3.00vw + 1.00rem, 3.00rem);
 }
 
-html, body {
-  font-size: var(--fs-400);
+/* Removed duplicate/competing globals
+   - --card-w / --card-h: now owned by project-cards.css and carousel.css
+   - Per-range font-size/body vars
+*/
+
+/* Base + reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; width: 100%; }
+html, body { width: 100%; margin: 0; overflow-x: hidden; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
   line-height: 1.6;
+  font-size: var(--fs-400);
   text-rendering: optimizeLegibility;
 }
 
@@ -75,141 +67,25 @@ h6 { font-size: var(--fs-500); line-height: 1.35; }
 
 p, li, dd, dt, label, input, button { font-size: var(--fs-400); }
 small, .hud { font-size: var(--fs-300); opacity: .9; }
-/* ========== end fluid type scale ========== */
 
-/* ====== Extra Small (portrait phones, <360px) ====== */
-@media (max-width: 359px) {
-  :root {
-    --hex-size: 36px;
-    --card-w: 240px;
-    --card-h: 160px;
-    --app-pad: 0.75rem;
-    --fs-body: 14px;
-  }
+img, picture, video, canvas { display: block; max-width: 100%; height: auto; }
+
+/* Layout helpers */
+main { width: 100%; margin: 0 auto; padding: var(--app-pad); box-sizing: border-box; }
+.container { width: min(100% - 2rem, var(--max-w)); margin-inline: auto; }
+.section { padding-block: var(--space-6); }
+.grid { display: grid; gap: var(--space-4); }
+.grid.auto-fit { grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); }
+.align-center-col { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+
+#app, #app-shell, main { width: 100%; }
+
+/* Motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 
-/* ====== Small (phones, 360–479px) ====== */
-@media (min-width: 360px) and (max-width: 479px) {
-  :root {
-    --hex-size: 40px;
-    --card-w: 260px;
-    --card-h: 170px;
-    --app-pad: 1rem;
-    --fs-body: 15px;
-  }
-}
-
-/* ====== Medium (large phones / phablets, 480–599px) ====== */
-@media (min-width: 480px) and (max-width: 599px) {
-  :root {
-    --hex-size: 48px;
-    --card-w: 280px;
-    --card-h: 180px;
-    --app-pad: 1rem;
-    --fs-body: 15px;
-  }
-}
-
-/* ====== Large (small tablets, 600–767px) ====== */
-@media (min-width: 600px) and (max-width: 767px) {
-  :root {
-    --hex-size: 52px;
-    --card-w: 290px;
-    --card-h: 185px;
-    --app-pad: 1.1rem;
-    --fs-body: 15px;
-  }
-}
-
-/* ====== Tablet / Small Laptop (768–1023px) ====== */
-@media (min-width: 768px) and (max-width: 1023px) {
-  :root {
-    --hex-size: 56px;
-    --card-w: 300px;
-    --card-h: 190px;
-    --app-pad: 1.25rem;
-    --fs-body: 16px;
-  }
-}
-
-/* ====== Medium Laptop (1024–1279px) ====== */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  :root {
-    --hex-size: 64px;
-    --card-w: 320px;
-    --card-h: 200px;
-    --app-pad: 1.5rem;
-    --fs-body: 16px;
-  }
-}
-
-/* ====== Large Laptop (1280–1439px) ====== */
-@media (min-width: 1280px) and (max-width: 1439px) {
-  :root {
-    --hex-size: 72px;
-    --card-w: 340px;
-    --card-h: 220px;
-    --app-pad: 1.75rem;
-    --fs-body: 16px;
-  }
-}
-
-/* ====== Desktop (1440–1599px) ====== */
-@media (min-width: 1440px) and (max-width: 1599px) {
-  :root {
-    --hex-size: 80px;
-    --card-w: 380px;
-    --card-h: 250px;
-    --app-pad: 2rem;
-    --fs-body: 17px;
-  }
-}
-
-/* ====== Large Desktop (1600–1899px) ====== */
-@media (min-width: 1600px) and (max-width: 1899px) {
-  :root {
-    --hex-size: 88px;
-    --card-w: 420px;
-    --card-h: 300px;
-    --app-pad: 2.1rem;
-    --fs-body: 17px;
-  }
-}
-
-/* ====== UHD (1900–2559px) ====== */
-@media (min-width: 1900px) and (max-width: 2559px) {
-  :root {
-    --hex-size: 96px;
-    --card-w: 600px;
-    --card-h: 450px;
-    --app-pad: 2.25rem;
-    --fs-body: 17px;
-  }
-}
-
-/* ====== 4K+ (2560–3839px) ====== */
-@media (min-width: 2560px) and (max-width: 3839px) {
-  :root {
-    --hex-size: 120px;
-    --card-w: 720px;
-    --card-h: 520px;
-    --app-pad: 2.5rem;
-    --fs-body: 18px;
-  }
-}
-
-/* ====== 5K+ (3840px and up) ====== */
-@media (min-width: 3840px) {
-  :root {
-    --hex-size: 144px;
-    --card-w: 880px;
-    --card-h: 640px;
-    --app-pad: 3rem;
-    --fs-body: 19px;
-  }
-}
-
-/* Compact type on small screens */
+/* Compact type on small screens (keep) */
 @media (max-width: 600px) {
   :root {
     --fs-300: clamp(0.76rem, 0.25vw + 0.68rem, 0.9rem);
@@ -223,72 +99,24 @@ small, .hud { font-size: var(--fs-300); opacity: .9; }
   body { line-height: 1.55; }
 }
 
-@media (max-width: 360px) {
+/* ≥1080p/4K: upscale type a bit (keep) */
+@media (min-width: 1920px) {
   :root {
-    --fs-400: clamp(0.84rem, 1vw + 0.6rem, 0.95rem);
-    --fs-700: clamp(1.2rem, 2vw + 0.8rem, 1.45rem);
-    --fs-900: clamp(1.7rem, 3vw + 0.8rem, 2.2rem);
+    --fs-300: clamp(0.92rem, 0.20vw + 0.86rem, 1.05rem);
+    --fs-400: clamp(1.05rem, 0.35vw + 0.98rem, 1.20rem);
+    --fs-500: clamp(1.20rem, 0.55vw + 1.05rem, 1.34rem);
+    --fs-600: clamp(1.34rem, 0.85vw + 1.14rem, 1.61rem);
+    --fs-700: clamp(1.61rem, 1.25vw + 1.20rem, 2.02rem);
+    --fs-800: clamp(2.02rem, 2.00vw + 1.18rem, 2.52rem);
+    --fs-900: clamp(2.40rem, 3.00vw + 1.10rem, 3.36rem);
   }
 }
 
-main {
-  width: 100%;
-  margin: 0 auto;
-  padding: var(--app-pad);
-  box-sizing: border-box;
-}
-
-body {
-    width: 100%;
-    margin: 0;
-    background-color: var(--bg);
-
-  /* keep text readable across breakpoints */
-  font-size: var(--fs-body);
-}
-
-.align-center-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-/* Base + reset */
-*, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0;
-  line-height: 1.6;
-  font-size: clamp(16px, 1.1vw + 0.2rem, 18px);
-}
-img, picture, video, canvas {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-/* Layout helpers */
-.container { width: min(100% - 2rem, var(--max-w)); margin-inline: auto; }
-.section { padding-block: var(--space-6); }
-.grid { display: grid; gap: var(--space-4); }
-.grid.auto-fit { grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); }
-
-/* Prevent horizontal overflow and ensure full-width base */
-html, body { width: 100%; margin: 0; overflow-x: hidden; }
-
-/* Generic content wrapper for mobile-first centering */
-.content-wrap {
-  width: 100%;
-  max-width: 1200px;
-  margin-inline: auto;
-  padding-inline: clamp(12px, 4vw, 28px);
-}
-
-#app, #app-shell, main { width: 100%; }
-
-/* Motion preference */
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+/* Ultra-wide bump (optional, keep) */
+@media (min-width: 2560px) {
+  :root {
+    --fs-400: clamp(1.12rem, 0.35vw + 1.05rem, 1.30rem);
+    --fs-700: clamp(1.75rem, 1.25vw + 1.32rem, 2.20rem);
+    --fs-900: clamp(2.60rem, 3.00vw + 1.20rem, 3.60rem);
+  }
 }

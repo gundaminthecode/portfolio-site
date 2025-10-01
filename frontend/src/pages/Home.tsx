@@ -27,6 +27,7 @@ export default function Home() {
           <div id="intro-text" className="align-center-col">
             <h1>Hi, I'm Nick</h1>
             <p>I'm an emerging developer specializing in web applications and interactive experiences. Welcome to my portfolio site!</p>
+            <button><NavLink to="/about-me">Learn More About Me</NavLink></button>
           </div>
         </div>
       </div>
