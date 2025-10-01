@@ -1,24 +1,86 @@
-/* Heatmap */
+/* Heatmap (bigger cells + adaptive spacing) */
 .progress-heatmap {
-  --cell: 12px;
-  --gap: 3px;
+  --cell: clamp(14px, 4.5vw, 20px);    /* was 12px — larger, mobile-friendly */
+  --gap: clamp(3px, 0.9vw, 5px);       /* was 3px */
   --col0: color-mix(in oklab, var(--header-colour) 4%, transparent);
   --col1: color-mix(in oklab, var(--header-colour) 18%, transparent);
   --col2: color-mix(in oklab, var(--header-colour) 32%, transparent);
   --col3: color-mix(in oklab, var(--header-colour) 48%, transparent);
   --col4: color-mix(in oklab, var(--header-colour) 64%, transparent);
+
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* months, weeks, legend */
+  gap: .6rem;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+/* Month labels aligned to week columns (one label per week column) */
+.progress-heatmap .months {
+  display: flex;
+  gap: var(--gap);
+  padding-inline: .25rem;
+  overflow-x: auto;
+  font-size: var(--fs-400);
+  opacity: .9;
+  user-select: none;
+}
+.progress-heatmap .months .label {
+  flex: 0 0 var(--cell);              /* width matches a week column */
+  width: var(--cell);
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Weeks row with month dividers */
+.progress-heatmap .weeks {
   display: flex;
   gap: var(--gap);
   align-items: flex-start;
   overflow-x: auto;
   padding: .25rem;
   border-radius: 8px;
+
+  /* Mobile-friendly scrolling */
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
 }
-.progress-heatmap .week { display: grid; grid-auto-rows: var(--cell); gap: var(--gap); }
+.progress-heatmap .week {
+  position: relative;
+  display: grid;
+  grid-auto-rows: var(--cell);
+  gap: var(--gap);
+  scroll-snap-align: start;
+}
+.progress-heatmap .week.month-start::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--gap) * -0.5);      /* draw in the middle of the gap */
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in oklab, var(--header-colour) 30%, transparent);
+  opacity: .7;
+}
+
+/* Text wrapping safety (no overflow) */
+.commit, .commit *, .progress-heatmap, .progress-heatmap * {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Larger cells + clearer focus targets */
 .progress-heatmap .day {
-  width: var(--cell); height: var(--cell);
-  border: 0; border-radius: 2px; background: var(--col0);
-  cursor: pointer; padding: 0;
+  width: var(--cell);
+  height: var(--cell);
+  border: 0;
+  border-radius: 3px;                  /* was 2px */
+  background: var(--col0);
+  cursor: pointer;
+  padding: 0;
+  outline-offset: 2px;
 }
 .progress-heatmap .day.lvl-0 { background: var(--col0); }
 .progress-heatmap .day.lvl-1 { background: var(--col1); }
@@ -26,30 +88,38 @@
 .progress-heatmap .day.lvl-3 { background: var(--col3); }
 .progress-heatmap .day.lvl-4 { background: var(--col4); }
 
-.progress-heatmap .legend { display: flex; align-items: center; gap: .4rem; margin-left: .5rem; }
-.progress-heatmap .legend i { width: var(--cell); height: var(--cell); border-radius: 2px; display: inline-block; }
+/* Legend slightly larger for readability */
+.progress-heatmap .legend {
+  display: flex;
+  align-items: center;
+  gap: .5rem;                          /* was .4rem */
+  margin-left: .5rem;
+  font-size: var(--fs-400);            /* was default */
+}
+.progress-heatmap .legend i {
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 3px;
+  display: inline-block;
+}
 .progress-heatmap .legend .lvl-0 { background: var(--col0); }
 .progress-heatmap .legend .lvl-1 { background: var(--col1); }
 .progress-heatmap .legend .lvl-2 { background: var(--col2); }
 .progress-heatmap .legend .lvl-3 { background: var(--col3); }
 .progress-heatmap .legend .lvl-4 { background: var(--col4); }
 
-/* Commit list panel */
-.commit-list {
-  display: grid;
-  gap: .75rem;
-}
-.commit {
-  border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
+/* Commit list containment (unchanged, kept here for context) */
+.commit-list { display: grid; gap: .9rem; max-width: 100%; }
+.commit, .commit * { max-width: 100%; overflow-wrap: anywhere; word-break: break-word; }
+.commit { border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
   background: color-mix(in oklab, var(--header-colour) 8%, transparent);
-  border-radius: 10px;
-  padding: .75rem .9rem;
-}
+  border-radius: 10px; padding: .9rem 1rem; }
 .commit h4 { margin: 0 0 .25rem 0; font-size: var(--fs-500); }
 .commit .meta { font-size: var(--fs-300); opacity: .8; }
 .commit .blurb { margin-top: .5rem; font-size: var(--fs-400); }
 
-/* Make sure heatmap doesn’t push width; enable its own scrolling */
-.progress-heatmap { max-width: 100%; overflow-x: auto; }
-/* Ensure commit list wraps within slice width */
-.commit-list, .commit, .commit * { max-width: 100%; overflow-wrap: anywhere; word-break: break-word; }
+/* Optional: slightly bigger cells on very small screens for tapability */
+@media (max-width: 420px) {
+  .progress-heatmap { --cell: clamp(16px, 6vw, 22px); --gap: clamp(4px, 1.2vw, 6px); }
+  .progress-heatmap .months { font-size: var(--fs-400); }
+}

@@ -18,11 +18,19 @@
 /* Group info + progress slices to share layout */
 #project-info-slice .slice-content,
 #project-progress-slice .slice-content {
-  display: flex; flex-direction: column; align-items: flex-start;
+  display: flex; align-items: flex-start;
   gap: clamp(1rem, 1.5vw, 2rem);
   padding: clamp(1rem, 1.2vw, 2rem);
   width: min(1200px, 95vw);
   margin: 0 auto; box-sizing: border-box;
+}
+
+#project-info-slice .slice-content {
+  flex-direction: row;
+}
+
+#project-progress-slice .slice-content {
+  flex-direction: column;
 }
 
 /* Columns: summary (1) and main (4) for info slice only */
@@ -51,4 +59,11 @@
 @media (max-width: 380px) {
   #project-info-slice .slice-content,
   #project-progress-slice .slice-content { padding: 0.6rem; gap: 0.6rem; }
+}
+
+/* Prevent hero text from overflowing in progress section */
+#project-progress-hero-slice .slice-content > * {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }

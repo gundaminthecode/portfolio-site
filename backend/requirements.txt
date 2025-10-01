@@ -2,3 +2,6 @@ flask
 flask-cors
 requests
 gunicorn
+Flask-Caching==2.1.0
+redis>=5
+requests>=2.32

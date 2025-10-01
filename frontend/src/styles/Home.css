@@ -33,7 +33,6 @@
 }
 
 #projects-slice > div {
-    height: 50vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -54,7 +53,7 @@
 /* The right column can share the other half */
 #this-project {
     flex: 0 0 50%;
-    max-width: 50%;
+    max-width: 85%;
     min-width: 0;
     padding: 0 2rem 0 0;;
 }

@@ -1,60 +1,70 @@
 // src/hooks/useCaseStudy.ts
-import { useEffect, useState } from "react";
-import fm from "front-matter";
-import type { Repo } from "../components/Projects/ProjectCard";
-import { deriveOwnerRepo } from "../utils/deriveOwnerRepo";
+import { useEffect, useMemo, useState } from "react"
+
+type Repo = { name: string; owner?: { login?: string } }
 
 const CANDIDATES = [
-    "docs/CASESTUDY.md",
-    "docs/casestudy.md",
-];
+  "docs/CASESTUDY.md",
+  "docs/casestudy.md",
+]
+
+type FrontMatter = { [key: string]: string }
+
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "")
+
+function parseFrontmatter(md: string): { frontmatter: FrontMatter; body: string } {
+  if (!md.startsWith("---")) return { frontmatter: {}, body: md }
+  const end = md.indexOf("\n---", 3)
+  if (end === -1) return { frontmatter: {}, body: md }
+  const raw = md.slice(3, end).trim()
+  const body = md.slice(end + 4).replace(/^\s+/, "")
+  const fm: FrontMatter = {}
+  raw.split(/\r?\n/).forEach((line) => {
+    const m = line.match(/^\s*([A-Za-z0-9_-]+)\s*:\s*(.+)\s*$/)
+    if (m) fm[m[1]] = m[2].replace(/^["']|["']$/g, "")
+  })
+  return { frontmatter: fm, body }
+}
 
 export function useCaseStudy(repo?: Repo) {
-  const [loading, setLoading] = useState(false);
-  const [markdown, setMarkdown] = useState("");
-  const [frontmatter, setFrontmatter] = useState<Record<string, any> | null>(null);
+  const [loading, setLoading] = useState(false)
+  const [markdown, setMarkdown] = useState<string>("")
+  const [frontmatter, setFrontmatter] = useState<FrontMatter>({})
+  const [error, setError] = useState<string | undefined>()
 
   useEffect(() => {
-    if (!repo) return;
-    let cancelled = false;
+    let alive = true
+    const owner = repo?.owner?.login
+    const name = repo?.name
+    if (!owner || !name || !API_BASE) return
 
-    (async () => {
-      setLoading(true);
-      const { owner, name } = deriveOwnerRepo(repo);
-      const branch = "main";
-
-      for (const p of CANDIDATES) {
-        const raw = `https://raw.githubusercontent.com/${owner}/${name}/refs/heads/${branch}/${p}`;
-        const res = await fetch(raw, { cache: "no-store" });
-        if (!res.ok) continue;
-
-        let txt = await res.text();
-
-        const baseDir = p.includes("/") ? p.slice(0, p.lastIndexOf("/") + 1) : "";
-        const rawBase = `https://raw.githubusercontent.com/${owner}/${name}/refs/heads/${branch}/${baseDir}`;
-
-        // fix relative images inside markdown
-        txt = txt.replace(/!\[([^\]]*)\]\((?!https?:\/\/)([^)]+)\)/g, (_m, alt, rel) => `![${alt}](${rawBase}${rel})`);
-
-        const parsed = fm<Record<string, any>>(txt);
-        const attrs = { ...(parsed.attributes ?? {}) };
-
-        // fix hero if present and relative
-        if (attrs.hero && !/^https?:\/\//.test(attrs.hero)) {
-          attrs.hero = `${rawBase}${attrs.hero}`;
+    ;(async () => {
+      try {
+        setLoading(true)
+        setError(undefined)
+        const res = await fetch(
+          `${API_BASE}/api/case-study?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(name)}`,
+          { cache: "no-store" }
+        )
+        if (res.status === 404) {
+          if (alive) { setMarkdown(""); setFrontmatter({}); setLoading(false) }
+          return
         }
-
-        if (!cancelled) {
-          setMarkdown(parsed.body);
-          setFrontmatter(attrs);
-        }
-        break;
+        if (!res.ok) throw new Error(await res.text())
+        const data = (await res.json()) as { path: string; content: string }
+        const { frontmatter, body } = parseFrontmatter(data.content || "")
+        if (!alive) return
+        setMarkdown(body)
+        setFrontmatter(frontmatter)
+      } catch (e: any) {
+        if (alive) setError(e?.message || "Failed to load case study")
+      } finally {
+        if (alive) setLoading(false)
       }
-      if (!cancelled) setLoading(false);
-    })();
+    })()
 
-    return () => { cancelled = true; };
-  }, [repo?.id]);
+    return () => { alive = false }
+  }, [repo?.owner?.login, repo?.name])
 
-  return { loading, markdown, frontmatter };
+  return { markdown, frontmatter, loading, error }
 }

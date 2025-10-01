@@ -16,55 +16,22 @@ export type ProgressData = {
   error?: string
 }
 
-const GITHUB_API = "https://api.github.com"
-
-function authHeaders(): Record<string, string> {
-  const token = import.meta.env.VITE_GITHUB_TOKEN
-  return token ? { Authorization: `Bearer ${token}` } : {}
-}
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "")
 
 async function fetchAllCommits(owner: string, repo: string, sinceISO: string): Promise<Commit[]> {
-  const per_page = 100
-  let page = 1
-  const all: Commit[] = []
-
-  // stop after 1000 commits safeguard
-  while (page <= 10) {
-    const url = `${GITHUB_API}/repos/${owner}/${repo}/commits?since=${encodeURIComponent(
-      sinceISO
-    )}&per_page=${per_page}&page=${page}`
-    const res = await fetch(url, { headers: { ...authHeaders() } })
-    if (!res.ok) break
-    const data = await res.json()
-    if (!Array.isArray(data) || data.length === 0) break
-
-    for (const c of data) {
-      all.push({
-        sha: c.sha,
-        html_url: c.html_url,
-        message: c.commit?.message ?? "",
-        author: {
-          name: c.commit?.author?.name ?? c.author?.login ?? "unknown",
-          date: c.commit?.author?.date ?? c.committer?.date ?? "",
-        },
-      })
-    }
-    if (data.length < per_page) break
-    page++
-  }
-  return all
+  const url = `${API_BASE}/api/commits?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}&since=${encodeURIComponent(sinceISO)}`
+  const res = await fetch(url, { cache: "no-store" })
+  if (!res.ok) throw new Error(await res.text())
+  return res.json()
 }
 
 async function fetchProgressMd(owner: string, repo: string): Promise<string | null> {
-  const candidates = ["progress.md", "Progress.md", "docs/progress.md"]
-  for (const path of candidates) {
-    const url = `${GITHUB_API}/repos/${owner}/${repo}/contents/${path}`
-    const res = await fetch(url, { headers: { Accept: "application/vnd.github.v3.raw", ...authHeaders() } })
-    if (res.ok) {
-      return await res.text()
-    }
-  }
-  return null
+  const url = `${API_BASE}/api/progress-md?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}`
+  const res = await fetch(url, { cache: "no-store" })
+  if (res.status === 404) return null
+  if (!res.ok) throw new Error(await res.text())
+  const data = (await res.json()) as { path: string; content: string }
+  return data.content
 }
 
 function parseBlurbs(md: string | null): Record<string, string> {
