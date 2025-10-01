@@ -33,6 +33,9 @@
   z-index: 1;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transform: skewY(calc(-1 * var(--slice-skew)));
   padding-block-end: var(--slice-safe-bottom);  /* NEW: reserve room for floating bg */;
 }

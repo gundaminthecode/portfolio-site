@@ -53,6 +53,10 @@ def respond(data, cache_state="MISS"):
     resp.headers["X-Cache"] = cache_state
     return with_cache_headers(resp)
 
+# Add small helpers once:
+def _hit(data):  r = jsonify(data); r.headers["X-Cache"]="HIT";  return with_cache_headers(r)
+def _miss(key,data): cache.set(key,data,timeout=CACHE_TTL); r=jsonify(data); r.headers["X-Cache"]="MISS"; return with_cache_headers(r)
+
 @app.get("/api/repos")
 def list_repos():
     username = request.args.get("username", "").strip()
@@ -181,10 +185,11 @@ def commits():
 
 @app.get("/api/progress-md")
 def progress_md():
-    owner = request.args.get("owner","").strip()
-    repo = request.args.get("repo","").strip()
-    if not owner or not repo:
-        abort(400, "owner and repo are required")
+    owner = request.args.get("owner","").strip(); repo = request.args.get("repo","").strip()
+    if not owner or not repo: abort(400, "owner and repo are required")
+    ck = f"progressmd:{owner}:{repo}"
+    c = cache.get(ck)
+    if c is not None: return _hit(c)
 
     key = f"progressmd:{owner}:{repo}"
     cached = cache.get(key + ":data")
@@ -208,7 +213,8 @@ def progress_md():
             cache.set(key + ":path", path, timeout=CACHE_TTL)
             if new_etag:
                 cache.set(key + ":etag", new_etag, timeout=CACHE_TTL)
-            return respond({"path": path, "content": r.text}, "MISS")
+            data = {"path": path, "content": r.text}
+            return _miss(ck, data)
         if r.status_code == 403:
             abort(403, "GitHub rate limit. Set GITHUB_TOKEN on the server.")
 

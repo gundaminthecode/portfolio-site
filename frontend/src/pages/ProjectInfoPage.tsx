@@ -88,7 +88,6 @@ export default function ProjectInfoPage() {
             </aside>
           </aside>
 
-          <div className="project-grid-wrapper app-divs">
             <div className="projects-content">
               <article className="project-body">
                 <p className="project-desc">
@@ -124,7 +123,7 @@ export default function ProjectInfoPage() {
                 )}
               </article>
             </div>
-          </div>
+          
         </div>
       </div>
 
@@ -132,7 +131,7 @@ export default function ProjectInfoPage() {
         <div className="slice-content">
           <h1>Project Progress</h1>
           <p>Commit activity and notes from progress.md for {project.owner?.login}/{project.name}</p>
-          <div className="project-grid-wrapper" style={{ width: "100%" }}>
+          <div>
             <ProjectProgress owner={owner} repo={repo} />
           </div>
         </div>

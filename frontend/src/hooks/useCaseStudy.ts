@@ -43,8 +43,7 @@ export function useCaseStudy(repo?: Repo) {
         setLoading(true)
         setError(undefined)
         const res = await fetch(
-          `${API_BASE}/api/case-study?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(name)}`,
-          { cache: "no-store" }
+          `${API_BASE}/api/case-study?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(name)}`
         )
         if (res.status === 404) {
           if (alive) { setMarkdown(""); setFrontmatter({}); setLoading(false) }

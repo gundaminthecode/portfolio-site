@@ -23,15 +23,6 @@
   margin-inline: auto;
 }
 
-/* Removed ID-based backgrounds/skew (now generic via .content-slice) */
-/* #projects-hero-slice, #projects-grid-slice { background: var(--r4-yellow); } */
-
-#projects-hero-slice {
-  /* --slice-skew: 2deg; */    /* removed: generic */
-  /* background: var(--r4-yellow); */ /* removed: generic */
-  height: 15vh;                /* keep explicit height here */
-}
-
 #projects-grid-slice .slice-content {
   display: flex;
   flex-direction: row;
@@ -91,17 +82,12 @@
   #projects-grid-container, .projects-grid-container { order: 2; width: 100%; }
 }
 
-/* Removed inner card styling; lives in project-cards.css */
-/* #projects-grid .card, .projects-grid .card {
-  width: 100%;
-  height: auto;
-} */
 
 /* Tighter slice paddings/gaps on small screens */
 @media (max-width: 600px) {
   #projects-hero-slice { height: auto; margin-top: 3vh; } /* keep explicit heights/margins here */
   #projects-hero-slice .slice-content { padding: 0.75rem; }
-  #projects-grid-slice .slice-content { gap: 0.75rem; padding: 0.75rem; width: min(var(--projects-grid-max), 98vw); }
+  #projects-grid-slice .slice-content { gap: 0.75rem; padding: 0.75rem; }
 }
 @media (max-width: 380px) {
   #projects-grid-slice .slice-content { padding: 0.6rem; gap: 0.6rem; }
