@@ -1,5 +1,5 @@
 // src/hooks/useProgress.ts
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 export type Commit = {
   sha: string
@@ -62,7 +62,9 @@ function parseBlurbs(md: string | null): Record<string, string> {
   return map
 }
 
-function startOfDayUTC(d: Date) { return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate())) }
+function startOfDayUTC(d: Date) {
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()))
+}
 function fmt(d: Date) { return startOfDayUTC(d).toISOString().slice(0, 10) }
 
 export default function useProgress(owner: string, repo: string, lookbackDays = 365) {
@@ -70,22 +72,28 @@ export default function useProgress(owner: string, repo: string, lookbackDays = 
   const [blurbs, setBlurbs] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | undefined>()
+  const fetchedKeyRef = useRef<string | null>(null) // dedupe in Strict Mode
 
   useEffect(() => {
     let alive = true
+
+    const since = startOfDayUTC(new Date())        // stable at midnight
+    since.setUTCDate(since.getUTCDate() - lookbackDays)
+    const sinceISO = since.toISOString()           // e.g. 2025-10-01T00:00:00.000Z
+    const key = `${owner}/${repo}/${sinceISO}`
+
+    // Prevent duplicate fetch in React 18 StrictMode dev double-mount
+    if (fetchedKeyRef.current === key) return
+    fetchedKeyRef.current = key
+
     ;(async () => {
       try {
         setLoading(true)
         setError(undefined)
-        const since = new Date()
-        since.setUTCDate(since.getUTCDate() - lookbackDays)
-
         const [list, md] = await Promise.all([
-          fetchAllCommits(owner, repo, since.toISOString()),
-          // Never throw on missing progress.md
+          fetchAllCommits(owner, repo, sinceISO),
           fetchProgressMd(owner, repo).catch(() => null),
         ])
-
         if (!alive) return
         setCommits(list)
         setBlurbs(parseBlurbs(md))
@@ -96,6 +104,7 @@ export default function useProgress(owner: string, repo: string, lookbackDays = 
         if (alive) setLoading(false)
       }
     })()
+
     return () => { alive = false }
   }, [owner, repo, lookbackDays])
 

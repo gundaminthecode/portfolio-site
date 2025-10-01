@@ -1,5 +1,5 @@
 /* ===========================
-  Project Grid Styles (UI-only; no layout columns here)
+  Project Grid Styles
   =========================== */
 
 @import "../styles/index.css";
@@ -37,7 +37,7 @@
 }
 .filters__label { display: block; font-size: .9rem; font-weight: 600; margin-bottom: .5rem; opacity: .9; }
 .filters__hint { font-size: .8rem; opacity: .7; margin: .25rem 0 .5rem; }
-.filters__list { display: grid; grid-template-columns: 1fr; gap: .5rem; }
+.filters__list { display: grid; grid-template-columns: 1fr; gap: .5rem; list-style: none;}
 .filters__check { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
 .filters input[type="checkbox"],
 .projects-filters input[type="checkbox"] { accent-color: var(--r4-yellow); }

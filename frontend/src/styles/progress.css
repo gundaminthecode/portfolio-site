@@ -1,3 +1,5 @@
+/* src/styles/progress.css */
+
 /* Heatmap (bigger cells + adaptive spacing) */
 .progress-heatmap {
   --cell: clamp(14px, 4.5vw, 20px);    /* was 12px — larger, mobile-friendly */

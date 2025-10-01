@@ -16,7 +16,10 @@ export default function ProjectProgress({ owner, repo }: Props) {
 
   return (
     <div className="projects-content">
-      <ProgressHeatmap countsByDate={countsByDate} onSelect={setSelectedDate} />
+        <div className="heatmap">
+            <ProgressHeatmap countsByDate={countsByDate} onSelect={setSelectedDate} />
+        </div>
+      
       <div className="commit-list" aria-live="polite">
         {commits.length === 0 ? (
           <div className="hud">No commits on {selectedDate}</div>

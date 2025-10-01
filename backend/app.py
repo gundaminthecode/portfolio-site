@@ -20,15 +20,15 @@ cache = Cache(
     },
 )
 
-def gh_headers(extra: Dict[str, str] | None = None) -> Dict[str, str]:
+def gh_headers(extra: Dict[str,str] | None = None) -> Dict[str,str]:
     h = {
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
+        "User-Agent": "portfolio-site-backend",   # NEW
     }
     if GITHUB_TOKEN:
         h["Authorization"] = f"Bearer {GITHUB_TOKEN}"
-    if extra:
-        h.update(extra)
+    if extra: h.update(extra)
     return h
 
 def with_cache_headers(resp, seconds=CACHE_TTL):
@@ -47,6 +47,11 @@ def cache_miss_response(key, data, ttl=CACHE_TTL):
     resp.headers["X-Cache"] = "MISS"
     resp.headers["Cache-Control"] = f"public, max-age={ttl}"
     return resp
+
+def respond(data, cache_state="MISS"):
+    resp = jsonify(data)
+    resp.headers["X-Cache"] = cache_state
+    return with_cache_headers(resp)
 
 @app.get("/api/repos")
 def list_repos():
@@ -125,16 +130,18 @@ def list_repos():
 
 @app.get("/api/commits")
 def commits():
-    owner = request.args.get("owner", "").strip()
-    repo = request.args.get("repo", "").strip()
-    since = request.args.get("since", "").strip()
+    owner = request.args.get("owner","").strip()
+    repo = request.args.get("repo","").strip()
+    since = request.args.get("since","").strip()  # ISO
     if not owner or not repo or not since:
         abort(400, "owner, repo and since are required")
 
-    ck = f"commits:{owner}:{repo}:{since[:10]}"
+    # Normalize cache key to the day so reloads share cache
+    since_day = since[:10]                        # YYYY-MM-DD
+    ck = f"commits:{owner}:{repo}:{since_day}"
     cached = cache.get(ck)
     if cached is not None:
-        return cache_hit_response(cached)
+        resp = jsonify(cached); resp.headers["X-Cache"] = "HIT"; return with_cache_headers(resp)
 
     @cache.memoize(timeout=CACHE_TTL)
     def _fetch(owner: str, repo: str, since: str) -> List[Dict[str, Any]]:
@@ -174,67 +181,86 @@ def commits():
 
 @app.get("/api/progress-md")
 def progress_md():
-    owner = request.args.get("owner", "").strip()
-    repo = request.args.get("repo", "").strip()
+    owner = request.args.get("owner","").strip()
+    repo = request.args.get("repo","").strip()
     if not owner or not repo:
         abort(400, "owner and repo are required")
 
-    ck = f"progressmd:{owner}:{repo}"
-    cached = cache.get(ck)
-    if cached is not None:
-        return with_cache_headers(jsonify(cached))
-
+    key = f"progressmd:{owner}:{repo}"
+    cached = cache.get(key + ":data")
+    etag = cache.get(key + ":etag")
     candidates = [
-        "progress.md", "Progress.md", "PROGRESS.md",
-        "docs/progress.md", "docs/Progress.md", "docs/PROGRESS.md",
-        ".github/progress.md", ".github/PROGRESS.md",
+        "progress.md","Progress.md","PROGRESS.md",
+        "docs/progress.md","docs/Progress.md","docs/PROGRESS.md",
+        ".github/progress.md",".github/PROGRESS.md",
     ]
-
     for path in candidates:
         url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
-        r = requests.get(
-            url,
-            headers=gh_headers({"Accept": "application/vnd.github.v3.raw"}),
-            timeout=15,
-        )
+        headers = gh_headers({"Accept": "application/vnd.github.v3.raw"})
+        if etag:
+            headers["If-None-Match"] = etag
+        r = requests.get(url, headers=headers, timeout=15)
+        if r.status_code == 304 and cached is not None:
+            return respond({"path": cache.get(key + ":path"), "content": cached}, "REVALIDATED")
         if r.ok:
-            data = {"path": path, "content": r.text}
-            cache.set(ck, data, timeout=CACHE_TTL)
-            return with_cache_headers(jsonify(data))
+            new_etag = r.headers.get("ETag")
+            cache.set(key + ":data", r.text, timeout=CACHE_TTL)
+            cache.set(key + ":path", path, timeout=CACHE_TTL)
+            if new_etag:
+                cache.set(key + ":etag", new_etag, timeout=CACHE_TTL)
+            return respond({"path": path, "content": r.text}, "MISS")
         if r.status_code == 403:
             abort(403, "GitHub rate limit. Set GITHUB_TOKEN on the server.")
 
-    # Not found → return empty payload (avoid noisy 404)
-    data = {"path": None, "content": ""}
-    cache.set(ck, data, timeout=CACHE_TTL)
-    return with_cache_headers(jsonify(data))
+    # none found → cache empty result
+    cache.set(key + ":data", "", timeout=CACHE_TTL)
+    cache.set(key + ":path", None, timeout=CACHE_TTL)
+    return respond({"path": None, "content": ""}, "MISS")
 
 @app.get("/api/case-study")
 def case_study():
-    owner = request.args.get("owner", "").strip()
-    repo = request.args.get("repo", "").strip()
+    owner = request.args.get("owner","").strip()
+    repo = request.args.get("repo","").strip()
     if not owner or not repo:
         abort(400, "owner and repo are required")
 
-    ck = f"casestudy:{owner}:{repo}"
-    cached = cache.get(ck)
-    if cached is not None:
-        return cache_hit_response(cached)
+    key = f"casestudy:{owner}:{repo}"
+    cached = cache.get(key + ":data")
+    etag = cache.get(key + ":etag")
+    for path in ["docs/CASESTUDY.md","docs/casestudy.md","CASESTUDY.md","casestudy.md","CASE_STUDY.md"]:
+        url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
+        headers = gh_headers({"Accept": "application/vnd.github.v3.raw"})
+        if etag:
+            headers["If-None-Match"] = etag
+        r = requests.get(url, headers=headers, timeout=15)
+        if r.status_code == 304 and cached is not None:
+            return respond({"path": cache.get(key + ":path"), "content": cached}, "REVALIDATED")
+        if r.ok:
+            new_etag = r.headers.get("ETag")
+            cache.set(key + ":data", r.text, timeout=CACHE_TTL)
+            cache.set(key + ":path", path, timeout=CACHE_TTL)
+            if new_etag:
+                cache.set(key + ":etag", new_etag, timeout=CACHE_TTL)
+            return respond({"path": path, "content": r.text}, "MISS")
+        if r.status_code == 403:
+            abort(403, "GitHub rate limit. Set GITHUB_TOKEN on the server.")
+    return respond({"path": None, "content": ""}, "MISS")
 
-    @cache.memoize(timeout=CACHE_TTL)
-    def _fetch(owner: str, repo: str) -> Dict[str, str]:
-        for path in ["docs/CASESTUDY.md", "docs/casestudy.md", "CASESTUDY.md", "casestudy.md", "CASE_STUDY.md"]:
-            url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
-            r = requests.get(url, headers=gh_headers({"Accept": "application/vnd.github.v3.raw"}), timeout=15)
-            if r.ok:
-                return {"path": path, "content": r.text}
-            if r.status_code == 403:
-                abort(403, "GitHub rate limit. Set GITHUB_TOKEN on the server.")
-        abort(404, "case study not found")
-
-    data = _fetch(owner, repo)
-    data = data
-    return cache_miss_response(ck, data)
+@app.get("/api/health")
+def health():
+    # Report whether token is loaded and current rate limit
+    try:
+        r = requests.get("https://api.github.com/rate_limit", headers=gh_headers(), timeout=10)
+        data = r.json() if r.ok else {"error": r.text}
+        return jsonify({
+            "token_present": bool(bool(GITHUB_TOKEN)),
+            "status": r.status_code,
+            "rate": data.get("rate") or data,
+            "core_remaining": r.headers.get("x-ratelimit-remaining"),
+            "core_reset": r.headers.get("x-ratelimit-reset"),
+        })
+    except Exception as e:
+        return jsonify({"token_present": bool(GITHUB_TOKEN), "error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "8000")), debug=bool(os.getenv("DEBUG")))
