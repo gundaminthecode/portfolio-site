@@ -3,6 +3,7 @@
 import ProjectSlide from "./ProjectSlide";
 import type { Repo } from "./ProjectCard";
 import "../../styles/project-grid.css";
+import "../../styles/project-cards.css"; // NEW: visuals for cards
 
 
 export default function ProjectGrid({ repos }: { repos: Repo[] }) {

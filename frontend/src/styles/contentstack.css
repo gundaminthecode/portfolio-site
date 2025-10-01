@@ -1,0 +1,42 @@
+/* ===========================
+  Content Stack + Slice (generic)
+  =========================== */
+
+:root {
+  --slice-gap: 2rem;            /* gap between slices */
+  --slice-bg: var(--r4-yellow); /* default slice background */
+  --slice-skew: 2deg;           /* default skew */
+}
+
+/* Vertical stack of slices */
+#content-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--slice-gap);
+}
+
+/* Each slice provides a background + skew (generic) */
+.content-slice {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--slice-bg);
+  transform: skewY(var(--slice-skew));
+  transform-origin: top left;
+}
+
+/* Real content cancels the skew and sits above bg */
+.content-slice > .slice-content {
+  position: relative;
+  z-index: 1;
+  transform: skewY(calc(-1 * var(--slice-skew)));
+  transform-origin: top left;
+  width: 85%;
+  margin: 3rem auto;
+  box-sizing: border-box;
+}
+
+/* Compact gaps on small screens */
+@media (max-width: 600px) {
+  #content-stack { gap: 1rem; }
+}

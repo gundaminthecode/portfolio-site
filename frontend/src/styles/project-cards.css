@@ -1,0 +1,57 @@
+/* ===========================
+  Project Card Styles (visuals only)
+  =========================== */
+
+/* Card sizing vars scoped to the grid */
+.projects-grid {
+  --card-h: clamp(180px, 20vw, 340px);
+  --card-pad: clamp(0.6rem, 0.5vw + 0.35rem, 0.9rem);
+}
+@media (max-width: 600px) {
+  .projects-grid { --card-h: clamp(150px, 26vw, 260px); --card-pad: clamp(0.5rem, 1vw, 0.75rem); }
+}
+@media (max-width: 380px) {
+  .projects-grid { --card-h: clamp(135px, 28vw, 220px); --card-pad: 0.5rem; }
+}
+
+/* Visual card styling + containment */
+.projects-grid .project-slide,
+.projects-grid .project-slide.project-slide--grid {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: var(--card-h) !important;
+  padding: var(--card-pad);
+  box-sizing: border-box;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--header-colour) 10%, transparent);
+  border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
+  overflow: hidden;
+}
+
+/* Prevent media or inner layout from forcing overflow */
+.projects-grid .project-slide,
+.projects-grid .project-slide * {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.projects-grid .project-slide img,
+.projects-grid .project-slide video,
+.projects-grid .project-slide svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Typography inside cards */
+.project-slide__title { font-size: var(--fs-700); line-height: 1.15; margin: 0 0 .35rem 0; }
+.project-slide__desc  { font-size: var(--fs-400); line-height: 1.4; }
+.project-slide__meta,
+.project-slide__tags  { font-size: var(--fs-300); line-height: 1.35; }
+
+/* Legacy .card blocks used elsewhere */
+#projects-grid .card, .projects-grid .card {
+  width: 100%;
+  height: auto;
+}

@@ -3,6 +3,7 @@
   =========================== */
 
 @import "./scroll-reveal.css";
+@import "./contentstack.css"; /* NEW: generic content stack/slice rules */
 
 .App { min-height: 100dvh; display: flex; flex-direction: column; }
 .App > main {
@@ -71,7 +72,7 @@ header {
 .header-cutout__text {
   font-family: "Audiowide", sans-serif;
   font-weight: 400;
-  font-size: 10rem;
+  font-size: 10vh;
   letter-spacing: 0.06em; /* match .logo spacing */
 }
 
@@ -79,7 +80,7 @@ header {
 @media (max-width: 1900px) {
   header .logo,
   .header-cutout__text {
-    font-size: clamp(6rem, 9vw, 10rem);
+    font-size: clamp(3rem, 9vw, 7rem);
   }
 }
 
@@ -187,30 +188,9 @@ header .logo {
 
 /* ===== Content Stack (desktop) ===== */
 
-/* Generic slice layout (used by all pages) */
-#content-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.content-slice {
-  position: relative;
-  z-index: 0;
-  overflow: hidden;
-  --slice-skew: 0deg;                 /* default */
-  transform: skewY(var(--slice-skew));
-  transform-origin: top left;
-  padding: 2rem 0;;
-}
-
-/* Cancel the skew for real content */
-.slice-content {
-  position: relative;
-  z-index: 1;
-  transform: skewY(calc(-1 * var(--slice-skew)));
-  transform-origin: top left;
-}
+/* Removed: any #content-stack, .content-slice, .slice-content base rules.
+   These now live in contentstack.css. Page-specific slice IDs remain
+   in their own files (projects.css, project-info.css, Home.css). */
 
 /* Phone-specific polish (optional) */
 @media (max-width: 768px) {
@@ -254,7 +234,7 @@ header .logo {
 /* Desktop: hide mobile header icons, show right rail, pad content */
 @media (min-width: 1901px) {
   .header-cutout__text {
-    font-size: 13rem;
+    font-size: 9rem;
   }
 }
 
