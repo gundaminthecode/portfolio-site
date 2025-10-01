@@ -1,6 +1,8 @@
 // src/pages/Home.tsx
 import GithubProjects from "../components/Projects/GithubProjects";
 import "../styles/Home.css";
+import { NavLink} from "react-router-dom";
+
 
 import { CONFIG } from "../config";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
@@ -10,7 +12,6 @@ const username = CONFIG.GITHUB_USERNAME;
 
 export default function Home() {
   useScrollReveal();
-  
 
   return (
     <>
@@ -42,7 +43,8 @@ export default function Home() {
             />
           </div>
           <div id="this-project">
-            <h2>Want to learn more about this project?</h2>
+            <h2>Want to learn more about this portfolio project?</h2>
+            <button><NavLink to="/portfolio-project">View Project Breakdown</NavLink></button>
           </div>
         </div>
         

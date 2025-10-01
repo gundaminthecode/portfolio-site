@@ -49,7 +49,7 @@ function App() {
           <nav id="navBar" aria-label="Primary">
             <NavLink to="/" end className={navClass} aria-label="Home"><Home size={24} /></NavLink>
             <NavLink to="/projects" className={navClass} aria-label="Projects"><FolderGit2 size={24} /></NavLink>
-            <a href="#/##about" className="navBar__link" aria-label="About"><User2 size={24} /></a>
+            <NavLink to="/about-me" className={navClass} aria-label="About"><User2 size={24} /></NavLink>
             <a href="#/##contact" className="navBar__link" aria-label="Contact"><Mail size={24} /></a>
           </nav>
         </div>
