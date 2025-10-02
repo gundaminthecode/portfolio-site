@@ -25,6 +25,7 @@
   transform: skewY(var(--slice-skew));
   transform-origin: top left;
   padding: 2rem;
+  box-shadow: 8px 8px 0 hsla(0, 0%, 78%);
 }
 
 /* Real content sits above, never skewed */
@@ -38,6 +39,7 @@
   align-items: center;
   transform: skewY(calc(-1 * var(--slice-skew)));
   padding-block-end: var(--slice-safe-bottom);  /* NEW: reserve room for floating bg */;
+  
 }
 
 /* Compact gaps on small screens */

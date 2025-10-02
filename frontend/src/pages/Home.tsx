@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
     <div id="content-stack">
-      <div className="content-slice" id="headshot-slice">
+      <div className="" id="headshot-slice">
         <div id="headshot-circle">
           HI
         </div>
