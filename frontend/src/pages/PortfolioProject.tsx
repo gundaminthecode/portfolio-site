@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 export default function PortfolioProject() {
+    useScrollReveal();
+    
+
     return (
         <div id='content-stack'>
             <Link to="/" className='back-link'>← Back to Home</Link>

@@ -18,19 +18,15 @@ function fmt(d: Date) {
 }
 
 export default function ProgressHeatmap({ countsByDate, onSelect, start, end }: Props) {
-  const { weeks, max, monthLabels } = useMemo(() => {
+  const { weeks, max, monthSegments } = useMemo(() => {
     const today = end
       ? new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate()))
       : new Date()
     const lastSunday = startOfWeekSun(today)
 
-    // Find first commit date (min key in countsByDate) if available
-    const keys = Object.keys(countsByDate).sort() // ISO sorts chronologically
-    const firstCommitDate = keys.length
-      ? startOfWeekSun(new Date(keys[0]))
-      : null
+    const keys = Object.keys(countsByDate).sort()
+    const firstCommitDate = keys.length ? startOfWeekSun(new Date(keys[0])) : null
 
-    // Default to 52 weeks lookback, but never earlier than repo’s first commit week
     const defaultStart = (() => {
       const d = new Date(lastSunday)
       d.setUTCDate(d.getUTCDate() - 7 * 52)
@@ -40,14 +36,17 @@ export default function ProgressHeatmap({ countsByDate, onSelect, start, end }: 
     let startDate = start ? startOfWeekSun(start) : defaultStart
     if (firstCommitDate && firstCommitDate > startDate) startDate = firstCommitDate
 
-    // Build columns of weeks
-    const weeks: { startISO: string; days: { date: string; count: number }[]; isMonthStart: boolean }[] = []
+    const weeks: {
+      startISO: string
+      days: { date: string; count: number }[]
+      isMonthStart: boolean
+    }[] = []
+
     let cursor = new Date(startDate)
     let max = 0
     while (cursor <= lastSunday) {
       const colDays: { date: string; count: number }[] = []
       const colStart = new Date(cursor)
-      const monthBefore = colStart.getUTCMonth()
       for (let i = 0; i < 7; i++) {
         const key = fmt(cursor)
         const count = countsByDate[key] || 0
@@ -55,46 +54,60 @@ export default function ProgressHeatmap({ countsByDate, onSelect, start, end }: 
         colDays.push({ date: key, count })
         cursor.setUTCDate(cursor.getUTCDate() + 1)
       }
-      const isMonthStart =
-        weeks.length > 0
-          ? new Date(fmt(colStart)).getUTCMonth() !== new Date(weeks[weeks.length - 1].startISO).getUTCMonth()
-          : true
+      const prev = weeks[weeks.length - 1]
+      const isMonthStart = prev
+        ? new Date(colStart).getUTCMonth() !== new Date(prev.startISO).getUTCMonth()
+        : true
       weeks.push({ startISO: fmt(colStart), days: colDays, isMonthStart })
     }
 
-    const monthLabels = weeks.map((w, i) => {
-      const d = new Date(w.startISO)
-      const label = d.toLocaleString(undefined, { month: "short" })
-      if (i === 0) return label
-      const prev = new Date(weeks[i - 1].startISO)
-      return d.getUTCMonth() !== prev.getUTCMonth() ? label : ""
-    })
+    // Build month segments: label starts on the week that contains day=1
+    const weekHasFirst = (w: typeof weeks[number]) =>
+      w.days.some(d => new Date(d.date).getUTCDate() === 1)
 
-    return { weeks, max, monthLabels }
+    const labelForWeek = (w: typeof weeks[number]) => {
+      const firstIdx = w.days.findIndex(d => new Date(d.date).getUTCDate() === 1)
+      const d = new Date(firstIdx >= 0 ? w.days[firstIdx].date : w.days[0].date)
+      return d.toLocaleString(undefined, { month: "long" }) // full month name
+    }
+
+    const monthSegments: { label: string; span: number }[] = []
+    if (weeks.length) {
+      let segStart = 0
+      let segLabel = labelForWeek(weeks[0])
+      for (let i = 1; i < weeks.length; i++) {
+        if (weekHasFirst(weeks[i])) {
+          monthSegments.push({ label: segLabel, span: i - segStart })
+          segStart = i
+          segLabel = labelForWeek(weeks[i])
+        }
+      }
+      monthSegments.push({ label: segLabel, span: weeks.length - segStart })
+    }
+
+    return { weeks, max, monthSegments }
   }, [countsByDate, start, end])
 
-  const level = (n: number) => {
-    if (n === 0) return 0
-    if (n <= 1) return 1
-    if (n <= 3) return 2
-    if (n <= 6) return 3
-    return 4
-  }
+  const level = (n: number) => (n === 0 ? 0 : n <= 1 ? 1 : n <= 3 ? 2 : n <= 6 ? 3 : 4)
 
   return (
     <div className="progress-heatmap" aria-label="Commit activity">
       <div className="months" aria-hidden>
-        {monthLabels.map((m, i) => (
-          <span key={i} className="label">{m}</span>
+        {monthSegments.map((seg, i) => (
+          <span
+            key={i}
+            className="label"
+            style={{
+              width: `calc(var(--cell) * ${seg.span} + var(--gap) * ${Math.max(seg.span - 1, 0)})`,
+            }}
+          >
+            {seg.label}
+          </span>
         ))}
       </div>
       <div className="weeks" role="grid">
         {weeks.map((w, i) => (
-          <div
-            key={i}
-            className={`week${w.isMonthStart && i !== 0 ? " month-start" : ""}`}
-            role="row"
-          >
+          <div key={i} className={`week${w.isMonthStart && i !== 0 ? " month-start" : ""}`} role="row">
             {w.days.map((d) => (
               <button
                 key={d.date}

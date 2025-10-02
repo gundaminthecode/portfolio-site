@@ -26,17 +26,14 @@
   opacity: .9;
   user-select: none;
   max-width: 100%;
-  overflow: hidden; /* clip to container, weeks row handles scrolling */
+  overflow: hidden;
 }
 .progress-heatmap .months .label {
-  flex: 0 0 var(--cell);              /* width matches a week column */
-  width: var(--cell);
-  text-align: left;
+  flex: 0 0 auto;              /* width is set inline to span N week columns */
+  width: auto;
   white-space: nowrap;
   min-width: 0;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: left;
 }
 
 /* Weeks row with month dividers */
@@ -59,16 +56,6 @@
   grid-auto-rows: var(--cell);
   gap: var(--gap);
   scroll-snap-align: start;
-}
-.progress-heatmap .week.month-start::before {
-  content: "";
-  position: absolute;
-  left: calc(var(--gap) * -0.5);      /* draw in the middle of the gap */
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: color-mix(in oklab, var(--header-colour) 30%, transparent);
-  opacity: .7;
 }
 
 /* Text wrapping safety (no overflow) */

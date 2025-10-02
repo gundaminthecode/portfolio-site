@@ -21,7 +21,7 @@ type Props = {
 };
 
 export default function Projects(props: Props) {
-  useScrollReveal(); // activates reveal on .content-slice .slice-content
+  useScrollReveal();
 
   const {
     username,
