@@ -1,5 +1,5 @@
 // src/hooks/useProgress.ts
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 export type Commit = {
   sha: string
@@ -12,14 +12,14 @@ const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "")
 
 async function fetchAllCommits(owner: string, repo: string, sinceISO: string, signal?: AbortSignal) {
   const url = `${API_BASE}/api/commits?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}&since=${encodeURIComponent(sinceISO)}`
-  const res = await fetch(url, { signal })              // removed cache: "no-store"
+  const res = await fetch(url, { signal, cache: "no-store" }) // prevent HTTP cache bleed
   if (!res.ok) throw new Error(await res.text())
   return (await res.json()) as Commit[]
 }
 
 async function fetchProgressMd(owner: string, repo: string, signal?: AbortSignal): Promise<string | null> {
   const url = `${API_BASE}/api/progress-md?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}`
-  const res = await fetch(url, { signal })              // removed cache: "no-store"
+  const res = await fetch(url, { signal, cache: "no-store" }) // prevent HTTP cache bleed
   if (res.status === 404) return null
   if (!res.ok) throw new Error(await res.text())
   const data = (await res.json()) as { path: string | null; content: string }
@@ -52,67 +52,103 @@ function parseBlurbs(md: string | null): Record<string, string> {
   return map
 }
 
-export default function useProgress(owner: string, repo: string, lookbackDays = 365) {
-  const [commits, setCommits] = useState<Commit[]>([])
-  const [blurbs, setBlurbs] = useState<Record<string, string>>({})
+// Module-level cache keyed per owner/repo/window so results don't bleed between projects
+const PROGRESS_CACHE = new Map<string, {
+  commitsByDate: Record<string, Commit[]>;
+  countsByDate: Record<string, number>;
+  blurbsBySha: Record<string, string>;
+}>()
+
+export default function useProgress(owner: string, repo: string, days = 365) {
+  const [commitsByDate, setCommitsByDate] = useState<Record<string, Commit[]>>({})
+  const [countsByDate, setCountsByDate] = useState<Record<string, number>>({})
+  const [blurbsBySha, setBlurbsBySha] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)        // start false; set true only when we actually fetch
   const [error, setError] = useState<string | undefined>()
+  const reqId = useRef(0) // guards late responses
+
+  // normalize for cache key so "Nick/Repo" and "nick/repo" share the same entry
+  const oKey = (owner || "").toLowerCase().trim()
+  const rKey = (repo || "").toLowerCase().trim()
+  const cacheKey = `${oKey}/${rKey}/${days}`
 
   useEffect(() => {
-    const controller = new AbortController()
-    let alive = true
+    let aborted = false
+    const ac = new AbortController()
+    const myId = ++reqId.current
 
-    async function run() {
-      if (!owner || !repo) { if (alive) setLoading(false); return }
-      setLoading(true)
-      setError(undefined)
+    setLoading(true)
+    setError(undefined)
+    setCommitsByDate({})
+    setCountsByDate({})
+    setBlurbsBySha({})
+
+    const cached = PROGRESS_CACHE.get(cacheKey)
+    if (cached) {
+      if (!aborted && reqId.current === myId) {
+        setCommitsByDate(cached.commitsByDate)
+        setCountsByDate(cached.countsByDate)
+        setBlurbsBySha(cached.blurbsBySha)
+        setLoading(false)
+      }
+      return () => { aborted = true; ac.abort() }
+    }
+
+    ;(async () => {
       try {
+        if (!owner || !repo) { if (!aborted && reqId.current === myId) setLoading(false); return }
+
         const since = startOfDayUTC(new Date())
-        since.setUTCDate(since.getUTCDate() - lookbackDays)
+        since.setUTCDate(since.getUTCDate() - days)
         const sinceISO = since.toISOString()
 
         const [commitsRes, progressRes] = await Promise.allSettled([
-          fetchAllCommits(owner, repo, sinceISO, controller.signal),
-          fetchProgressMd(owner, repo, controller.signal),
+          fetchAllCommits(owner, repo, sinceISO, ac.signal),
+          fetchProgressMd(owner, repo, ac.signal),
         ])
 
-        if (!alive) return
+        if (aborted || reqId.current !== myId) return
+
+        let nextCommitsByDate: Record<string, Commit[]> = {}
+        let nextCountsByDate: Record<string, number> = {}
 
         if (commitsRes.status === "fulfilled") {
-          setCommits(commitsRes.value)
+          const commits = commitsRes.value
+          for (const c of commits) {
+            const d = fmt(new Date(c.author.date))
+            ;(nextCommitsByDate[d] ||= []).push(c)
+            nextCountsByDate[d] = (nextCountsByDate[d] || 0) + 1
+          }
         } else {
           setError(commitsRes.reason?.message || "Failed to load commits")
-          setCommits([])
         }
 
         const md = progressRes.status === "fulfilled" ? progressRes.value : null
-        setBlurbs(parseBlurbs(md))
+        const nextBlurbsBySha = parseBlurbs(md)
+
+        const result = {
+          commitsByDate: nextCommitsByDate,
+          countsByDate: nextCountsByDate,
+          blurbsBySha: nextBlurbsBySha,
+        }
+
+        // cache and set if still latest
+        if (!aborted && reqId.current === myId) {
+          PROGRESS_CACHE.set(cacheKey, result)
+          setCommitsByDate(result.commitsByDate)
+          setCountsByDate(result.countsByDate)
+          setBlurbsBySha(result.blurbsBySha)
+          setLoading(false)
+        }
       } catch (e: any) {
-        if (alive) setError(e?.message || "Failed to load progress")
-      } finally {
-        if (alive) setLoading(false)
+        if (aborted || e?.name === "AbortError") return
+        setError(e?.message || "Failed to load progress")
+        setLoading(false)
       }
-    }
+    })()
 
-    run()
-    return () => { alive = false; controller.abort() }
-  }, [owner, repo, lookbackDays])
+    return () => { aborted = true; ac.abort() }
+  }, [owner, repo, days])
 
-  const commitsByDate = useMemo(() => {
-    const map: Record<string, Commit[]> = {}
-    for (const c of commits) {
-      const d = fmt(new Date(c.author.date))
-      ;(map[d] ||= []).push(c)
-    }
-    for (const d of Object.keys(map)) map[d].sort((a, b) => (a.author.date > b.author.date ? -1 : 1))
-    return map
-  }, [commits])
-
-  const countsByDate = useMemo(() => {
-    const m: Record<string, number> = {}
-    for (const [d, list] of Object.entries(commitsByDate)) m[d] = list.length
-    return m
-  }, [commitsByDate])
-
-  return { commitsByDate, countsByDate, blurbsBySha: blurbs, loading, error }
+  return { commitsByDate, countsByDate, blurbsBySha, loading, error }
 }

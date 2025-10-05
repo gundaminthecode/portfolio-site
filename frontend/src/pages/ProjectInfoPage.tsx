@@ -22,11 +22,10 @@ function formatK(n: number | undefined) {
 export default function ProjectInfoPage() {
   useScrollReveal();
 
-  const [qp] = useSearchParams()
-  // Allow ?repo=owner/name to override; default to your portfolio repo
-  const repoParam = qp.get("repo")
-  const owner = repoParam?.split("/")[0] || CONFIG.GITHUB_USERNAME
-  const repo = repoParam?.split("/")[1] || "portfolio-site"
+  const [qp] = useSearchParams();
+  const repoParam = qp.get("repo");
+  const urlOwner = repoParam?.split("/")[0];
+  const urlRepo = repoParam?.split("/")[1];
 
   const { id } = useParams<{ id: string }>();
 
@@ -44,6 +43,10 @@ export default function ProjectInfoPage() {
   if (loading && !outlet?.repos) return <p>Loading…</p>;
   if (error && !outlet?.repos) return <p style={{ color: "crimson" }}>Error: {error}</p>;
   if (!project) return <div>Project not found.</div>;
+
+  // Use the selected project's repo for progress (fallback to URL/defaults)
+  const ownerForProgress = project.owner?.login || urlOwner || CONFIG.GITHUB_USERNAME;
+  const repoForProgress = project.name || urlRepo || "portfolio-site";
 
   const liveHref = (project as any).live_url || (project as any).homepage || null;
 
@@ -138,7 +141,11 @@ export default function ProjectInfoPage() {
           <h1>Project Progress</h1>
           <p>Commit activity and notes from progress.md for {project.owner?.login}/{project.name}</p>
           <div>
-            <ProjectProgress owner={owner} repo={repo} />
+            <ProjectProgress
+              key={`${ownerForProgress}/${repoForProgress}`}  // force fresh hook per project
+              owner={ownerForProgress}
+              repo={repoForProgress}
+            />
           </div>
         </div>
       </div>

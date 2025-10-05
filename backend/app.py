@@ -35,6 +35,11 @@ def with_cache_headers(resp, seconds=CACHE_TTL):
     resp.headers["Cache-Control"] = f"public, max-age={seconds}"
     return resp
 
+# NEW: responses that should never be cached by the browser/proxy
+def no_store_headers(resp):
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
 def cache_hit_response(data, ttl=CACHE_TTL):
     resp = jsonify(data)
     resp.headers["X-Cache"] = "HIT"
@@ -53,12 +58,21 @@ def respond(data, cache_state="MISS"):
     resp.headers["X-Cache"] = cache_state
     return with_cache_headers(resp)
 
-# Add small helpers once:
-def _hit(data):  r = jsonify(data); r.headers["X-Cache"]="HIT";  return with_cache_headers(r)
-def _miss(key,data): cache.set(key,data,timeout=CACHE_TTL); r=jsonify(data); r.headers["X-Cache"]="MISS"; return with_cache_headers(r)
+# Helpers
+def _hit(data):
+    r = jsonify(data); r.headers["X-Cache"]="HIT";  return with_cache_headers(r)
+def _miss(key,data):
+    cache.set(key,data,timeout=CACHE_TTL); r=jsonify(data); r.headers["X-Cache"]="MISS"; return with_cache_headers(r)
+
+# NEW: no-store variants used for dynamic per-repo data
+def _hit_ns(data):
+    r = jsonify(data); r.headers["X-Cache"]="HIT";  return no_store_headers(r)
+def _miss_ns(key,data):
+    cache.set(key,data,timeout=CACHE_TTL); r=jsonify(data); r.headers["X-Cache"]="MISS"; return no_store_headers(r)
 
 @app.get("/api/repos")
 def list_repos():
+    # keep public cache for the list
     username = request.args.get("username", "").strip()
     includeForks = request.args.get("includeForks", "false").lower() == "true"
     includeArchived = request.args.get("includeArchived", "false").lower() == "true"
@@ -134,18 +148,17 @@ def list_repos():
 
 @app.get("/api/commits")
 def commits():
-    owner = request.args.get("owner","").strip()
-    repo = request.args.get("repo","").strip()
-    since = request.args.get("since","").strip()  # ISO
+    owner = (request.args.get("owner","") or "").strip().lower()
+    repo = (request.args.get("repo","") or "").strip().lower()
+    since = (request.args.get("since","") or "").strip()  # ISO
     if not owner or not repo or not since:
         abort(400, "owner, repo and since are required")
 
-    # Normalize cache key to the day so reloads share cache
-    since_day = since[:10]                        # YYYY-MM-DD
+    since_day = since[:10]
     ck = f"commits:{owner}:{repo}:{since_day}"
     cached = cache.get(ck)
     if cached is not None:
-        resp = jsonify(cached); resp.headers["X-Cache"] = "HIT"; return with_cache_headers(resp)
+        return _hit_ns(cached)  # no-store to the client
 
     @cache.memoize(timeout=CACHE_TTL)
     def _fetch(owner: str, repo: str, since: str) -> List[Dict[str, Any]]:
@@ -181,15 +194,18 @@ def commits():
 
     data = _fetch(owner, repo, since)
     out = data
-    return cache_miss_response(ck, out)
+    return _miss_ns(ck, out)  # cache server-side, but prevent client caching
 
 @app.get("/api/progress-md")
 def progress_md():
-    owner = request.args.get("owner","").strip(); repo = request.args.get("repo","").strip()
+    owner = (request.args.get("owner","") or "").strip().lower()
+    repo = (request.args.get("repo","") or "").strip().lower()
     if not owner or not repo: abort(400, "owner and repo are required")
+
     ck = f"progressmd:{owner}:{repo}"
     c = cache.get(ck)
-    if c is not None: return _hit(c)
+    if c is not None:
+        return _hit_ns(c)  # serve no-store
 
     key = f"progressmd:{owner}:{repo}"
     cached = cache.get(key + ":data")
@@ -206,7 +222,8 @@ def progress_md():
             headers["If-None-Match"] = etag
         r = requests.get(url, headers=headers, timeout=15)
         if r.status_code == 304 and cached is not None:
-            return respond({"path": cache.get(key + ":path"), "content": cached}, "REVALIDATED")
+            # revalidated; still return no-store
+            return no_store_headers(jsonify({"path": cache.get(key + ":path"), "content": cached}))
         if r.ok:
             new_etag = r.headers.get("ETag")
             cache.set(key + ":data", r.text, timeout=CACHE_TTL)
@@ -214,19 +231,18 @@ def progress_md():
             if new_etag:
                 cache.set(key + ":etag", new_etag, timeout=CACHE_TTL)
             data = {"path": path, "content": r.text}
-            return _miss(ck, data)
+            return _miss_ns(ck, data)
         if r.status_code == 403:
             abort(403, "GitHub rate limit. Set GITHUB_TOKEN on the server.")
 
-    # none found → cache empty result
     cache.set(key + ":data", "", timeout=CACHE_TTL)
     cache.set(key + ":path", None, timeout=CACHE_TTL)
-    return respond({"path": None, "content": ""}, "MISS")
+    return no_store_headers(jsonify({"path": None, "content": ""}))
 
 @app.get("/api/case-study")
 def case_study():
-    owner = request.args.get("owner","").strip()
-    repo = request.args.get("repo","").strip()
+    owner = (request.args.get("owner","") or "").strip().lower()
+    repo = (request.args.get("repo","") or "").strip().lower()
     if not owner or not repo:
         abort(400, "owner and repo are required")
 
@@ -240,17 +256,17 @@ def case_study():
             headers["If-None-Match"] = etag
         r = requests.get(url, headers=headers, timeout=15)
         if r.status_code == 304 and cached is not None:
-            return respond({"path": cache.get(key + ":path"), "content": cached}, "REVALIDATED")
+            return no_store_headers(jsonify({"path": cache.get(key + ":path"), "content": cached}))
         if r.ok:
             new_etag = r.headers.get("ETag")
             cache.set(key + ":data", r.text, timeout=CACHE_TTL)
             cache.set(key + ":path", path, timeout=CACHE_TTL)
             if new_etag:
                 cache.set(key + ":etag", new_etag, timeout=CACHE_TTL)
-            return respond({"path": path, "content": r.text}, "MISS")
+            return no_store_headers(jsonify({"path": path, "content": r.text}))
         if r.status_code == 403:
             abort(403, "GitHub rate limit. Set GITHUB_TOKEN on the server.")
-    return respond({"path": None, "content": ""}, "MISS")
+    return no_store_headers(jsonify({"path": None, "content": ""}))
 
 @app.get("/api/health")
 def health():

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import useProgress from "../../hooks/useProgress"
 import ProgressHeatmap from "./ProgressHeatmap"
 import "../../styles/progress.css"
@@ -7,9 +7,21 @@ import "../../styles/project-cards.css" // for typography vars
 type Props = { owner: string; repo: string }
 
 export default function ProjectProgress({ owner, repo }: Props) {
-  const { commitsByDate, countsByDate, blurbsBySha, loading, error } = useProgress(owner, repo, 365)
-  const [selectedDate, setSelectedDate] = useState<string>(() => new Date().toISOString().slice(0, 10))
-  const commits = useMemo(() => commitsByDate[selectedDate] || [], [commitsByDate, selectedDate])
+  const { commitsByDate, countsByDate, blurbsBySha, loading, error } =
+    useProgress(owner, repo, 365);
+
+  // Reset selected date when project changes to avoid mismatched selection
+  const [selectedDate, setSelectedDate] = useState<string>(() =>
+    new Date().toISOString().slice(0, 10)
+  );
+  useEffect(() => {
+    setSelectedDate(new Date().toISOString().slice(0, 10));
+  }, [owner, repo]);
+
+  const commits = useMemo(
+    () => commitsByDate[selectedDate] || [],
+    [commitsByDate, selectedDate]
+  );
 
   if (loading) return <div className="hud">Loading progress…</div>
   if (error) return <div className="hud">Error: {error}</div>
