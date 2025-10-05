@@ -18,7 +18,7 @@ function fmt(d: Date) {
 }
 
 export default function ProgressHeatmap({ countsByDate, onSelect, start, end }: Props) {
-  const { weeks, max, monthSegments } = useMemo(() => {
+  const { weeks, monthSegments } = useMemo(() => {
     const today = end
       ? new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate()))
       : new Date()

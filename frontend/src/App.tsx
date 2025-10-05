@@ -25,7 +25,7 @@ function App() {
           cols={18}
           rows={18}
           amp={15}
-          speed={0.5}
+          speed={0}
           colors="var(--bs-col-1) var(--bs-col-2) var(--bs-col-3) var(--bs-col-4)"
         />
       </div>

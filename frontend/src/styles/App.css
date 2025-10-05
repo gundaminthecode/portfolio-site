@@ -188,8 +188,8 @@ header .logo {
 }
 
 .back-link {
-  --hex-size: 12rem; /* base width */
-  --hex-width: 18rem; /* wider hexagon */
+  --hex-size: clamp(5rem, 6.5vw, 8rem); /* base width */
+  --hex-width: clamp(10rem, 7.5vw, 14rem); /* wider hexagon */
   --hex-height: calc(var(--hex-size) / 1.1547); /* keep original height */
   width: var(--hex-width); /* use wider width */
   height: var(--hex-height); /* fixed height */
@@ -200,7 +200,7 @@ header .logo {
   background: var(--hex-bg, hsl(223 40% 12%));
   color: var(--hex-fg, var(--text-secondary, #fff));
   text-decoration: none;
-  font-size: 2rem;
+  font-size: calc(0.25 * var(--hex-size));
   gap: 0.25rem;
   transition: background .2s ease, color .2s ease, transform .15s ease, filter .2s ease;
 }

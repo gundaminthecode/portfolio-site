@@ -7,7 +7,7 @@ export default function PortfolioProject() {
 
     return (
         <div id='content-stack'>
-            <Link to="/" className='back-link'>← Back to Home</Link>
+            <Link to="/" className='back-link'>Back</Link>
             <div className='content-slice'>
                 <div className='slice-content'>
                     <h1>Custom Developed Web-Portfolio</h1>

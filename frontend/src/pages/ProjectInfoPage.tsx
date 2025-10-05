@@ -49,13 +49,14 @@ export default function ProjectInfoPage() {
 
   return (
     <div id="content-stack">
+      <Link to="/projects" className='back-link'>Back</Link>
       {/* Hero */}
       <div className="content-slice" id="project-info-hero-slice">
         <DiagonalHexBackground route="BR_TL" zIndex={-1} />
 
         <div className="slice-content">
           <nav className="crumbs" style={{ marginBottom: ".5rem" }}>
-            <Link to="/projects">← Back to Projects</Link>
+            
           </nav>
           <header className="project-header">
             <h2>{project.name}</h2>

@@ -28,16 +28,17 @@
 /* Filter UI elements */
 .filters,
 .projects-filters { gap: 1rem; }
-.filters__title { font-size: 1.05rem; font-weight: 600; margin: 0 0 .25rem 0; }
+.filters__title { font-size: 1.05rem; font-weight: 600; margin: 0.5rem 0 .25rem 0; }
 .filters__group {
   padding: .75rem;
+  margin-top: 0.5rem;
   border-radius: 10px;
   background: color-mix(in oklab, var(--header-colour) 6%, transparent);
   border: 1px solid color-mix(in oklab, var(--header-colour) 18%, transparent);
 }
 .filters__label { display: block; font-size: .9rem; font-weight: 600; margin-bottom: .5rem; opacity: .9; }
 .filters__hint { font-size: .8rem; opacity: .7; margin: .25rem 0 .5rem; }
-.filters__list { display: grid; grid-template-columns: 1fr; gap: .5rem; list-style: none;}
+.filters__list { display: grid; grid-template-columns: 1fr; gap: .5rem; list-style: none; padding: 0;}
 .filters__check { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
 .filters input[type="checkbox"],
 .projects-filters input[type="checkbox"] { accent-color: var(--r4-yellow); }
@@ -50,6 +51,60 @@
   transition: transform 120ms ease, background 120ms ease;
 }
 .filters__chip:hover { transform: translateY(-2px); }
+.filters__reset { margin-top: 0.5rem;}
+
+/* Hex-shaped custom checkbox */
+.filters__check.hex-check,
+.hex-check {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  cursor: pointer;
+}
+
+.hex-check input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  inline-size: var(--hex-size, 24px);
+  block-size: var(--hex-size, 24px);
+  background: color-mix(in oklab, var(--header-colour) 6%, transparent);
+  /* border: 2px solid var(--r4-yellow); */
+  clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+  display: grid;
+  place-items: center;
+  transition: background .15s ease, border-color .15s ease, box-shadow .2s ease;
+}
+
+/* Checkmark glyph */
+.hex-check input[type="checkbox"]::after {
+  content: "";
+  inline-size: 60%;
+  block-size: 60%;
+  background: currentColor;
+  clip-path: polygon(14% 54%, 0% 68%, 38% 100%, 100% 20%, 86% 6%, 38% 70%);
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform .12s ease;
+  color: #111; /* visible on yellow */
+}
+
+/* States */
+.hex-check input[type="checkbox"]:hover { filter: brightness(1.05); }
+.hex-check input[type="checkbox"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--r4-yellow) 45%, transparent);
+}
+.hex-check input[type="checkbox"]:checked {
+  background: var(--r4-yellow);
+  border-color: var(--r4-yellow);
+}
+.hex-check input[type="checkbox"]:checked::after { transform: scale(1); }
+.hex-check input[type="checkbox"]:disabled { opacity: .55; cursor: not-allowed; }
+
+/* Touch: bigger tap target */
+@media (max-width: 600px) {
+  .hex-check input[type="checkbox"] { --hex-size: 28px; }
+}
 
 /* Mobile: landscape filters */
 @media (max-width: 1050px) {
