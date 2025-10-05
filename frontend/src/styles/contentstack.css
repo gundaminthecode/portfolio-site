@@ -1,34 +1,27 @@
-/* ===========================
-  Content Stack + Slice (generic)
-  =========================== */
-
 :root {
   --slice-gap: 2rem;
   --slice-bg: var(--r4-yellow);
   --slice-skew: 2deg;
-  --slice-safe-bottom: 2rem;   /* NEW: extra bottom space inside slices */
+  --slice-safe-bottom: 2rem;
 }
 
-/* Vertical stack of slices */
 #content-stack {
   display: flex;
   flex-direction: column;
   gap: var(--slice-gap);
 }
 
-/* Each slice provides a background + skew (generic) */
 .content-slice {
   position: relative;
   z-index: 0;
-  overflow: visible; /* Change this to visible */
+  overflow: visible;
   background: var(--slice-bg);
   transform: skewY(var(--slice-skew));
   transform-origin: top left;
   padding: 2rem;
-  box-shadow: 8px 8px 0 hsla(0, 0%, 78%);
+  /* box-shadow: 8px 8px 0 hsla(0, 0%, 78%); */
 }
 
-/* Real content sits above, never skewed */
 .content-slice > .slice-content {
   position: relative;
   z-index: 1;
@@ -38,10 +31,9 @@
   flex-direction: column;
   align-items: center;
   transform: skewY(calc(-1 * var(--slice-skew)));
-  padding-block-end: var(--slice-safe-bottom);  /* NEW: reserve room for floating bg */;
+  padding-block-end: var(--slice-safe-bottom);
 }
 
-/* Compact gaps on small screens */
 @media (max-width: 600px) {
   #content-stack { gap: 1rem; }
 }

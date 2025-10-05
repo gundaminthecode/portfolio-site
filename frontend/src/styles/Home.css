@@ -60,10 +60,6 @@
 }
 
 
-
-#intro-slice { --slice-skew: 2deg; background: var(--r4-yellow); }
-#projects-slice { --slice-skew: 2deg; background: var(--r4-yellow); }
-
 .hero { padding-block: var(--space-6); }
 .hero__content { display: grid; gap: var(--space-4); align-items: start; }
 @media (min-width: 768px) {

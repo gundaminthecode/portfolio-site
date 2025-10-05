@@ -5,6 +5,7 @@ import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { Home, FolderGit2, User2, Mail } from "lucide-react";
 import BrokenShapeEl from "./components/Background/BrokenShape";
+import { useEffect } from "react";
 
 const swipeTransition: Transition = {
   duration: 0.35,
@@ -16,6 +17,30 @@ const navClass = ({ isActive }: { isActive: boolean }) =>
 
 function App() {
   const location = useLocation();
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const headerEl = document.querySelector("header");
+    if (!headerEl) return;
+
+    const setVar = () => {
+      const h = Math.round(headerEl.getBoundingClientRect().height);
+      root.style.setProperty("--header-h", `${h}px`);
+    };
+
+    const ro = new ResizeObserver(setVar);
+    ro.observe(headerEl);
+
+    setVar();
+    window.addEventListener("resize", setVar);
+    // account for webfont load changing header height
+    (document as any).fonts?.ready?.then(setVar).catch(() => {});
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", setVar);
+    };
+  }, []);
 
   return (
     <div id="app-container">
@@ -31,13 +56,7 @@ function App() {
       </div>
 
       {/* Left Side Rectangle */}
-      <svg
-        className="left-rectangle"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <rect x="0" y="0" width="20vw" height="100%" fill="var(--r4-yellow)" />
-      </svg>
+      <div className="left-rectangle" aria-hidden="true" />
 
       <header>
         {/* Knockout overlay */}

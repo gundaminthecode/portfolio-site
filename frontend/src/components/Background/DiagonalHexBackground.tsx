@@ -17,10 +17,10 @@ type Props = {
 };
 
 const DiagonalHexBackground: React.FC<Props> = ({
-  count = 6,
+  count = 10,
   mainColor = "#fff",
   ghostColor = "#fff",
-  durationRangeSec = [10, 18],
+  durationRangeSec = [15, 20],
   strokeWidth = 10,
   route = "BL_TR",
   spawnPad = 12,
@@ -121,7 +121,12 @@ const DiagonalHexBackground: React.FC<Props> = ({
                 position: "absolute",
                 left: start.left,
                 top: start.top,
-                animation: `move-${idx} ${h.dur}s linear infinite`,
+                // animation: `move-${idx} ${h.dur}s linear infinite`,
+                // animationDelay: `${h.negDelay}s`,
+                animationName: `move-${idx}`,
+                animationDuration: `${h.dur}s`,
+                animationTimingFunction: "linear",
+                animationIterationCount: "infinite",
                 animationDelay: `${h.negDelay}s`,
                 willChange: "left, top",
               }}
@@ -138,7 +143,12 @@ const DiagonalHexBackground: React.FC<Props> = ({
                   style={{
                     transform: `scale(${h.scale})`,
                     transformOrigin: "center",
-                    animation: `hex-spin ${h.spinDur}s linear infinite`,
+                    // animation: `hex-spin ${h.spinDur}s linear infinite`,
+                    // animationDirection: h.rotDir < 0 ? "reverse" : "normal",
+                    animationName: "hex-spin",
+                    animationDuration: `${h.spinDur}s`,
+                    animationTimingFunction: "linear",
+                    animationIterationCount: "infinite",
                     animationDirection: h.rotDir < 0 ? "reverse" : "normal",
                   }}
                 >
