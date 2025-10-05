@@ -27,7 +27,7 @@ export default function Home() {
           <div id="intro-text" className="align-center-col">
             <h1>Hi, I'm Nick</h1>
             <p>I'm an emerging developer specializing in web applications and interactive experiences. Welcome to my portfolio site!</p>
-            <button><NavLink to="/about-me">Learn More About Me</NavLink></button>
+            <NavLink to="/about-me" className="home_link_button">Learn More About Me</NavLink>
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@ export default function Home() {
           </div>
           <div id="this-project">
             <h2>Want to learn more about this portfolio project?</h2>
-            <button><NavLink to="/portfolio-project">View Project Breakdown</NavLink></button>
+            <NavLink to="/portfolio-project" className="home_link_button">View Project Breakdown</NavLink>
           </div>
         </div>
         

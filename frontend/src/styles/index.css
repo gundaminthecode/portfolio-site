@@ -40,10 +40,6 @@
   --fs-900: clamp(2.10rem, 3.00vw + 1.00rem, 3.00rem);
 }
 
-/* Removed duplicate/competing globals
-   - --card-w / --card-h: now owned by project-cards.css and carousel.css
-   - Per-range font-size/body vars
-*/
 
 /* Base + reset */
 *, *::before, *::after { box-sizing: border-box; }
@@ -56,6 +52,11 @@ body {
   line-height: 1.6;
   font-size: var(--fs-400);
   text-rendering: optimizeLegibility;
+
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
 }
 
 h1 { font-size: var(--fs-900); line-height: 1.1; }

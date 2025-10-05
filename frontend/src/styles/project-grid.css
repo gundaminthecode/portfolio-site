@@ -2,7 +2,8 @@
   Project Grid Styles
   =========================== */
 
-@import "../styles/index.css";
+/* REMOVE this line to avoid re-importing global styles and altering cascade */
+/* @import "../styles/index.css"; */
 
 /* Sticky sidebar + filter panel look (reused on info page) */
 .filter-panel,
@@ -63,6 +64,7 @@
 }
 
 .hex-check input[type="checkbox"] {
+  --hex-size: 28px; /* default size */
   appearance: none;
   -webkit-appearance: none;
   inline-size: var(--hex-size, 24px);

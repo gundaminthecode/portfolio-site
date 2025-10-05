@@ -16,7 +16,6 @@ export default function ProjectSlide({
   variant = "carousel",
   className,
 }: Props) {
-  const live = (repo.live_url ?? repo.homepage ?? "").trim() || undefined;
   const updated =
     repo.updated_at?.length === 0
       ? ""
@@ -45,8 +44,8 @@ export default function ProjectSlide({
       )}
 
       <div className="project-slide__meta">
-        <span title="Stars">★ {repo.stargazers_count}</span>
-        <span title="Forks">⑂ {repo.forks_count}</span>
+        <span title="Stars">★ {repo.stargazers_count}</span><br />
+        <span title="Forks">⑂ {repo.forks_count}</span><br />
         {updated && (
           <span title="Last updated" style={{ marginLeft: "auto" }}>
             ⏱ {updated}
@@ -57,10 +56,11 @@ export default function ProjectSlide({
       <footer className="project-slide__actions">
         <Link
           to={`/project/${repo.id}`}
-          style={{ textDecoration: "none", color: "inherit" }}
+          id="project-button"
         >
-          <h3 style={{ margin: 0 }}>View Project</h3>
+          View Project
         </Link>
+
         <a
           href={repo.html_url}
           target="_blank"
@@ -69,16 +69,6 @@ export default function ProjectSlide({
         >
           View Repository
         </a>
-        {live && (
-          <a
-            href={live}
-            target="_blank"
-            rel="noopener noreferrer"
-            id="site-button"
-          >
-            Live Site
-          </a>
-        )}
       </footer>
     </article>
   );
