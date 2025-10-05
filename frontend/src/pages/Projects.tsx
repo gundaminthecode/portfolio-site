@@ -56,7 +56,6 @@ export default function Projects(props: Props) {
         <div className="content-slice" id="projects-grid-slice">
           <DiagonalHexBackground route="BR_TL" zIndex={-1} />
           <div className="slice-content">
-            {/* Make this the direct flex child so flex:1 applies */}
             <aside
               id="projects-filters"
               className="projects-filters filter-panel filter-panel--desktop app-divs"

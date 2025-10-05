@@ -20,7 +20,7 @@
 .content-slice {
   position: relative;
   z-index: 0;
-  overflow: hidden;
+  overflow: visible; /* Change this to visible */
   background: var(--slice-bg);
   transform: skewY(var(--slice-skew));
   transform-origin: top left;
@@ -39,7 +39,6 @@
   align-items: center;
   transform: skewY(calc(-1 * var(--slice-skew)));
   padding-block-end: var(--slice-safe-bottom);  /* NEW: reserve room for floating bg */;
-  
 }
 
 /* Compact gaps on small screens */

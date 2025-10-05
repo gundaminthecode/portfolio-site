@@ -40,6 +40,7 @@
   border-radius: 12px;
   background: color-mix(in oklab, var(--header-colour) 10%, transparent);
   border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
+  backdrop-filter: blur(3px);
   overflow: hidden;                           /* keep inner media contained */
 }
 
@@ -59,9 +60,22 @@
   display: block;
 }
 
+.project-slide__header {
+  padding: 1rem 0;
+}
+
+.project-slide__actions {
+  margin-top: auto; /* Push to bottom */
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  background: none;
+}
+
 /* Typography inside cards (line clamp to stabilize height) */
 .project-slide__title {
   font-size: var(--fs-700);
+  font-weight: 600; /* Adjust weight for better clarity */
   line-height: 1.15;
   margin: 0 0 .35rem 0;
   display: -webkit-box;
@@ -72,6 +86,7 @@
 }
 .project-slide__desc  {
   font-size: var(--fs-400);
+  font-weight: 400; /* Adjust weight for better clarity */
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 3;       /* at most 3 lines */
@@ -92,4 +107,9 @@
 #projects-grid .card, .projects-grid .card {
   width: 100%;
   height: auto;
+}
+
+.project-slide {
+  -webkit-font-smoothing: antialiased; /* For WebKit browsers */
+  -moz-osx-font-smoothing: grayscale;   /* For Firefox on macOS */
 }

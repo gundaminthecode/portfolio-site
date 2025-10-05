@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Add useState import
+import { useState } from 'react'; // Add useState import
 import type { Repo } from "./ProjectCard";
 
 // Types

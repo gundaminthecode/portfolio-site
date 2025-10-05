@@ -8,7 +8,7 @@ import BrokenShapeEl from "./components/Background/BrokenShape";
 
 const swipeTransition: Transition = {
   duration: 0.35,
-  ease: [0.22, 1, 0.36, 1] as const, // 👈 tuple, not number[]
+  ease: [0.22, 1, 0.36, 1] as const,
 };
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
@@ -22,13 +22,22 @@ function App() {
       {/* Site-wide animated background */}
       <div id="site-bg" aria-hidden="true">
         <BrokenShapeEl
-          cols={18}
-          rows={18}
+          cols={12}
+          rows={14}
           amp={15}
-          speed={0}
+          speed={0.1}
           colors="var(--bs-col-1) var(--bs-col-2) var(--bs-col-3) var(--bs-col-4)"
         />
       </div>
+
+      {/* Left Side Rectangle */}
+      <svg
+        className="left-rectangle"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <rect x="0" y="0" width="20vw" height="100%" fill="var(--r4-yellow)" />
+      </svg>
 
       <header>
         {/* Knockout overlay */}
@@ -59,10 +68,10 @@ function App() {
         {/* Page transition wrapper */}
         <AnimatePresence mode="wait">
           <motion.main
-            key={location.pathname}            // re-animate on route change
-            initial={{ x: 40, opacity: 0 }}    // enter from right
+            key={location.pathname}
+            initial={{ x: 40, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -40, opacity: 0 }}      // exit to left
+            exit={{ x: -40, opacity: 0 }}
             transition={swipeTransition}
             style={{ willChange: "transform, opacity" }}
             className="page"

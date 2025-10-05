@@ -171,6 +171,7 @@ private cfg: Cfg = {
   private _draw(t: number) {
     const { amp } = this.cfg; const n = this._pts.length;
     if (!this._px || this._px.length !== n) { this._px = new Float32Array(n); this._py = new Float32Array(n); }
+    if (!this._py) return;
     for (let i = 0; i < n; i++) {
       const p = this._pts[i];
       this._px[i] = p.x0 + Math.sin(p.phx + t * p.fx * 2.2) * amp;

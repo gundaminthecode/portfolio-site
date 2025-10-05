@@ -19,8 +19,8 @@ type Props = {
 const DiagonalHexBackground: React.FC<Props> = ({
   count = 6,
   mainColor = "#fff",
-  ghostColor = "#fff",                    // was: "rgba(255,255,255,.6)"
-  durationRangeSec = [6, 11],
+  ghostColor = "#fff",
+  durationRangeSec = [10, 18],
   strokeWidth = 10,
   route = "BL_TR",
   spawnPad = 12,
@@ -56,10 +56,7 @@ const DiagonalHexBackground: React.FC<Props> = ({
       const negDelay = -rnd(0, dur);
       const lane = Math.floor(rnd(0, Math.max(1, lanes)));
       const laneOffset = ((lane / Math.max(1, lanes - 1)) - 0.5) * 2 * laneSpread;
-      // per-hex random opacity
       const alpha = isMain ? 1 : rnd(0.35, 0.85);
-
-      // Slow spin settings
       const rotDir = Math.random() < 0.5 ? 1 : -1; // cw/ccw
       const spinDur = dur * rnd(1.6, 2.4);         // slower than travel
 
@@ -73,7 +70,7 @@ const DiagonalHexBackground: React.FC<Props> = ({
   return (
     <div
       aria-hidden
-      style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex }}
+      style={{ position: "absolute", inset: 0, overflow: "visible", pointerEvents: "none", zIndex }} // Ensure overflow is visible
     >
       <style>
         {`@keyframes hex-spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }`}
@@ -97,12 +94,15 @@ const DiagonalHexBackground: React.FC<Props> = ({
         const color = h.isMain ? mainColor : ghostColor;
         const sw = h.isMain ? strokeWidth : Math.max(2, strokeWidth * 0.6);
 
+        // Adjust the starting position to allow for a vertical range of 40% to 100% of the parent container
         const start = {
           left: `${from.x + (offsetAxis === "x" ? h.laneOffset : 0)}%`,
-          top: `${from.y + (offsetAxis === "y" ? h.laneOffset : 0)}%`,
+          top: `${rnd(40, 100)}%`, // Spawn between 40% and 100% of the height
         };
+
+        // Adjust the end position to float off the left side of the viewport
         const end = {
-          left: `${to.x + (offsetAxis === "x" ? h.laneOffset : 0)}%`,
+          left: `${to.x + (offsetAxis === "x" ? h.laneOffset : 0) - 150}vw`, // Move left by 150vw to go off-screen
           top: `${to.y + (offsetAxis === "y" ? h.laneOffset : 0)}%`,
         };
 
@@ -131,8 +131,6 @@ const DiagonalHexBackground: React.FC<Props> = ({
                 style={{
                   transform: `rotate(${rotation}deg)`,
                   transformOrigin: "center",
-                  // remove wrapper opacity so each hex can have its own
-                  // opacity: h.opacity,
                 }}
               >
                 {/* Spin + scale */}
@@ -155,7 +153,7 @@ const DiagonalHexBackground: React.FC<Props> = ({
                       style={{
                         color,
                         strokeWidth: sw,
-                        opacity: h.alpha,              // per-hex random opacity
+                        opacity: h.alpha,
                       } as React.CSSProperties}
                     />
                   </svg>

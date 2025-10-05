@@ -5,7 +5,7 @@
 @import "./scroll-reveal.css";
 @import "./contentstack.css"; /* NEW: generic content stack/slice rules */
 
-.App { min-height: 100dvh; display: flex; flex-direction: column; }
+.App { display: flex; flex-direction: column; }
 .App > main {
   flex: 1 1 auto;
   width: min(100% - 2rem, var(--max-w));
@@ -46,8 +46,9 @@ header, #app-shell {
   padding: 2rem;
   max-width: min(80%, 100%);
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto clamp(2rem, 5vw, 5rem) auto;
   box-sizing: border-box;
+  z-index: 2;
 }
 
 /* ===== Header / Navigation ===== */
@@ -59,6 +60,7 @@ header {
   align-items: center;
   gap: 1rem;
   flex-wrap: nowrap; /* NEW: prevents wrap that increases header height */
+  z-index: 1000; /* Ensure header is above the rectangle */
 }
 
 .header-cutout {
@@ -68,6 +70,7 @@ header {
   height: 100%;
   display: block;
   pointer-events: none; /* clicks go to the logo link */
+  z-index: 2; /* Ensure cutout is above the rectangle */
 }
 
 .header-cutout__text {
@@ -108,21 +111,23 @@ header .logo {
   display: flex;
   gap: 1rem;
   flex: 0 0 auto;
+  z-index: 1100;        /* ensure above header overlay */
 }
 
 /* Hexagon nav buttons */
 #navBar {
   display: flex;
   gap: 0.75rem;
-  align-items: center; /* centers the row while some items drop down */
+  align-items: center;
 }
 
+/* Base: consistent transform driven by vars */
 #navBar .sidebar-nav__link,
 #navBar .navBar__link {
-  --hex-size: 8rem;
+  --hex-size: clamp(3rem, 6vw, 5rem);          /* base size (phones/tablets) */
   --hex-height: calc(var(--hex-size) / 1.1547);
-  --hex-offset: 0px;
-  --hex-scale: 1; /* base scale */
+  --hex-offset: 0px;                            /* no stagger by default */
+  --hex-scale: 1;
 
   width: var(--hex-size);
   aspect-ratio: 1.1547;
@@ -134,30 +139,23 @@ header .logo {
   color: var(--hex-fg, #fff);
   text-decoration: none;
   transition: background .2s ease, color .2s ease, transform .15s ease, filter .2s ease;
-  transform: scale(var(--hex-scale)) translateY(var(--hex-offset)); /* updated */
+  transform: scale(var(--hex-scale)) translateY(var(--hex-offset));
 }
 
-/* Stagger: every second hex drops by half the hex height */
-#navBar > *:nth-child(even) {
-  --hex-offset: calc(var(--hex-height) / 2);
+/* Remove base stagger that caused inconsistent header heights */
+#navBar > * { 
+  --hex-offset: 0px;
 }
 
-/* Hover keeps the per-item offset and nudges up 1px */
+/* Hover bob uses the same transform pipeline */
 #navBar .sidebar-nav__link:hover,
 #navBar .navBar__link:hover {
   background: var(--hex-bg-hover, hsl(223 50% 18%));
-  /* was: static transform; now a gentle bob */
   animation: hex-bob 1.4s ease-in-out infinite;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
 }
 
-/* spin/wobble the icon while hovering */
-#navBar .sidebar-nav__link:hover svg,
-#navBar .navBar__link:hover svg {
-  animation: icon-wobble 0.9s ease-in-out infinite;
-}
-
-/* ensure spin pivots at the center */
+/* Icon sizing stays proportional */
 #navBar svg {
   width: 56%;
   height: 56%;
@@ -165,48 +163,44 @@ header .logo {
   will-change: transform;
 }
 
-/* keyframes */
-@keyframes hex-bob {
-  0%, 100% {
-    transform: scale(var(--hex-scale)) translateY(calc(var(--hex-offset) - 1px));
+/* Tablet: slightly bigger, still no stagger */
+@media (min-width: 769px) and (max-width: 1050px) {
+  header { padding: 1.25rem; }
+  #navBar .sidebar-nav__link,
+  #navBar .navBar__link {
+    --hex-size: clamp(3.75rem, 7vw, 5.75rem);
+    /* keep --hex-offset: 0; do not override transform */
   }
-  50% {
-    transform: scale(var(--hex-scale)) translateY(calc(var(--hex-offset) - 6px));
-  }
-}
-@keyframes icon-wobble {
-  0%, 100% { transform: rotate(0deg); }
-  25%     { transform: rotate(6deg); }
-  75%     { transform: rotate(-6deg); }
 }
 
-/* Focus style */
-#navBar .sidebar-nav__link:focus-visible,
-#navBar .navBar__link:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.6);
+/* Desktop: larger size; enable stagger only on wide desktops */
+@media (min-width: 1051px) {
+  #navBar .sidebar-nav__link,
+  #navBar .navBar__link {
+    --hex-size: clamp(5rem, 6.5vw, 8rem);
+  }
+}
+@media (min-width: 1400px) {
+  /* Stagger every second item only when there’s room */
+  #navBar > *:nth-child(even) {
+    --hex-offset: calc(var(--hex-height) / 2);
+  }
 }
 
-.back-link {
-  --hex-size: clamp(5rem, 6.5vw, 8rem); /* base width */
-  --hex-width: clamp(10rem, 7.5vw, 14rem); /* wider hexagon */
-  --hex-height: calc(var(--hex-size) / 1.1547); /* keep original height */
-  width: var(--hex-width); /* use wider width */
-  height: var(--hex-height); /* fixed height */
-  aspect-ratio: unset; /* disable aspect-ratio */
-  clip-path: polygon(18% 0, 82% 0, 100% 50%, 82% 100%, 18% 100%, 0 50%);
-  display: grid;
-  place-items: center;
-  background: var(--hex-bg, hsl(223 40% 12%));
-  color: var(--hex-fg, var(--text-secondary, #fff));
-  text-decoration: none;
-  font-size: calc(0.25 * var(--hex-size));
-  gap: 0.25rem;
-  transition: background .2s ease, color .2s ease, transform .15s ease, filter .2s ease;
-}
-.back-link:hover {
-  background: var(--hex-bg-hover, hsl(223 50% 18%));
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+/* Phones: smaller, column rail; no stagger, no hover bob on touch */
+@media (max-width: 768px) {
+  #nav-container {
+    position: absolute;
+    right: 0.75rem;
+    top: 0.75rem;
+    z-index: 1100;                       /* higher than overlay/content */
+  }
+  #navBar { flex-direction: column; align-items: flex-end; gap: 0.6rem; }
+  #navBar .sidebar-nav__link,
+  #navBar .navBar__link {
+    --hex-size: clamp(3rem, 14vw, 4.25rem);
+    --hex-offset: 0; /* no stagger */
+  }
 }
 
 /* ===== Content Stack (desktop) ===== */
@@ -326,28 +320,34 @@ header {
   }
 }
 
-/* Mobile (<768px): vertical floating rail on the right (kept) */
+/* MOBILE: vertical rail pinned to the right, shrink-wrapped */
 @media (max-width: 768px) {
   header { padding: 1rem; }
 
   #nav-container {
     position: fixed;
-    right: 0.75rem;
     top: 0.75rem;
-    width: auto;
+    right: 0.75rem;
+    left: auto;               /* don't stretch from the left */
+    width: max-content;       /* override earlier width: 100% */
     margin: 0;
-    z-index: 100;
-    pointer-events: auto;
+    display: block;           /* shrink-wrap the nav */
+    z-index: 1100;
   }
+
   #navBar {
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-end;    /* right align the column */
     gap: 0.6rem;
+    width: max-content;       /* match container shrink-wrap */
   }
-  /* No stagger in rail mode */
-  #navBar > * { --hex-offset: 0 !important; }
 
-  /* Smaller hex buttons on phones */
+  /* ensure each item hugs the right edge; no stagger when vertical */
+  #navBar > * {
+    align-self: flex-end;
+    --hex-offset: 0 !important;
+  }
+
   #navBar .sidebar-nav__link,
   #navBar .navBar__link {
     --hex-size: clamp(3rem, 14vw, 4.25rem);
@@ -355,8 +355,79 @@ header {
   }
 }
 
+/* Keep stagger on while horizontal (>=769px) */
+@media (min-width: 769px) {
+  #navBar > *:nth-child(even) {
+    --hex-offset: calc(var(--hex-height) / 2) !important;
+  }
+}
+
+/* Tablet polish (do not cancel stagger here) */
+@media (max-width: 1050px) and (min-width: 769px) {
+  header { padding: 1.25rem; }
+  #logo-container { flex: 1 1 auto; min-width: 0; }
+  #nav-container  { flex: 0 0 auto; margin-left: auto; width: auto; }
+  /* removed the old rule that zeroed stagger here */
+}
+
+/* Desktop sizes (stagger stays on from the 769+ rule) */
+@media (min-width: 1051px) {
+  #navBar .sidebar-nav__link,
+  #navBar .navBar__link {
+    --hex-size: clamp(5rem, 6.5vw, 8rem);
+  }
+}
+
 /* Very small phones: tiny nudge */
 @media (max-width: 420px) {
   #nav-container { right: 0.5rem; top: 0.5rem; }
-  #navBar { gap: 0.5rem; }
+}
+
+.left-rectangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20vw;
+  height: 100%;
+  z-index: 1; /* Ensure it is below the header */
+}
+
+/* Footer */
+footer {
+  background-color: var(--header-colour); /* Use the header color */
+  height: clamp(2rem, 5rem, 5rem); /* Clamp height between 2rem and 5rem */
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  margin-top: auto; /* Push footer to the bottom of the page */
+  z-index: 2;
+}
+
+/* Additional styles for footer content */
+footer p {
+  margin: 0; /* Remove default margin */
+  color: #fff; /* Set text color to white or adjust as needed */
+  text-align: center; /* Center text */
+}
+
+.back-link {
+  --hex-size: clamp(5rem, 6.5vw, 8rem); /* base width */
+  --hex-width: clamp(10rem, 7.5vw, 14rem); /* wider hexagon */
+  --hex-height: calc(var(--hex-size) / 1.1547); /* keep original height */
+  width: var(--hex-width); /* use wider width */
+  height: var(--hex-height); /* fixed height */
+  aspect-ratio: unset; /* disable aspect-ratio */
+  clip-path: polygon(18% 0, 82% 0, 100% 50%, 82% 100%, 18% 100%, 0 50%);
+  display: grid;
+  place-items: center;
+  background: var(--hex-bg, hsl(223 40% 12%));
+  color: var(--hex-fg, var(--text-secondary, #fff));
+  text-decoration: none;
+  font-size: calc(0.25 * var(--hex-size));
+  gap: 0.25rem;
+  transition: background .2s ease, color .2s ease, transform .15s ease, filter .2s ease;
+}
+.back-link:hover {
+  background: var(--hex-bg-hover, hsl(223 50% 18%));
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
 }
