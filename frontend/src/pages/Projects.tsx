@@ -11,6 +11,8 @@ import { useState } from "react";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 import "../styles/projects.css";
 import useScrollReveal from "../hooks/useScrollReveal";
+import { Link } from 'react-router-dom';
+
 
 type Props = {
   username: string;
@@ -48,6 +50,7 @@ export default function Projects(props: Props) {
   return (
     <>
       <div id="content-stack">
+        <Link to="/" className='back-link'>Back</Link>
         <div className="content-slice" id="projects-hero-slice">
           <DiagonalHexBackground route="BR_TL" zIndex={-1} />
           <div className="slice-content">Hi there! Here are some of my projects:</div>

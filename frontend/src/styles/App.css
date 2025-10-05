@@ -121,6 +121,17 @@ header .logo {
   align-items: center;
 }
 
+/* Compose-able hover bob variable */
+@property --hex-bob {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes hex-bob-var {
+  0%, 100% { --hex-bob: 0px; }
+  50%      { --hex-bob: -6px; }
+}
+
 /* Base: consistent transform driven by vars */
 #navBar .sidebar-nav__link,
 #navBar .navBar__link {
@@ -139,7 +150,7 @@ header .logo {
   color: var(--hex-fg, #fff);
   text-decoration: none;
   transition: background .2s ease, color .2s ease, transform .15s ease, filter .2s ease;
-  transform: scale(var(--hex-scale)) translateY(var(--hex-offset));
+  transform: translateY(calc(var(--hex-offset) + var(--hex-bob))) scale(var(--hex-scale));
 }
 
 /* Remove base stagger that caused inconsistent header heights */
@@ -147,11 +158,11 @@ header .logo {
   --hex-offset: 0px;
 }
 
-/* Hover bob uses the same transform pipeline */
+/* Hover: animate the variable, not transform */
 #navBar .sidebar-nav__link:hover,
 #navBar .navBar__link:hover {
   background: var(--hex-bg-hover, hsl(223 50% 18%));
-  animation: hex-bob 1.4s ease-in-out infinite;
+  animation: hex-bob-var 1.4s ease-in-out infinite;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
 }
 
@@ -169,7 +180,7 @@ header .logo {
   #navBar .sidebar-nav__link,
   #navBar .navBar__link {
     --hex-size: clamp(3.75rem, 7vw, 5.75rem);
-    /* keep --hex-offset: 0; do not override transform */
+    transform: translateY(calc(var(--hex-offset) + var(--hex-bob))) scale(var(--hex-scale));
   }
 }
 
@@ -200,6 +211,7 @@ header .logo {
   #navBar .navBar__link {
     --hex-size: clamp(3rem, 14vw, 4.25rem);
     --hex-offset: 0; /* no stagger */
+    transform: translateY(calc(var(--hex-offset) + var(--hex-bob))) scale(var(--hex-scale));
   }
 }
 
@@ -308,7 +320,7 @@ header {
   #navBar .sidebar-nav__link,
   #navBar .navBar__link {
     --hex-size: clamp(3.75rem, 7.5vw, 5.25rem);
-    transform: scale(var(--hex-scale)) translateY(0);
+    transform: translateY(calc(var(--hex-offset) + var(--hex-bob))) scale(var(--hex-scale));
   }
 }
 
@@ -351,7 +363,7 @@ header {
   #navBar .sidebar-nav__link,
   #navBar .navBar__link {
     --hex-size: clamp(3rem, 14vw, 4.25rem);
-    transform: scale(var(--hex-scale)) translateY(0);
+    transform: translateY(calc(var(--hex-offset) + var(--hex-bob))) scale(var(--hex-scale));
   }
 }
 
@@ -426,6 +438,7 @@ footer p {
   font-size: calc(0.25 * var(--hex-size));
   gap: 0.25rem;
   transition: background .2s ease, color .2s ease, transform .15s ease, filter .2s ease;
+  transform: scale(var(--hex-scale, 1)) translateY(var(--hex-offset, 0px));
 }
 .back-link:hover {
   background: var(--hex-bg-hover, hsl(223 50% 18%));
