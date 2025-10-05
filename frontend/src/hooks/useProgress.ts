@@ -59,7 +59,7 @@ const PROGRESS_CACHE = new Map<string, {
   blurbsBySha: Record<string, string>;
 }>()
 
-export default function useProgress(owner: string, repo: string, days = 365) {
+export default function useProgress(owner: string, repo: string, days = 3650) { // was 365
   const [commitsByDate, setCommitsByDate] = useState<Record<string, Commit[]>>({})
   const [countsByDate, setCountsByDate] = useState<Record<string, number>>({})
   const [blurbsBySha, setBlurbsBySha] = useState<Record<string, string>>({})

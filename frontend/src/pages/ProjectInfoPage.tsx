@@ -145,6 +145,7 @@ export default function ProjectInfoPage() {
               key={`${ownerForProgress}/${repoForProgress}`}  // force fresh hook per project
               owner={ownerForProgress}
               repo={repoForProgress}
+              days={3650} // show ~10 years of history
             />
           </div>
         </div>

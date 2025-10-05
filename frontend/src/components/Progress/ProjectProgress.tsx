@@ -4,11 +4,11 @@ import ProgressHeatmap from "./ProgressHeatmap"
 import "../../styles/progress.css"
 import "../../styles/project-cards.css" // for typography vars
 
-type Props = { owner: string; repo: string }
+type Props = { owner: string; repo: string; days?: number };
 
-export default function ProjectProgress({ owner, repo }: Props) {
+export default function ProjectProgress({ owner, repo, days = 3650 }: Props) { // default to ~10 years
   const { commitsByDate, countsByDate, blurbsBySha, loading, error } =
-    useProgress(owner, repo, 365);
+    useProgress(owner, repo, days);
 
   // Reset selected date when project changes to avoid mismatched selection
   const [selectedDate, setSelectedDate] = useState<string>(() =>
@@ -29,7 +29,7 @@ export default function ProjectProgress({ owner, repo }: Props) {
   return (
     <div className="projects-content">
         <div className="heatmap">
-            <ProgressHeatmap countsByDate={countsByDate} onSelect={setSelectedDate} />
+            <ProgressHeatmap countsByDate={countsByDate} onSelect={setSelectedDate} monthsWindow={12}/>
         </div>
       
       <div className="commit-list">

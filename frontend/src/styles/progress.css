@@ -11,23 +11,37 @@
   --col4: color-mix(in oklab, var(--header-colour) 64%, transparent);
 
   display: grid;
-  grid-template-rows: auto 1fr auto; /* months, weeks, legend */
+  /* years, months, weeks, legend */
+  grid-template-rows: auto auto 1fr auto;
   gap: .6rem;
   margin: 0 auto;
   border-radius: 8px;
 }
 
-/* Month labels aligned to week columns (one label per week column) */
+/* Year and Month labels aligned to week columns */
+.progress-heatmap .years,
 .progress-heatmap .months {
   display: flex;
   gap: var(--gap);
   padding-inline: .25rem;
-  font-size: var(--fs-400);
-  opacity: .9;
   user-select: none;
   max-width: 100%;
   overflow: hidden;
 }
+
+/* Slight visual distinction */
+.progress-heatmap .years {
+  font-size: var(--fs-500);
+  font-weight: 600;
+  opacity: .9;
+}
+.progress-heatmap .months {
+  font-size: var(--fs-400);
+  opacity: .9;
+}
+
+/* Each label spans N week-columns (width set inline by the component) */
+.progress-heatmap .years .label,
 .progress-heatmap .months .label {
   flex: 0 0 auto;              /* width is set inline to span N week columns */
   width: auto;
@@ -129,7 +143,10 @@
 
 /* Optional: slightly bigger cells on very small screens for tapability */
 @media (max-width: 420px) {
-  .progress-heatmap { --cell: clamp(16px, 6vw, 22px); --gap: clamp(4px, 1.2vw, 6px); }
+  .progress-heatmap {
+    --cell: clamp(16px, 6vw, 22px);
+    --gap: clamp(4px, 1.2vw, 6px);
+  }
   .progress-heatmap .months { font-size: var(--fs-400); }
 }
 
