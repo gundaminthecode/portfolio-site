@@ -135,6 +135,7 @@ def list_repos():
                 "pushed_at": r.get("pushed_at"),
                 "owner": {"login": o.get("login")},
                 "homepage": r.get("homepage"),
+                "has_pages": r.get("has_pages"),
                 "default_branch": r.get("default_branch"),
                 "license": r.get("license"),
                 "open_issues_count": r.get("open_issues_count"),

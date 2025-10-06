@@ -85,6 +85,7 @@
   gap: 0.5rem;
   flex-wrap: wrap;
   background: none;
+  margin-bottom: 1.5rem;
 }
 .project-slide__actions a,
 .project-slide__actions button,

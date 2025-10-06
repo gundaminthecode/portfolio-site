@@ -2,7 +2,6 @@
 import { Link, useOutletContext, useParams, useSearchParams} from "react-router-dom";
 import { useGithubRepos } from "../hooks/useGithubRepos";
 import type { Repo } from "../components/Projects/ProjectCard";
-import LivePreview from "../components/Projects/LivePreview";
 import CaseStudy from "../components/Projects/CaseStudy";
 import { useCaseStudy } from "../hooks/useCaseStudy";
 import useScrollReveal from "../hooks/useScrollReveal";
@@ -10,6 +9,7 @@ import ProjectProgress from "../components/Progress/ProjectProgress";
 import "../styles/project-info.css";
 import { CONFIG } from "../config";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
+import { deriveLiveUrl } from "../hooks/deriveLiveURL";
 
 type OutletCtx = { repos?: Repo[] };
 
@@ -48,7 +48,7 @@ export default function ProjectInfoPage() {
   const ownerForProgress = project.owner?.login || urlOwner || CONFIG.GITHUB_USERNAME;
   const repoForProgress = project.name || urlRepo || "portfolio-site";
 
-  const liveHref = (project as any).live_url || (project as any).homepage || null;
+  const liveHref = deriveLiveUrl(project);
 
   return (
     <div id="content-stack">
@@ -123,12 +123,6 @@ export default function ProjectInfoPage() {
                   />
                 )}
 
-                {liveHref && (
-                  <div className="live-preview-block">
-                    <h3>Live Preview</h3>
-                    <LivePreview url={liveHref} title={`${project.name} – Live Preview`} />
-                  </div>
-                )}
               </article>
             </div>
           
