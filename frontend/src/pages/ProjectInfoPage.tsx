@@ -68,9 +68,9 @@ export default function ProjectInfoPage() {
       </div>
 
       {/* Info slice (summary + body) */}
-      <div className="content-slice" >
+      <div className="content-slice" id="project-info-slice">
         <DiagonalHexBackground route="BR_TL" zIndex={-1} />
-        <div className="slice-content" id="project-info-slice">
+        <div className="slice-content">
           <aside className="filter-panel filter-panel--desktop app-divs">
             <aside className="projects-filters">
               <div className="project-summary-card">
