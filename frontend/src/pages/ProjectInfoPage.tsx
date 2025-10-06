@@ -144,6 +144,23 @@ export default function ProjectInfoPage() {
           </div>
         </div>
       </div>
+      
+      {liveHref && (
+        <div className="content-slice" id="live-preview-slice">
+            <div className="slice-content">
+            <h1>Live Preview</h1>
+            <p>Check out the live preview of the project at:</p>
+            <a href={liveHref} target="_blank" rel="noopener noreferrer">{liveHref}</a>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem", width: "100%", height: "100%" }}>
+              <iframe
+              src={liveHref}
+              title={`Live preview of ${project.name}`}
+              style={{ width: "100%", maxWidth: "100%", height: "700px", border: 0}}
+              />
+            </div>
+            </div>
+        </div>
+      )}
     </div>
   );
 }
