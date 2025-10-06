@@ -16,7 +16,7 @@
 }
 
 /* Project info slice layout (progress slice styles removed) */
-#project-info-slice {
+#project-info-slice .slice-content {
   display: flex;
   align-items: flex-start;
   gap: clamp(1rem, 1.5vw, 2rem);
@@ -52,7 +52,7 @@
 
 /* Mobile stack for info slice (progress slice removed) */
 @media (max-width: 1050px) {
-  #project-info-slice { flex-direction: column; }
+  #project-info-slice .slice-content { flex-direction: column; }
   #project-info-slice .filter-panel { flex: 1 1 0;}
   #project-info-slice .project-grid-wrapper { order: 2; width: 100%; }
   .projects-content { flex-direction: column; gap: 1rem; }
