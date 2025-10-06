@@ -68,9 +68,9 @@ export default function ProjectInfoPage() {
       </div>
 
       {/* Info slice (summary + body) */}
-      <div className="content-slice" id="project-info-slice">
+      <div className="content-slice" >
         <DiagonalHexBackground route="BR_TL" zIndex={-1} />
-        <div className="slice-content">
+        <div className="slice-content" id="project-info-slice">
           <aside className="filter-panel filter-panel--desktop app-divs">
             <aside className="projects-filters">
               <div className="project-summary-card">
@@ -89,7 +89,7 @@ export default function ProjectInfoPage() {
                 <div className="project-links" style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
                   <a className="btn" href={project.html_url} target="_blank" rel="noopener noreferrer">GitHub</a>
                   {liveHref && (
-                    <a className="btn btn--ghost" href={liveHref} target="_blank" rel="noopener noreferrer">Live Site</a>
+                    <a className="btn" href={liveHref} target="_blank" rel="noopener noreferrer">Live Site</a>
                   )}
                 </div>
               </div>
