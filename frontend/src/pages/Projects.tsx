@@ -11,6 +11,7 @@ import { useState } from "react";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 import "../styles/projects.css";
 import { Link } from 'react-router-dom';
+import { useGithubUser } from "../hooks/useGithubUser";
 
 
 type Props = {
@@ -36,6 +37,7 @@ export default function Projects(props: Props) {
     includeArchived,
     sortBy,
   });
+  const { user, loading: userLoading, error: userError } = useGithubUser(username);
 
   const [filters, setFilters] = useState({ ...DEFAULT_FILTERS });
   const languages = uniqueLanguages(repos);
@@ -51,7 +53,39 @@ export default function Projects(props: Props) {
         <Link to="/" className='back-link'>Back</Link>
         <div className="content-slice" id="projects-hero-slice">
           <DiagonalHexBackground route="BR_TL" zIndex={-1} />
-          <div className="slice-content">Hi there! Here are some of my projects:</div>
+          <div className="slice-content">
+            {user ? (
+              <section className="github-profile-panel app-divs">
+                <img className="gh-avatar" src={user.avatar_url} alt={`${user.name ?? user.login} avatar`} />
+                <div className="gh-main">
+                  <h1 className="gh-name">
+                    <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+                      {user.name ?? user.login} - Nick Mathiasen
+                    </a>
+                  </h1>
+                  {user.bio && <p className="gh-bio">{user.bio}</p>}
+                  <ul className="gh-meta">
+                    {user.location && <li>📍 {user.location}</li>}
+                    {user.company && <li>🏢 {user.company}</li>}
+                    <li>👥 {user.followers} followers · {user.following} following</li>
+                    <li>📦 {user.public_repos} public repos</li>
+                  </ul>
+                  <div className="gh-actions">
+                    <a className="btn" href={user.html_url} target="_blank" rel="noopener noreferrer">GitHub</a>
+                    {user.blog && user.blog.trim() && (
+                      <a className="btn btn--ghost" href={user.blog.startsWith("http") ? user.blog : `https://${user.blog}`} target="_blank" rel="noopener noreferrer">
+                        Website
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </section>
+            ) : userLoading ? (
+              <p>Loading profile…</p>
+            ) : userError ? (
+              <p style={{ color: "crimson" }}>Profile error: {userError}</p>
+            ) : null}
+          </div>
         </div>
 
         <div className="content-slice" id="projects-grid-slice">

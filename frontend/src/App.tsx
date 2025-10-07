@@ -5,7 +5,8 @@ import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { Home, FolderGit2, User2, Mail } from "lucide-react";
 import BrokenShapeEl from "./components/Background/BrokenShape";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ContactModal from "./components/ContactModal";
 
 const swipeTransition: Transition = {
   duration: 0.35,
@@ -17,6 +18,7 @@ const navClass = ({ isActive }: { isActive: boolean }) =>
 
 function App() {
   const location = useLocation();
+  const [contactOpen, setContactOpen] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -78,7 +80,10 @@ function App() {
             <NavLink to="/" end className={navClass} aria-label="Home"><Home size={24} /></NavLink>
             <NavLink to="/projects" className={navClass} aria-label="Projects"><FolderGit2 size={24} /></NavLink>
             <NavLink to="/about-me" className={navClass} aria-label="About"><User2 size={24} /></NavLink>
-            <a href="#/##contact" className="navBar__link" aria-label="Contact"><Mail size={24} /></a>
+            {/* Contact opens modal */}
+            <button type="button" className="sidebar-nav__link" aria-label="Contact" onClick={() => setContactOpen(true)}>
+              <Mail size={24} />
+            </button>
           </nav>
         </div>
       </header>
@@ -99,9 +104,12 @@ function App() {
           </motion.main>
         </AnimatePresence>
       </div>
-    
+
+      {/* Contact modal */}
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} contactEmail="you@example.com" />
+
       <footer>
-        <p>Made by Nick - <a href="https://github.com/gundaminthecode">GitHub</a></p>
+        <p>Made by Nick Mathiasen</p>
       </footer>
     </div>
   );

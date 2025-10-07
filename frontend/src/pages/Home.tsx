@@ -6,6 +6,7 @@ import { NavLink} from "react-router-dom";
 
 import { CONFIG } from "../config";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
+import headshot from "../assets/portfolio-project/headshot.jpg";
 
 const username = CONFIG.GITHUB_USERNAME;
 
@@ -14,9 +15,19 @@ export default function Home() {
   return (
     <>
     <div id="content-stack">
-      <div className="" id="headshot-slice">
-        <div id="headshot-circle">
-          HI
+      <div id="headshot-slice">
+        <div id="headshot-circle" aria-label="Headshot">
+          <img src={headshot} alt="Nick Mathiasen" />
+          <svg className="headshot-ring" viewBox="-6 -6 112 112" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <path id="headshotTextPath" d="M50,50 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" />
+            </defs>
+            <text>
+              <textPath href="#headshotTextPath" startOffset="0%">
+                Nick Mathiasen • Frontend • Web Developer • Portfolio •
+              </textPath>
+            </text>
+          </svg>
         </div>
       </div>
       <div className="content-slice" id="intro-slice">

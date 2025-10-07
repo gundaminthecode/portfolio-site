@@ -3,30 +3,86 @@
 }
 
 #headshot-slice {
-    height: 30vh;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    margin: 4rem 0 2rem 0;
-    padding-right: 20%;
-    padding-bottom: 2rem;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem 0 2rem 0;
+  padding-bottom: 2rem;
 }
 
+/* Headshot frame */
 #headshot-circle {
-    width: 15vh;
-    height: 15vh;
-    background-color: var(--r4-yellow);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    color: white;
-    font-family: 'Space Grotesk', sans-serif;
+  --ring-color: var(--header-colour);
+  --ring-speed: 18s;
+  --ring-outset: 15%;     /* more visible outside the photo */
+  --ring-font-size: 9px;  /* bump text size */
+
+  position: relative;
+  width: clamp(140px, 18vh, 240px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: visible;                /* was hidden: let ring render outside */
+  background: transparent;          /* frame handled by ring/pseudo */
+  box-shadow: 0 6px 18px rgba(0,0,0,.15);
+}
+
+/* Photo stays circular without needing overflow hidden */
+#headshot-circle > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+/* Optional subtle border around the photo for separation */
+#headshot-circle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px #fff; /* white rim behind the rotating text */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Rotating text ring (SVG) */
+#headshot-circle .headshot-ring {
+  position: absolute;
+  inset: calc(-1 * var(--ring-outset));
+  width: calc(100% + 2 * var(--ring-outset));
+  height: calc(100% + 2 * var(--ring-outset));
+  pointer-events: none;
+  color: var(--ring-color);
+  animation: headshot-spin var(--ring-speed) linear infinite;
+  z-index: 1;
+  overflow: visible; /* ensure text outside viewBox isn't cut off */
+}
+
+#headshot-circle .headshot-ring text {
+  fill: currentColor;
+  font: 600 var(--ring-font-size)/1 'Space Grotesk', system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  /* improve contrast on busy backgrounds */
+  paint-order: stroke fill;
+  stroke: #fff;
+  stroke-width: 0.6px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.25);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #headshot-circle .headshot-ring { animation: none; }
+}
+
+@keyframes headshot-spin {
+  to { transform: rotate(360deg); }
 }
 
 #intro-slice{
-    height: 50vh;
+    height: 25vh;
     display: flex;
     flex-direction: column;
     justify-content: center;

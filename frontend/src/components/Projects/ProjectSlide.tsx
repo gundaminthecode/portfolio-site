@@ -4,7 +4,6 @@ import type { Repo } from "./ProjectCard";
 import { Link } from "react-router-dom";
 
 import "../../styles/project-grid.css";
-import { deriveLiveUrl } from "../../hooks/deriveLiveURL";
 
 type Props = {
   repo: Repo;
@@ -21,8 +20,6 @@ export default function ProjectSlide({
     repo.updated_at?.length === 0
       ? ""
       : new Date(repo.updated_at).toLocaleDateString();
-
-  const liveHref = deriveLiveUrl(repo);
 
   return (
     <article
@@ -72,14 +69,6 @@ export default function ProjectSlide({
         >
           View Repository
         </a>
-
-        <br />
-
-        {liveHref && (
-          <a href={liveHref} target="_blank" rel="noopener noreferrer">
-            Live Site
-          </a>
-        )}
       </footer>
     </article>
   );

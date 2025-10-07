@@ -4,6 +4,8 @@
 
 @import "./scroll-reveal.css";
 @import "./contentstack.css"; /* NEW: generic content stack/slice rules */
+@import "./github-profile-panel.css";
+@import "./contact-modal.css";
 
 .App { display: flex; flex-direction: column; }
 .App > main {

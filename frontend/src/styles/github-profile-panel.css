@@ -1,0 +1,38 @@
+.github-profile-panel {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(0.75rem, 1.2vw, 1rem);
+  padding: clamp(0.75rem, 1.2vw, 1rem);
+  border-radius: 12px;
+  align-items: center;
+}
+.github-profile-panel .gh-avatar {
+  width: clamp(64px, 8vw, 96px);
+  height: clamp(64px, 8vw, 96px);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(0,0,0,.15);
+}
+.github-profile-panel .gh-main { min-width: 0; }
+.github-profile-panel .gh-name { margin: 0 0 .25rem; font-size: clamp(1.25rem, 2vw, 1.6rem); }
+.github-profile-panel .gh-name a { color: inherit; text-decoration: none; }
+.github-profile-panel .gh-name a:hover { text-decoration: underline; }
+.github-profile-panel .gh-bio { margin: 0.25rem 0 0.5rem; }
+.github-profile-panel .gh-meta {
+  display: flex; flex-wrap: wrap; gap: .75rem 1rem; margin: 0 0 .75rem; padding: 0; list-style: none;
+  font-size: 0.95rem;
+}
+.github-profile-panel .gh-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+.github-profile-panel .btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  text-decoration: none; color: #fff; border: 2px solid currentColor;
+  background: var(--header-colour); padding: .45rem .9rem; border-radius: 8px;
+  font-weight: 600; transition: background-color .2s, color .2s, box-shadow .2s;
+}
+.github-profile-panel .btn:hover { background: var(--r4-yellow); color: #0d1b3d; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+.github-profile-panel .btn--ghost { background: transparent; color: var(--header-colour); border-color: var(--header-colour); }
+.github-profile-panel .btn--ghost:hover { background: var(--r4-yellow); color: #0d1b3d; }
+
+@media (max-width: 560px) {
+  .github-profile-panel { grid-template-columns: 1fr; }
+}
