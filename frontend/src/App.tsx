@@ -1,5 +1,7 @@
 // App.tsx
 
+// Main application component that sets up routing, layout, and global elements like header and footer.
+
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
@@ -7,6 +9,7 @@ import { Home, FolderGit2, User2, Mail } from "lucide-react";
 import BrokenShapeEl from "./components/Background/BrokenShape";
 import { useEffect, useState } from "react";
 import ContactModal from "./components/ContactModal";
+import ScrollToTop from "./components/ScrollToTop";
 
 const swipeTransition: Transition = {
   duration: 0.35,
@@ -46,7 +49,7 @@ function App() {
 
   return (
     <div id="app-container">
-      {/* Site-wide animated background */}
+      <ScrollToTop />
       <div id="site-bg" aria-hidden="true">
         <BrokenShapeEl
           cols={12}
