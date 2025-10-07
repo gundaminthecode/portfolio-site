@@ -66,7 +66,9 @@ export default function PortfolioProject() {
                     <div className='development-slice'>
                         <h2>Development Outcomes</h2>
                             <h3>Pitch Product</h3>
-                                <p>This was the version of the site used within the pitch presentation in Week 8.</p>
+                                <div className='text-container'>
+                                    <p>This was the version of the site used within the pitch presentation in Week 8.</p>
+                                </div>
                                 <div className='image-container'>
                                     <img src={pitchOutcomeImageMobile1} alt="Mobile Outcome 1" />
                                     <img src={pitchOutcomeImageMobile2} alt="Mobile Outcome 2" />
@@ -88,7 +90,7 @@ export default function PortfolioProject() {
             <div className='content-slice portfolio-info-slices'>
                 <div className='slice-content'>
                     <h1>Reflection</h1>
-                    <div>
+                    <div className='text-container'>
                         <p>This project has been a deep undertaking for me. Throughout my time in all my courses, I have learned a variety of skills that are relatively simple in practice, but have never had the opportunity to use them together and put them to real world practice.</p>
                         <p>
                             My largest struggle with this project was the styling of the website. As many of my courses have had a major focus on functionality over aesthetics, working towards a cohesive and satisfactory personal style has been a hurdle I have attempted to overcome.<br />
@@ -106,6 +108,10 @@ export default function PortfolioProject() {
             <div className='content-slice portfolio-info-slices'>
                 <div className='slice-content'>
                     <h1>Future Plan</h1>
+                    <div className='text-container'>
+                        <p>As this portfolio has been designed to be scalable, reusable and updatable, I will continue to use it as a platform for developing my skills as a web-developer. There will most likely be new aesthetics that I will pivot the site to work towards, and new technologies and ideas I would like to integrate and use to potentially replace older and more outdated ones.</p>
+                        <p>Past this project, I aim to update my older projects with basic information to fill out their respective information pages as well as build new projects with the information needed by the website.</p>
+                    </div>
                 </div>
             </div>
         </div>

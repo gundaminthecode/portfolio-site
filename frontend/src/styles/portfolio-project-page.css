@@ -28,3 +28,9 @@
         gap: 0.75rem;
     }
 }
+
+.text-container {
+    margin: auto;
+    padding: 1rem;
+    max-width: 1000px;
+}
