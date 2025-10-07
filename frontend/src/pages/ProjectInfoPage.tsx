@@ -4,7 +4,6 @@ import { useGithubRepos } from "../hooks/useGithubRepos";
 import type { Repo } from "../components/Projects/ProjectCard";
 import CaseStudy from "../components/Projects/CaseStudy";
 import { useCaseStudy } from "../hooks/useCaseStudy";
-import useScrollReveal from "../hooks/useScrollReveal";
 import ProjectProgress from "../components/Progress/ProjectProgress";
 import "../styles/project-info.css";
 import { CONFIG } from "../config";
@@ -20,7 +19,6 @@ function formatK(n: number | undefined) {
 }
 
 export default function ProjectInfoPage() {
-  useScrollReveal();
 
   const [qp] = useSearchParams();
   const repoParam = qp.get("repo");

@@ -10,7 +10,6 @@ import ProjectFilters, {
 import { useState } from "react";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 import "../styles/projects.css";
-import useScrollReveal from "../hooks/useScrollReveal";
 import { Link } from 'react-router-dom';
 
 
@@ -23,7 +22,6 @@ type Props = {
 };
 
 export default function Projects(props: Props) {
-  useScrollReveal();
 
   const {
     username,
