@@ -88,6 +88,19 @@ export default function PortfolioProject() {
             <div className='content-slice portfolio-info-slices'>
                 <div className='slice-content'>
                     <h1>Reflection</h1>
+                    <div>
+                        <p>This project has been a deep undertaking for me. Throughout my time in all my courses, I have learned a variety of skills that are relatively simple in practice, but have never had the opportunity to use them together and put them to real world practice.</p>
+                        <p>
+                            My largest struggle with this project was the styling of the website. As many of my courses have had a major focus on functionality over aesthetics, working towards a cohesive and satisfactory personal style has been a hurdle I have attempted to overcome.<br />
+                            After the project pitch in Week 8, I became extremely dissatisfied with the aesthetic direction my project was heading in, leaning more and more away from the late 90s to early 2000s vector aesthetic I wanted to achieve. This can be seen in the PITCH PRODUCT outcome.<br />
+                            This began a redesign sprint within the final weeks of the project, which could've been prevented with better planning and a clear aesthetic goal for the site in the beginning.
+                        </p>
+                        <p>Bringing all of my web-development skills together was another pain point. Many projects that I have worked on in the past have been small snippets of what can be done as part of a cohesive final product, but I had never actually put all the work together.</p>
+                        <p>This project also leaves some features to be desired, such as the lack of social media integrations (LinkedIn in particular) due to the lack of support within official APIs for the features which I wanted to implement.</p>
+                        <p>However, this portfolio has been designed to be automatically scalable, with the GitHub integrations allowing for automatic inclusion and updating of new projects, and the ability to read custom Case Study and Progress markdown files to fill out the dedicated project pages.</p>
+                        <p>Overall, I am satisfied with the outcome of this project, but there is lots of room for improvement and the display of my skills.</p>
+                    </div>
+                    
                 </div>
             </div>
             <div className='content-slice portfolio-info-slices'>
