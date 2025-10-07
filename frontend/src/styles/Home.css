@@ -82,7 +82,7 @@
 }
 
 #intro-slice{
-    height: 25vh;
+    height: clamp(auto, 40vh, 500px);
     display: flex;
     flex-direction: column;
     justify-content: center;

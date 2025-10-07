@@ -106,7 +106,7 @@ function App() {
       </div>
 
       {/* Contact modal */}
-      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} contactEmail="you@example.com" />
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} contactEmail="nmath2211@outlook.com" />
 
       <footer>
         <p>Made by Nick Mathiasen</p>
