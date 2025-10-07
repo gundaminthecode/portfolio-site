@@ -1,9 +1,11 @@
+/* styles/portfolio-project-page.css */
+/* Portfolio Project Page Styles */
+
 .portfolio-info-slices > .slice-content {
     align-items:start;
 }
 
 .image-container {
-    /* replace flex with grid so columns auto-fill the row */
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -14,14 +16,13 @@
 
 .image-container img {
     display: block;
-    width: 100%;      /* fill the grid cell */
-    height: auto;     /* keep aspect ratio */
+    width: 100%;
+    height: auto;
     object-fit: contain;
     border: 1px solid black;
     border-radius: 5px;
 }
 
-/* Optional: tighten for very small screens */
 @media (max-width: 520px) {
     .image-container {
         grid-template-columns: 1fr;

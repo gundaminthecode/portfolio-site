@@ -1,4 +1,7 @@
-// useGithubRepos.ts
+// hooks/useGithubRepos.ts
+
+// GitHub repositories viewer hook with filtering and sorting options
+
 import { useEffect, useState } from "react";
 import type { Repo } from "../components/Projects/ProjectCard";
 
@@ -26,6 +29,8 @@ export function useGithubRepos({
     setLoading(true);
     setError(null);
 
+    // Fetch repositories from the API
+    // API handles filtering and sorting
     const url = `${API_BASE}/api/repos?username=${encodeURIComponent(username)}&includeForks=${includeForks}&includeArchived=${includeArchived}&sortBy=${sortBy}`;
     fetch(url)
       .then(r => r.ok ? r.json() : Promise.reject(`${r.status} ${r.statusText}`))

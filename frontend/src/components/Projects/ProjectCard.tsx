@@ -1,3 +1,7 @@
+// components/Projects/ProjectCard.tsx
+
+// Project card component for defining GitHub repository info
+
 // Export Repo type
 export type Repo = {
   id: number;

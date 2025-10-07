@@ -1,3 +1,7 @@
+// hooks/useGithubUser.ts
+
+// Hook to fetch GitHub user profile data by username
+
 import { useEffect, useState } from "react";
 
 export type GithubUser = {
@@ -26,6 +30,7 @@ export function useGithubUser(username?: string) {
     setLoading(true);
     setError(null);
 
+    // Fetch user profile from GitHub API
     fetch(`https://api.github.com/users/${username}`, {
       signal: ctrl.signal,
       headers: { Accept: "application/vnd.github+json" },

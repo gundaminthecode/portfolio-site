@@ -1,3 +1,7 @@
+// components/ContactModal.tsx
+
+// Contact form modal dialog that opens the user's mail client with prefilled info
+
 import { useEffect, useRef, useState } from "react";
 
 type Props = {

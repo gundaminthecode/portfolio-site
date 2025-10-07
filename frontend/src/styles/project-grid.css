@@ -1,11 +1,7 @@
-/* ===========================
-  Project Grid Styles
-  =========================== */
+/* styles/project-grid.css */
 
-/* REMOVE this line to avoid re-importing global styles and altering cascade */
-/* @import "../styles/index.css"; */
+/* Project grid layout and filters */
 
-/* Sticky sidebar + filter panel look (reused on info page) */
 .filter-panel,
 .filter-panel.filter-panel--desktop {
   align-self: start;
@@ -26,7 +22,6 @@
   gap: 1rem;
 }
 
-/* Filter UI elements */
 .filters,
 .projects-filters { gap: 1rem; }
 .filters__title { font-size: 1.05rem; font-weight: 600; margin: 0.5rem 0 .25rem 0; }
@@ -54,7 +49,6 @@
 .filters__chip:hover { transform: translateY(-2px); }
 .filters__reset { margin-top: 0.5rem;}
 
-/* Hex-shaped custom checkbox */
 .filters__check.hex-check,
 .hex-check {
   display: flex;
@@ -64,7 +58,7 @@
 }
 
 .hex-check input[type="checkbox"] {
-  --hex-size: 28px; /* default size */
+  --hex-size: 28px;
   appearance: none;
   -webkit-appearance: none;
   inline-size: var(--hex-size, 24px);
@@ -77,7 +71,6 @@
   transition: background .15s ease, border-color .15s ease, box-shadow .2s ease;
 }
 
-/* Checkmark glyph */
 .hex-check input[type="checkbox"]::after {
   content: "";
   inline-size: 60%;
@@ -87,10 +80,9 @@
   transform: scale(0);
   transform-origin: center;
   transition: transform .12s ease;
-  color: #111; /* visible on yellow */
+  color: #111;
 }
 
-/* States */
 .hex-check input[type="checkbox"]:hover { filter: brightness(1.05); }
 .hex-check input[type="checkbox"]:focus-visible {
   outline: none;
@@ -103,12 +95,10 @@
 .hex-check input[type="checkbox"]:checked::after { transform: scale(1); }
 .hex-check input[type="checkbox"]:disabled { opacity: .55; cursor: not-allowed; }
 
-/* Touch: bigger tap target */
 @media (max-width: 600px) {
   .hex-check input[type="checkbox"] { --hex-size: 28px; }
 }
 
-/* Mobile: landscape filters */
 @media (max-width: 1050px) {
   .projects-filters {
     display: flex; flex-direction: row; flex-wrap: wrap;
@@ -116,7 +106,6 @@
   }
 }
 
-/* Project cards (grid view sizing vars) */
 .projects-grid {
   --card-h: clamp(180px, 20vw, 340px);
   --card-pad: clamp(0.6rem, 0.5vw + 0.35rem, 0.9rem);
@@ -128,21 +117,19 @@
   .projects-grid { --card-h: clamp(135px, 28vw, 220px); --card-pad: 0.5rem; }
 }
 
-/* RESTORED: visual card styling + containment */
 .projects-grid .project-slide,
 .projects-grid .project-slide.project-slide--grid {
   width: 100% !important;
   max-width: 100% !important;
-  height: var(--card-h) !important;        /* fixed visual height */
+  height: var(--card-h) !important;
   padding: var(--card-pad);
   box-sizing: border-box;
   border-radius: 12px;
   background: color-mix(in oklab, var(--header-colour) 10%, transparent);
   border: 1px solid color-mix(in oklab, var(--header-colour) 25%, transparent);
-  overflow: hidden;                         /* hard stop for overflow */
+  overflow: hidden;
 }
 
-/* Prevent media or inner layout from forcing overflow */
 .projects-grid .project-slide img,
 .projects-grid .project-slide video,
 .projects-grid .project-slide svg {
@@ -151,7 +138,6 @@
   display: block;
 }
 
-/* Safety: allow inner layout to shrink */
 .projects-grid .project-slide,
 .projects-grid .project-slide * {
   min-width: 0;
@@ -160,7 +146,6 @@
   word-break: break-word;
 }
 
-/* Card typography */
 .project-slide__title { font-size: var(--fs-700); line-height: 1.15; margin: 0 0 .35rem 0; }
 .project-slide__desc  { font-size: var(--fs-400); line-height: 1.4; }
 .project-slide__meta,

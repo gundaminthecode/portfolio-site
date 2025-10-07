@@ -1,10 +1,10 @@
-/* Project Info page layout (reuses filter panel + card look) */
+/* styles/project-info.css */
+
+/* Project Info Page Styles */
 
 #project-info-hero-slice {
-  /* --slice-skew: 2deg; */          /* removed: generic */
-  /* background: var(--r4-yellow); */ /* removed: generic */
-  min-height: 12vh;                  /* keep explicit size here */
-  margin-top: 4vh;                   /* keep explicit spacing here */
+  min-height: 12vh;
+  margin-top: 4vh;
 }
 
 #project-info-hero-slice .slice-content {
@@ -15,7 +15,6 @@
   gap: 0.5rem;
 }
 
-/* Project info slice layout */
 #project-info-slice .slice-content {
   display: flex;
   flex-direction: row;
@@ -26,38 +25,32 @@
   min-width: 0; 
 }
 
-/* Place columns */
 #project-info-slice .filter-panel { 
   grid-column: 1; 
 }
 
-/* Wrap long content and cap typical offenders */
 #project-info-slice .project-body *,
 #project-info-slice .project-body :is(p, h1, h2, h3, h4, h5, h6, li, a) {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* Mobile: single column */
 @media (max-width: 1050px) {
   #project-info-slice .slice-content { 
     flex-direction: column;
   }
 }
 
-/* Compact paddings (progress slice removed) */
 @media (max-width: 600px) {
   #project-info-hero-slice { margin-top: 3vh; }
   #project-info-hero-slice .slice-content { padding: 0.75rem; gap: 0.4rem; }
 }
 
-/* Keep: unrelated to project-progress-slice */
 #project-progress-hero-slice .slice-content > * {
   max-width: 100%;
   word-break: break-word;
 }
 
-/* Project links buttons: match card link styles */
 .project-links a,
 .project-links button,
 .project-links .btn {
@@ -90,7 +83,6 @@
   outline-offset: 2px;
 }
 
-/* Optional ghost variant */
 .project-links .btn--ghost {
   background: transparent;
   color: var(--header-colour);

@@ -1,31 +1,34 @@
-import { useState } from 'react'; // Add useState import
+// components/Projects/ProjectFilters.tsx
+
+// Project filters UI and logic for filtering & sorting GitHub repositories
+
+import { useState } from 'react';
 import type { Repo } from "./ProjectCard";
 
-// Types
 export type SortBy = "updated" | "stars" | "name";
 export type UpdatedWindow = "any" | "7" | "30" | "90" | "365";
 
 export type FiltersState = {
-  languages: string[];       // CHANGED: use array instead of Set
+  languages: string[];
   updatedWithin: UpdatedWindow;
   sortBy: SortBy;
   sortDir: "desc" | "asc";
 };
 
 export const DEFAULT_FILTERS: FiltersState = {
-  languages: [],             // CHANGED
+  languages: [],
   updatedWithin: "any",
   sortBy: "updated",
   sortDir: "desc",
 };
-
-// Helpers
+// Extract unique languages from repos
 export function uniqueLanguages(repos: Repo[]): string[] {
   const s = new Set<string>();
   for (const r of repos) if (r.language) s.add(r.language);
   return Array.from(s).sort((a, b) => a.localeCompare(b));
 }
 
+// Check if a date is within the updated window
 function withinWindow(updatedISO: string, window: UpdatedWindow): boolean {
   if (window === "any") return true;
   const days = Number(window);
@@ -40,7 +43,7 @@ export function applyFiltersAndSort(repos: Repo[], f: FiltersState): Repo[] {
   let list = repos.filter((r) => {
     const langOk =
       f.languages.length === 0 ||
-      (r.language ? f.languages.includes(r.language) : false); // CHANGED
+      (r.language ? f.languages.includes(r.language) : false);
     const timeOk = withinWindow(r.updated_at, f.updatedWithin);
     return langOk && timeOk;
   });
@@ -75,14 +78,14 @@ type Props = {
 };
 
 export default function ProjectFilters({ languages, value, onChange, onReset }: Props) {
-  const [isDropdownOpen, setDropdownOpen] = useState(false); // State for dropdown visibility
+  const [isDropdownOpen, setDropdownOpen] = useState(true); // State for dropdown visibility
 
   const toggleLang = (lang: string) => {
     const has = value.languages.includes(lang);
     const next = has
       ? value.languages.filter((l) => l !== lang)
       : [...value.languages, lang];
-    onChange({ ...value, languages: next }); // CHANGED
+    onChange({ ...value, languages: next });
   };
 
   return (
@@ -119,7 +122,7 @@ export default function ProjectFilters({ languages, value, onChange, onReset }: 
             </button>
           </div>
 
-          {/* Updated window */}
+          {/* Window */}
           <div className="filters__group">
             <div className="filters__label">Updated</div>
             <div className="filters__chips">

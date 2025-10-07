@@ -1,4 +1,8 @@
-// ProjectInfoPage.tsx
+// pages/ProjectInfoPage.tsx
+
+// This component displays detailed information about a specific GitHub project,
+// including a case study if available, and a live preview if the project has a live URL.
+
 import { Link, useOutletContext, useParams, useSearchParams} from "react-router-dom";
 import { useGithubRepos } from "../hooks/useGithubRepos";
 import type { Repo } from "../components/Projects/ProjectCard";

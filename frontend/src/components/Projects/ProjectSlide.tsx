@@ -1,4 +1,6 @@
-// ProjectSlide.tsx
+// components/Projects/ProjectSlide.tsx
+
+// Project card component for displaying basic GitHub repository info and linking to detail pages
 
 import type { Repo } from "./ProjectCard";
 import { Link } from "react-router-dom";

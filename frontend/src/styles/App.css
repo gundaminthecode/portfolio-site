@@ -1,9 +1,8 @@
-/* ===========================
-  App.css - Main Stylesheet
-  =========================== */
+/* styles/App.css */
 
-@import "./scroll-reveal.css";
-@import "./contentstack.css"; /* NEW: generic content stack/slice rules */
+/* Main Stylesheet */
+
+@import "./contentstack.css";
 @import "./github-profile-panel.css";
 @import "./contact-modal.css";
 
@@ -20,8 +19,8 @@
   width: 100vw;
   display: flex;
   flex-direction: column;
-  position: relative;  /* anchor content */
-  z-index: 1;          /* content above bg */
+  position: relative;
+  z-index: 1;
 }
 
 /* fixed, full-viewport background layer */
@@ -29,7 +28,7 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  pointer-events: none;  /* don’t block clicks */
+  pointer-events: none;
   overflow: visible;
 }
 
@@ -40,7 +39,7 @@
 
 /* put header + main above the bg */
 header, #app-shell {
-  position: relative; /* keep for header overlay positioning */
+  position: relative;
 }
 
 #app-shell {
@@ -53,16 +52,15 @@ header, #app-shell {
   z-index: 2;
 }
 
-/* ===== Header / Navigation ===== */
 header {
   position: relative;
   padding: 2rem;
-  background: transparent; /* overlay provides the color */
-  display: flex;           /* restore flex layout */
+  background: transparent;
+  display: flex;
   align-items: center;
   gap: 1rem;
-  flex-wrap: nowrap; /* NEW: prevents wrap that increases header height */
-  z-index: 1000; /* Ensure header is above the rectangle */
+  flex-wrap: nowrap;
+  z-index: 1000;
 }
 
 .header-cutout {
@@ -71,18 +69,17 @@ header {
   width: 100%;
   height: 100%;
   display: block;
-  pointer-events: none; /* clicks go to the logo link */
-  z-index: 2; /* Ensure cutout is above the rectangle */
+  pointer-events: none;
+  z-index: 2;
 }
 
 .header-cutout__text {
   font-family: "Audiowide", sans-serif;
   font-weight: 400;
   font-size: 10vh;
-  letter-spacing: 0.06em; /* match .logo spacing */
+  letter-spacing: 0.06em;
 }
 
-/* Scale the logo text and mask together under 1900px */
 @media (max-width: 1900px) {
   header .logo,
   .header-cutout__text {
@@ -91,7 +88,7 @@ header {
 }
 
 #logo-container {
-  flex: 0 0 auto;          /* size to content (the big logo text) */
+  flex: 0 0 auto;
 }
 
 header .logo {
@@ -109,14 +106,14 @@ header .logo {
 }
 
 #nav-container {
-  margin-left: auto;       /* push nav to the right */
+  margin-left: auto;
   display: flex;
   gap: 1rem;
   flex: 0 0 auto;
   z-index: 1100;        /* ensure above header overlay */
 }
 
-/* Hexagon nav buttons */
+
 #navBar {
   display: flex;
   gap: 0.75rem;
@@ -134,12 +131,11 @@ header .logo {
   50%      { --hex-bob: -6px; }
 }
 
-/* Base: consistent transform driven by vars */
 #navBar .sidebar-nav__link,
 #navBar .navBar__link {
-  --hex-size: clamp(3rem, 6vw, 5rem);          /* base size (phones/tablets) */
+  --hex-size: clamp(3rem, 6vw, 5rem);
   --hex-height: calc(var(--hex-size) / 1.1547);
-  --hex-offset: 0px;                            /* no stagger by default */
+  --hex-offset: 0px;
   --hex-scale: 1;
 
   width: var(--hex-size);
@@ -155,12 +151,10 @@ header .logo {
   transform: translateY(calc(var(--hex-offset) + var(--hex-bob))) scale(var(--hex-scale));
 }
 
-/* Remove base stagger that caused inconsistent header heights */
 #navBar > * { 
   --hex-offset: 0px;
 }
 
-/* Hover: animate the variable, not transform */
 #navBar .sidebar-nav__link:hover,
 #navBar .navBar__link:hover {
   background: var(--hex-bg-hover, hsl(223 50% 18%));
@@ -176,18 +170,17 @@ header .logo {
   75%      { transform: rotate(-8deg) scale(1.02); }
 }
 
-/* Base icon setup (compose-friendly) */
+
 #navBar svg {
   width: 56%;
   height: 56%;
   transform-origin: 50% 50%;
-  transform-box: fill-box;          /* ensure center is the visual center */
-  transform: rotate(0deg) scale(1); /* baseline so keyframes are deterministic */
+  transform-box: fill-box;
+  transform: rotate(0deg) scale(1);
   will-change: transform;
-  animation: none;                  /* only animate on hover/focus */
+  animation: none;
 }
 
-/* Wiggle the icon when the button is hovered/focused */
 #navBar .sidebar-nav__link:is(:hover, :focus-visible) svg,
 #navBar .navBar__link:is(:hover, :focus-visible) svg {
   animation: nav-icon-wiggle 1.1s ease-in-out infinite;
@@ -201,15 +194,6 @@ header .logo {
   }
 }
 
-/* Icon sizing stays proportional */
-#navBar svg {
-  width: 56%;
-  height: 56%;
-  transform-origin: 50% 50%;
-  will-change: transform;
-}
-
-/* Tablet: slightly bigger, still no stagger */
 @media (min-width: 769px) and (max-width: 1050px) {
   header { padding: 1.25rem; }
   #navBar .sidebar-nav__link,
@@ -219,7 +203,6 @@ header .logo {
   }
 }
 
-/* Desktop: larger size; enable stagger only on wide desktops */
 @media (min-width: 1051px) {
   #navBar .sidebar-nav__link,
   #navBar .navBar__link {
@@ -227,38 +210,25 @@ header .logo {
   }
 }
 @media (min-width: 1400px) {
-  /* Stagger every second item only when there’s room */
   #navBar > *:nth-child(even) {
     --hex-offset: calc(var(--hex-height) / 2);
   }
 }
 
-/* Phones: smaller, column rail; no stagger, no hover bob on touch */
 @media (max-width: 768px) {
   #nav-container {
     position: absolute;
     right: 0.75rem;
     top: 0.75rem;
-    z-index: 1100;                       /* higher than overlay/content */
+    z-index: 1100;
   }
   #navBar { flex-direction: column; align-items: flex-end; gap: 0.6rem; }
   #navBar .sidebar-nav__link,
   #navBar .navBar__link {
     --hex-size: clamp(3rem, 14vw, 4.25rem);
-    --hex-offset: 0; /* no stagger */
+    --hex-offset: 0;
     transform: translateY(calc(var(--hex-offset) + var(--hex-bob))) scale(var(--hex-scale));
   }
-}
-
-/* ===== Content Stack (desktop) ===== */
-
-/* Removed: any #content-stack, .content-slice, .slice-content base rules.
-   These now live in contentstack.css. Page-specific slice IDs remain
-   in their own files (projects.css, project-info.css, Home.css). */
-
-/* Phone-specific polish (optional) */
-@media (max-width: 768px) {
-  
 }
 
 @media (max-width: 1050px) {
@@ -268,7 +238,6 @@ header .logo {
     max-width: 100%;
   }
 
-  /* stack containers on mobile */
   #logo-container,
   #nav-container {
     flex: 0 0 auto;
@@ -290,26 +259,22 @@ header .logo {
   }
 }
 
-/* Desktop: hide mobile header icons, show right rail, pad content */
 @media (min-width: 1901px) {
   .header-cutout__text {
     font-size: 9rem;
   }
 }
 
-/* Desktop layout: make nav content-sized on the right */
 @media (min-width: 1051px) {
   header {
     flex-direction: row;
     align-items: center;
   }
   #logo-container {
-    /* allow logo side to give space to nav when needed */
     flex: 1 1 auto;
     min-width: 0;
   }
   #nav-container {
-    /* make nav size to its content and stick right */
     flex: 0 1 auto;
     margin-left: auto;
     justify-content: flex-end;
@@ -317,7 +282,7 @@ header .logo {
   }
 }
 
-/* Compact header/nav on phones */
+
 @media (max-width: 600px) {
   header { padding: 1rem; gap: 0.75rem; }
   header .logo {
@@ -331,27 +296,14 @@ header .logo {
   }
 }
 
-/* Keep header on a single row unless we're on true mobile */
-header {
-  /* existing props... */
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: nowrap; /* NEW: prevents wrap that increases header height */
-}
-
-/* Tablet (769–1050px): keep row layout, shrink padding, disable stagger drop */
 @media (max-width: 1050px) and (min-width: 769px) {
   header { padding: 1.25rem; }
 
-  /* Ensure logo and nav stay on one row */
   #logo-container { flex: 1 1 auto; min-width: 0; }
   #nav-container  { flex: 0 0 auto; margin-left: auto; width: auto; }
 
-  /* Stop the even-item vertical drop that made the header tall */
   #navBar > * { --hex-offset: 0 !important; }
 
-  /* Slightly smaller hex buttons on tablet */
   #navBar .sidebar-nav__link,
   #navBar .navBar__link {
     --hex-size: clamp(3.75rem, 7.5vw, 5.25rem);
@@ -359,7 +311,6 @@ header {
   }
 }
 
-/* Touch devices: don’t animate/bob on hover to avoid jank */
 @media (hover: none) {
   #navBar .sidebar-nav__link:hover,
   #navBar .navBar__link:hover {
@@ -367,7 +318,6 @@ header {
   }
 }
 
-/* MOBILE: vertical rail pinned to the right, shrink-wrapped */
 @media (max-width: 768px) {
   header { padding: 1rem; }
 
@@ -375,21 +325,20 @@ header {
     position: fixed;
     top: 0.75rem;
     right: 0.75rem;
-    left: auto;               /* don't stretch from the left */
-    width: max-content;       /* override earlier width: 100% */
+    left: auto;
+    width: max-content;
     margin: 0;
-    display: block;           /* shrink-wrap the nav */
+    display: block;
     z-index: 1100;
   }
 
   #navBar {
     flex-direction: column;
-    align-items: flex-end;    /* right align the column */
+    align-items: flex-end;
     gap: 0.6rem;
-    width: max-content;       /* match container shrink-wrap */
+    width: max-content;
   }
 
-  /* ensure each item hugs the right edge; no stagger when vertical */
   #navBar > * {
     align-self: flex-end;
     --hex-offset: 0 !important;
@@ -402,22 +351,18 @@ header {
   }
 }
 
-/* Keep stagger on while horizontal (>=769px) */
 @media (min-width: 769px) {
   #navBar > *:nth-child(even) {
     --hex-offset: calc(var(--hex-height) / 2) !important;
   }
 }
 
-/* Tablet polish (do not cancel stagger here) */
 @media (max-width: 1050px) and (min-width: 769px) {
   header { padding: 1.25rem; }
   #logo-container { flex: 1 1 auto; min-width: 0; }
   #nav-container  { flex: 0 0 auto; margin-left: auto; width: auto; }
-  /* removed the old rule that zeroed stagger here */
 }
 
-/* Desktop sizes (stagger stays on from the 769+ rule) */
 @media (min-width: 1051px) {
   #navBar .sidebar-nav__link,
   #navBar .navBar__link {
@@ -425,41 +370,39 @@ header {
   }
 }
 
-/* Very small phones: tiny nudge */
 @media (max-width: 420px) {
   #nav-container { right: 0.5rem; top: 0.5rem; }
 }
 
 .left-rectangle {
   position: absolute;
-  top: var(--header-h);   /* responsive to header height */
-  bottom: 0;              /* stretch to end of page content */
+  top: var(--header-h);
+  bottom: 0;
   left: 0;
   width: 20vw;
-  /* your color/gradient here */
   background: var(--r4-yellow);
   clip-path: polygon(0 0, calc(100% - 5vh) 0, 100% 100%, 0 100%);
   -webkit-clip-path: polygon(0 0, calc(100% - 5vh) 0, 100% 100%, 0 100%);
-  z-index: 1;             /* below header (header already z-index: 1000) */
-  pointer-events: none;   /* decorative */
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* Footer */
 footer {
-  background-color: var(--header-colour); /* Use the header color */
-  height: clamp(2rem, 5rem, 5rem); /* Clamp height between 2rem and 5rem */
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  margin-top: auto; /* Push footer to the bottom of the page */
+  background-color: var(--header-colour);
+  height: clamp(2rem, 5rem, 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
   z-index: 2;
 }
 
-/* Additional styles for footer content */
+
 footer p {
-  margin: 0; /* Remove default margin */
-  color: #fff; /* Set text color to white or adjust as needed */
-  text-align: center; /* Center text */
+  margin: 0;
+  color: #fff;
+  text-align: center;
 }
 
 .back-link {
@@ -472,12 +415,12 @@ footer p {
   display: inline-grid;
   place-items: center;
   width: var(--hex-w);
-  aspect-ratio: 1.5; /* regular hex */
+  aspect-ratio: 1.5;
   text-decoration: none;
   font-weight: 600;
   color: #fff;
 
-  border: 0;            /* avoid flat horizontal edges */
+  border: 0;
   isolation: isolate;
   transition: filter .2s, transform .15s, color .2s;
 }

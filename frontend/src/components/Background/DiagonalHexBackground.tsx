@@ -1,4 +1,7 @@
-// DiagonalHexBackground.tsx
+// components/Background/DiagonalHexBackground.tsx
+
+// Animated diagonal floating hexagons using React and CSS animations
+
 import React, { useMemo } from "react";
 
 type Route = "TL_BR" | "BL_TR" | "TR_BL" | "BR_TL";
@@ -90,6 +93,7 @@ const DiagonalHexBackground: React.FC<Props> = ({
         </defs>
       </svg>
 
+      {/* Render hexagons */}
       {hexes.map((h, idx) => {
         const color = h.isMain ? mainColor : ghostColor;
         const sw = h.isMain ? strokeWidth : Math.max(2, strokeWidth * 0.6);
@@ -97,12 +101,12 @@ const DiagonalHexBackground: React.FC<Props> = ({
         // Adjust the starting position to allow for a vertical range of 40% to 100% of the parent container
         const start = {
           left: `${from.x + (offsetAxis === "x" ? h.laneOffset : 0)}%`,
-          top: `${rnd(40, 100)}%`, // Spawn between 40% and 100% of the height
+          top: `${rnd(40, 100)}%`,
         };
 
         // Adjust the end position to float off the left side of the viewport
         const end = {
-          left: `${to.x + (offsetAxis === "x" ? h.laneOffset : 0) - 150}vw`, // Move left by 150vw to go off-screen
+          left: `${to.x + (offsetAxis === "x" ? h.laneOffset : 0) - 150}vw`, // move offscreen
           top: `${to.y + (offsetAxis === "y" ? h.laneOffset : 0)}%`,
         };
 
@@ -121,8 +125,6 @@ const DiagonalHexBackground: React.FC<Props> = ({
                 position: "absolute",
                 left: start.left,
                 top: start.top,
-                // animation: `move-${idx} ${h.dur}s linear infinite`,
-                // animationDelay: `${h.negDelay}s`,
                 animationName: `move-${idx}`,
                 animationDuration: `${h.dur}s`,
                 animationTimingFunction: "linear",
@@ -143,8 +145,6 @@ const DiagonalHexBackground: React.FC<Props> = ({
                   style={{
                     transform: `scale(${h.scale})`,
                     transformOrigin: "center",
-                    // animation: `hex-spin ${h.spinDur}s linear infinite`,
-                    // animationDirection: h.rotDir < 0 ? "reverse" : "normal",
                     animationName: "hex-spin",
                     animationDuration: `${h.spinDur}s`,
                     animationTimingFunction: "linear",

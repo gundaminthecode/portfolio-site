@@ -1,11 +1,14 @@
-// import React from "react"
+// components/Carousel/KeenCarousel.tsx
+
+// 3D cylinder carousel using Keen Slider with vertical mouse wheel control
+
 import { useKeenSlider } from "keen-slider/react"
 import type { KeenSliderPlugin } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 
 import ProjectSlide from "../Projects/ProjectSlide"
 import type { Repo } from "../Projects/ProjectCard"
-import "../../styles/carousel.css" // keep your styles
+import "../../styles/carousel.css"
 
 type Props = { repos: Repo[] }
 
@@ -65,7 +68,7 @@ export default function RepoCylinderCarousel({ repos }: Props) {
     },
     [
       carousel,
-      // optional: mouse wheel control
+      // mouse wheel control
       (slider) => {
         function onWheel(e: WheelEvent) {
           e.preventDefault()

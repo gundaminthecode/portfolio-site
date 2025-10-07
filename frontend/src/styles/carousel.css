@@ -1,6 +1,8 @@
+/* styles/carousel.css */
+/* Carousel Styles */
+
 @import 'keen-slider/keen-slider.min.css';
 
-/* Center whatever you render inside each slide */
 .swiper-slide,
 .keen-slider__slide {
   display: grid;
@@ -9,7 +11,6 @@
   --card-h: clamp(280px, 90vw, 380px);
 }
 
-/* FIX: force slide wrappers to fixed size */
 .swiper:not(.swiper-vertical) .swiper-slide {
   width: var(--card-w) !important;
   height: auto !important;
@@ -19,13 +20,11 @@
   width: auto !important;
 }
 
-/* Slide wrappers size (carousel layout concern only) */
 .keen-slider__slide {
   width: var(--card-w) !important;
   height: var(--card-h) !important;
 }
 
-/* Card fills the slide; visuals come from project-cards.css */
 .project-slide.project-slide--carousel {
   width: 100% !important;
   height: 100% !important;
@@ -33,21 +32,10 @@
   overflow: hidden;
 }
 
-/* Remove carousel-specific typography/spacing overrides so cards match the grid */
-/* DELETE these blocks if present:
-.project-slide.project-slide--carousel .project-slide__title { ... }
-.project-slide.project-slide--carousel .project-slide__desc  { ... }
-.project-slide.project-slide--carousel .project-slide__meta,
-.project-slide.project-slide--carousel .project-slide__tags { ... }
-@media (max-width: 600px) { .project-slide.project-slide--carousel { ... } }
-*/
-
-/* Control max size in one place */
 :root {
   --carousel-max-width: 500px;
   --carousel-height: 20vh;
 
-  /* Slide/card box size used by the carousel layout only */
   --card-w: min(92vw, 460px);
   --card-h: clamp(300px, 56vh, 560px);
 }
@@ -57,22 +45,19 @@
   width: 100%;
   max-width: var(--carousel-max-width);
   height: var(--carousel-height);
-  margin: 0 auto;                /* center within its column */
+  margin: 0 auto;
   perspective: 1000px;
 
-  /* make height predictable and consistent across screens */
   --carousel-height: clamp(240px, 40vh, 400px);
 }
 
-/* Control size responsively */
 .scene {
   --carousel-height: clamp(220px, 36vh, 400px);
-  --carousel-face-h: 60%; /* slide face height inside the ring */
+  --carousel-face-h: 60%;
   height: var(--carousel-height);
   position: relative;
 }
 
-/* The rotating ring (plugin sets inline transform) */
 .scene .carousel.keen-slider {
   position: absolute;
   inset: 0;
@@ -82,7 +67,6 @@
   transform-style: preserve-3d;
 }
 
-/* Faces on the ring — center them in the scene */
 .carousel.keen-slider > .keen-slider__slide.carousel__cell {
   position: absolute;
   top: 50%;
@@ -97,13 +81,11 @@
   will-change: transform;
 }
 
-/* Ensure the ring fills the scene’s height */
 .scene .carousel.keen-slider {
   height: 100%;
   transform-style: preserve-3d;
 }
 
-/* Card sizing: cap width so it doesn’t dominate on phones */
 .carousel__card {
   width: 100%;
   height: 100%;
@@ -115,7 +97,6 @@
   overflow: hidden;
 }
 
-/* Step down size on smaller screens */
 @media (max-width: 900px) {
   .scene { --carousel-height: clamp(200px, 34vh, 420px); --carousel-face-h: 56%; }
   .carousel__card { max-width: min(94%, 360px); }
@@ -129,7 +110,6 @@
   .carousel__card { max-width: min(98%, 290px); }
 }
 
-/* Hover bob inside carousels too */
 .project-slide.project-slide--carousel:hover {
   animation: hex-bob 1.4s ease-in-out infinite;
 }
@@ -164,36 +144,30 @@
   block-size: clamp(36px, 4vw, 48px);
 }
 
-/* Override: allow cylinder slides to size to the face, not --card-w/h */
 .carousel.keen-slider > .keen-slider__slide.carousel__cell {
   width: 100% !important;
   height: var(--carousel-face-h) !important;
 }
 
-/* Smaller type + safe wrapping inside carousel cards */
-/* Keep wrapping fixes; drop padding/font-size so visuals come from project-cards.css */
 .project-slide.project-slide--carousel {
-  /* ...existing code... */
-  /* remove padding and font-size from this block */
   overflow: hidden;
 }
 .project-slide.project-slide--carousel,
 .project-slide.project-slide--carousel * {
-  min-width: 0;                  /* allow flex/grid children to shrink */
+  min-width: 0;
   max-width: 100%;
-  overflow-wrap: anywhere;       /* break long tokens */
+  overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* Clamp title/desc lines and reduce sizes */
 .project-slide.project-slide--carousel .project-slide__title {
   font-size: var(--fs-600);
   line-height: 1.2;
   margin: 0 0 0.35rem 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;         /* up to 2 lines */
-  line-clamp: 2;                 /* up to 2 lines (standard) */
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
 }
 .project-slide.project-slide--carousel .project-slide__desc {
@@ -201,8 +175,8 @@
   line-height: 1.35;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;         /* up to 3 lines */
-  line-clamp: 3;                 /* up to 3 lines (standard) */
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   overflow: hidden;
 }
 .project-slide.project-slide--carousel .project-slide__meta,
@@ -211,7 +185,6 @@
   line-height: 1.3;
 }
 
-/* Extra tightening on small screens */
 @media (max-width: 600px) {
   .project-slide.project-slide--carousel { padding: 0.75rem; font-size: 0.88em; }
   .project-slide.project-slide--carousel .project-slide__title { 
@@ -224,7 +197,6 @@
   }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .project-slide.project-slide--carousel:hover { animation: none; }
 }

@@ -1,3 +1,6 @@
+/* styles/github-profile-panel.css */
+/* GitHub Profile Panel Styles */
+
 .github-profile-panel {
   display: grid;
   grid-template-columns: auto 1fr;

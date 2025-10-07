@@ -1,3 +1,7 @@
+// components/Progress/ProgressHeatmap.tsx
+
+// GitHub-like contributions heatmap calendar
+
 import { useMemo } from "react"
 
 type Props = {

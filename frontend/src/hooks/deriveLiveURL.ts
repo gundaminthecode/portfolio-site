@@ -1,4 +1,7 @@
-// deriveLiveUrl.ts
+// hooks/deriveLiveUrl.ts
+
+// Derive a live URL for a GitHub repository based on its homepage or GitHub Pages settings
+
 export function deriveLiveUrl(repo: {
   name: string;
   owner?: { login?: string | null } | null;

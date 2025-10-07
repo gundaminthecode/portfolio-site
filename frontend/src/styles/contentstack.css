@@ -1,3 +1,6 @@
+/* styles/contentstack.css */
+/* Content Stack Styles */
+
 :root {
   --slice-gap: 2rem;
   --slice-bg: var(--r4-yellow);
@@ -19,7 +22,6 @@
   transform: skewY(var(--slice-skew));
   transform-origin: top left;
   padding: 2rem;
-  /* box-shadow: 8px 8px 0 hsla(0, 0%, 78%); */
 }
 
 .content-slice > .slice-content {

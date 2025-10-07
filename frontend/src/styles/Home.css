@@ -1,3 +1,6 @@
+/* styles/Home.css */
+/* Home Page Styles */
+
 #intro-slice, #projects-slice {
     background: var(--r4-yellow);
 }

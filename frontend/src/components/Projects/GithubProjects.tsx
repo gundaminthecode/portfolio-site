@@ -1,4 +1,6 @@
-// GithubProjects.tsx
+// components/Projects/GithubProjects.tsx
+
+// GitHub repositories viewer with Keen Slider carousel
 
 import { useMemo } from "react";
 import KeenCarousel from '../Carousel/KeenCarousel.tsx'

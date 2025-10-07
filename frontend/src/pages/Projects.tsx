@@ -1,4 +1,6 @@
-// Projects.tsx
+// pages/Projects.tsx
+
+// This component displays a list of GitHub projects with filtering options and user profile information.
 
 import { useGithubRepos } from "../hooks/useGithubRepos";
 import ProjectGrid from "../components/Projects/ProjectGrid";

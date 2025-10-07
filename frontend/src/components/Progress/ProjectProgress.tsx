@@ -1,8 +1,12 @@
+// components/Progress/ProjectProgress.tsx
+
+// Project progress viewer with heatmap and commit list
+
 import { useEffect, useMemo, useState } from "react"
 import useProgress from "../../hooks/useProgress"
 import ProgressHeatmap from "./ProgressHeatmap"
 import "../../styles/progress.css"
-import "../../styles/project-cards.css" // for typography vars
+import "../../styles/project-cards.css"
 
 type Props = { owner: string; repo: string; days?: number };
 

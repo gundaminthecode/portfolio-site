@@ -1,3 +1,8 @@
+// pages/PortfolioProject.tsx
+
+// This component displays a detailed breakdown of the custom developed web-portfolio project.
+// Basic hard-coded structure for ease of implementation, future versions may pull from markdown files
+
 import { Link } from 'react-router-dom';
 import "../styles/portfolio-project-page.css"
 

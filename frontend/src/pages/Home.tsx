@@ -1,4 +1,7 @@
-// src/pages/Home.tsx
+// pages/Home.tsx
+
+// This component displays the home page with a headshot, introduction, and project previews.
+
 import GithubProjects from "../components/Projects/GithubProjects";
 import "../styles/Home.css";
 import { NavLink} from "react-router-dom";

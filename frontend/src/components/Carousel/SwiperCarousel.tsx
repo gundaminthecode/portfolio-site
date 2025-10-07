@@ -1,4 +1,8 @@
 // SwiperCarousel.tsx
+
+// unused, but kept for reference
+// 3D rolodex-style carousel using Swiper with vertical mouse wheel control
+
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay, Mousewheel } from 'swiper/modules'
 
@@ -16,7 +20,6 @@ export default function SwiperCarousel({ repos }: Props) {
       spaceBetween={18}
       centeredSlides={false}
       loop
-      // loopedSlides={repos.length}
       loopAdditionalSlides={2}
       speed={700}
       grabCursor

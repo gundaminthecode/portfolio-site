@@ -1,4 +1,7 @@
-// src/components/Projects/CaseStudy.tsx
+// components/Projects/CaseStudy.tsx
+
+// Case study viewer with front-matter summary table
+
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";

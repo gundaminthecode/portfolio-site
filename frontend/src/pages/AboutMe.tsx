@@ -1,3 +1,7 @@
+// pages/AboutMe.tsx
+
+// This component displays an "About Me" page with GitHub profile information.
+
 import { Link } from 'react-router-dom';
 import { CONFIG } from '../config';
 import { useGithubUser } from '../hooks/useGithubUser';

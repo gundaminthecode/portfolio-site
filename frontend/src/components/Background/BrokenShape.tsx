@@ -1,3 +1,7 @@
+// components/Background/BrokenShape.tsx
+
+// Animated SVG “broken glass” effect using custom element
+
 import React from "react";
 
 import "../../styles/index.css"
@@ -71,7 +75,7 @@ private cfg: Cfg = {
 
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg") as SVGSVGElement;
     this.svg.setAttribute("viewBox", "0 0 800 800");
-    this.svg.setAttribute("preserveAspectRatio", "xMidYMid slice"); // fill container like before
+    this.svg.setAttribute("preserveAspectRatio", "xMidYMid slice"); // fill container
     this.layer = document.createElementNS("http://www.w3.org/2000/svg", "g") as SVGGElement;
     this.svg.appendChild(this.layer);
     this.shadowRoot!.append(this.svg);
@@ -109,15 +113,17 @@ private cfg: Cfg = {
   }
 
   private _resize() {
-    // If you want dynamic sizing, uncomment below to match the host’s content box.
+    // dynamic sizing, uncomment below to match the host’s content box.
     // const rect = this.getBoundingClientRect();
     // this.W = Math.max(1, Math.floor(rect.width));
     // this.H = Math.max(1, Math.floor(rect.height));
     this.svg.setAttribute("viewBox", `0 0 ${this.W} ${this.H}`);
   }
 
+  // Random number generator
   private _rand(a = 1, b = 0) { return Math.random() * (a - b) + b; }
 
+  // Create grid of points with random jitter
   private _makeGrid() {
     const { cols, rows } = this.cfg;
     const jitter = Math.max(6, (this.W / cols) * 0.12);
@@ -136,6 +142,7 @@ private cfg: Cfg = {
     }
   }
 
+  // Create triangles from grid points
   private _makeTris() {
     const { cols, rows } = this.cfg; const idx = (x: number, y: number) => y * (cols + 1) + x;
     this._tris.length = 0;
@@ -148,6 +155,7 @@ private cfg: Cfg = {
     }
   }
 
+  // Build SVG elements
   private _build() {
     this._makeGrid(); this._makeTris();
     this.layer.replaceChildren();
@@ -168,6 +176,7 @@ private cfg: Cfg = {
     this._draw(0); // first paint
   }
 
+  // Draw frame at time t (seconds)
   private _draw(t: number) {
     const { amp } = this.cfg; const n = this._pts.length;
     if (!this._px || this._px.length !== n) { this._px = new Float32Array(n); this._py = new Float32Array(n); }
@@ -189,6 +198,7 @@ private cfg: Cfg = {
     }
   }
 
+  // Animation loop
   private _tick(now: number) {
     if (!this._running) return;
     const t = (now - this._t0) / 1000 * this.cfg.speed;
@@ -197,7 +207,7 @@ private cfg: Cfg = {
   }
 }
 
-// Safe, one-time registration
+// one-time registration
 export function registerBrokenShape() {
   if (typeof window !== "undefined" && !customElements.get("broken-shape")) {
     customElements.define("broken-shape", BrokenShape);
@@ -205,7 +215,7 @@ export function registerBrokenShape() {
 }
 registerBrokenShape();
 
-// React wrapper for easy import/use (no custom JSX needed)
+// React wrapper
 export type BrokenShapeProps = React.HTMLAttributes<HTMLElement> & {
   cols?: number | string;
   rows?: number | string;
@@ -213,7 +223,7 @@ export type BrokenShapeProps = React.HTMLAttributes<HTMLElement> & {
   speed?: number | string;
   stroke?: number | string;
   blend?: string;
-  colors?: string; // comma or space separated
+  colors?: string; // comma or space-separated list
 };
 
 export function BrokenShapeEl(props: BrokenShapeProps) {
@@ -222,20 +232,3 @@ export function BrokenShapeEl(props: BrokenShapeProps) {
 }
 
 export default BrokenShapeEl;
-
-// Optional: enable <broken-shape> in TSX app-wide by adding this to a .d.ts:
-// declare global {
-//   namespace JSX {
-//     interface IntrinsicElements {
-//       "broken-shape": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-//         cols?: number | string;
-//         rows?: number | string;
-//         amp?: number | string;
-//         speed?: number | string;
-//         stroke?: number | string;
-//         blend?: string;
-//         colors?: string;
-//       };
-//     }
-//   }
-// }

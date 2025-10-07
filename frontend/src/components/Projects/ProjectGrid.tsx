@@ -1,10 +1,11 @@
-// ProjectGrid.tsx
+// components/Projects/ProjectGrid.tsx
+
+// Grid layout for displaying GitHub repositories as project cards
 
 import ProjectSlide from "./ProjectSlide";
 import type { Repo } from "./ProjectCard";
 import "../../styles/project-grid.css";
-import "../../styles/project-cards.css"; // NEW: visuals for cards
-
+import "../../styles/project-cards.css";
 
 export default function ProjectGrid({ repos }: { repos: Repo[] }) {
   const keyOf = (r: Repo) =>
@@ -12,6 +13,7 @@ export default function ProjectGrid({ repos }: { repos: Repo[] }) {
 
   return (
     <div className="projects-grid">
+      {/* Render project slides */}
       {repos.map((repo) => (
         <ProjectSlide key={keyOf(repo)} repo={repo} variant="grid" />
       ))}

@@ -1,4 +1,7 @@
-// src/hooks/useProgress.ts
+// hooks/useProgress.ts
+
+// Custom React hook to fetch and organize GitHub commit history and associated progress blurbs from a repository progress .md file
+
 import { useEffect, useState, useRef } from "react"
 
 export type Commit = {

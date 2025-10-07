@@ -1,17 +1,16 @@
-// src/hooks/useCaseStudy.ts
-import { useEffect, useMemo, useState } from "react"
+// hooks/useCaseStudy.ts
+
+// Fetch and parse a case study .md file from a GitHub repository, extracting frontmatter and content
+
+import { useEffect, useState } from "react"
 
 type Repo = { name: string; owner?: { login?: string } }
-
-const CANDIDATES = [
-  "docs/CASESTUDY.md",
-  "docs/casestudy.md",
-]
 
 type FrontMatter = { [key: string]: string }
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "")
 
+// Simple YAML frontmatter parser
 function parseFrontmatter(md: string): { frontmatter: FrontMatter; body: string } {
   if (!md.startsWith("---")) return { frontmatter: {}, body: md }
   const end = md.indexOf("\n---", 3)
@@ -26,6 +25,7 @@ function parseFrontmatter(md: string): { frontmatter: FrontMatter; body: string 
   return { frontmatter: fm, body }
 }
 
+// Hook to load and parse a case study from a given GitHub repo
 export function useCaseStudy(repo?: Repo) {
   const [loading, setLoading] = useState(false)
   const [markdown, setMarkdown] = useState<string>("")

@@ -1,4 +1,7 @@
 // src/pages/NotFound.tsx
+
+// This component displays a "Not Found" page for undefined routes.
+
 export default function NotFound() {
   return (
     <section>
