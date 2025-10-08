@@ -397,10 +397,11 @@ footer {
   justify-content: center;
   margin-top: auto;
   z-index: 2;
+  gap: 1rem;
 }
 
 
-footer p {
+footer p, a{
   margin: 0;
   color: #fff;
   text-align: center;

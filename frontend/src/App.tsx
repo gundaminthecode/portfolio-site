@@ -5,11 +5,13 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
-import { Home, FolderGit2, User2, Mail } from "lucide-react";
+import { Home, FolderGit2, User2, Mail, Github, Linkedin, Instagram } from "lucide-react";
 import { useEffect, useState } from "react";
 import ContactModal from "./components/ContactModal";
 import ScrollToTop from "./components/ScrollToTop";
 import SeamlessSweep from "./components/Background/NewBackground";
+import { CONFIG } from './config';
+
 
 const swipeTransition: Transition = {
   duration: 0.35,
@@ -136,6 +138,15 @@ function App() {
 
       <footer>
         <p>Made by Nick Mathiasen</p>
+        <a className="social-link" href="https://www.instagram.com/gundaminthewindow/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <Instagram />
+          </a>
+          <a className="social-link" href="https://www.linkedin.com/in/nick-mathiasen-704580368/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <Linkedin />
+          </a>
+          <a className="social-link" href={`https://github.com/${CONFIG.GITHUB_USERNAME}`} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <Github />
+          </a>
       </footer>
     </div>
   );
