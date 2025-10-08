@@ -4,8 +4,8 @@
 
 import GithubProjects from "../components/Projects/GithubProjects";
 import "../styles/Home.css";
-import { NavLink} from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import { useEffect, useRef, useState, useId } from "react";
 
 import { CONFIG } from "../config";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
@@ -14,6 +14,16 @@ import headshot from "../assets/portfolio-project/headshot.jpg";
 const username = CONFIG.GITHUB_USERNAME;
 
 export default function Home() {
+  const ringPathId = useId();
+  const pathRef = useRef<SVGPathElement>(null);
+  const [ringLen, setRingLen] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    const p = pathRef.current;
+    if (!p) return;
+    const L = p.getTotalLength();
+    setRingLen(Math.max(0, L - 4)); // small padding so ends don’t clip
+  }, []);
 
   return (
     <>
@@ -23,11 +33,15 @@ export default function Home() {
           <img src={headshot} alt="Nick Mathiasen" />
           <svg className="headshot-ring" viewBox="-6 -6 112 112" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
             <defs>
-              <path id="headshotTextPath" d="M50,50 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" />
+              <path
+                ref={pathRef}
+                id={ringPathId}
+                d="M50,50 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0"
+              />
             </defs>
-            <text>
-              <textPath href="#headshotTextPath" startOffset="0%">
-                Nick Mathiasen • Frontend • Web Developer • Portfolio •
+            <text lengthAdjust="spacingAndGlyphs" textLength={ringLen}>
+              <textPath href={`#${ringPathId}`} startOffset="0%">
+                Nick Mathiasen  •  Full Stack  •  Web Dev  •  Portfolio  •
               </textPath>
             </text>
           </svg>
