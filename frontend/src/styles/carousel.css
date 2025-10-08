@@ -110,6 +110,32 @@
   .carousel__card { max-width: min(98%, 290px); }
 }
 
+/* Smaller, less intrusive carousel on mobile/touch */
+@media (pointer: coarse) {
+  .scene {
+    --carousel-height: clamp(140px, 28dvh, 300px);
+    --carousel-face-h: 46%;
+  }
+  .carousel__card { max-width: min(96%, 300px); }
+}
+
+/* Narrow phones */
+@media (max-width: 600px) {
+  .scene {
+    --carousel-height: clamp(140px, 30dvh, 300px);
+    --carousel-face-h: 46%;
+  }
+}
+@media (max-width: 380px) {
+  .scene {
+    --carousel-height: clamp(120px, 28dvh, 260px);
+    --carousel-face-h: 44%;
+  }
+}
+
+/* Slightly tighter spacing around the carousel */
+.scene { margin-block: 0.5rem 1rem; }
+
 .project-slide.project-slide--carousel:hover {
   animation: hex-bob 1.4s ease-in-out infinite;
 }
@@ -199,4 +225,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .project-slide.project-slide--carousel:hover { animation: none; }
+}
+
+@media (pointer: coarse) {
+  .carousel {
+    touch-action: pan-y;           /* let the page scroll vertically */
+    -ms-touch-action: pan-y;
+  }
 }
