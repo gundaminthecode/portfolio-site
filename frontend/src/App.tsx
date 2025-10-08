@@ -71,7 +71,7 @@ function App() {
           direction: pick(["up", "down"]) as "up" | "down",
         });
 
-        const lines = Array.from({ length: 70 }, makeLine);
+        const lines = Array.from({ length: 35 }, makeLine);
 
         return (
           <div id="site-bg" aria-hidden="true">
