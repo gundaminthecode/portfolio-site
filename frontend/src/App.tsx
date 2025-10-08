@@ -6,10 +6,10 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "./styles/App.css";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
 import { Home, FolderGit2, User2, Mail } from "lucide-react";
-import BrokenShapeEl from "./components/Background/BrokenShape";
 import { useEffect, useState } from "react";
 import ContactModal from "./components/ContactModal";
 import ScrollToTop from "./components/ScrollToTop";
+import SeamlessSweep from "./components/Background/NewBackground";
 
 const swipeTransition: Transition = {
   duration: 0.35,
@@ -50,15 +50,35 @@ function App() {
   return (
     <div id="app-container">
       <ScrollToTop />
-      <div id="site-bg" aria-hidden="true">
-        <BrokenShapeEl
-          cols={12}
-          rows={14}
-          amp={15}
-          speed={0.1}
-          colors="var(--bs-col-1) var(--bs-col-2) var(--bs-col-3) var(--bs-col-4)"
-        />
-      </div>
+      {(() => {
+        const colors = [
+          "var(--bs-col-2)",
+          "var(--bs-col-3)",
+          "var(--r4-yellow)",
+          "var(--header-colour)",
+          "var(--bs-col-1)",
+        ];
+        const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+        const irand = (min: number, max: number) => Math.floor(rand(min, max + 1));
+        const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
+
+        const makeLine = () => ({
+          yPct: Math.random(),
+          duration: rand(10, 15),
+          color: pick(colors),
+          strokeWidth: irand(4, 8),
+          bendAt: rand(0.5, 0.9),
+          direction: pick(["up", "down"]) as "up" | "down",
+        });
+
+        const lines = Array.from({ length: 70 }, makeLine);
+
+        return (
+          <div id="site-bg" aria-hidden="true">
+            <SeamlessSweep lines={lines} />
+          </div>
+        );
+      })()}
 
       {/* Left Side Rectangle */}
       <div className="left-rectangle" aria-hidden="true" />
