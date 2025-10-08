@@ -146,6 +146,7 @@ header .logo {
 
   background: var(--hex-bg, hsl(223 40% 12%));
   color: var(--hex-fg, #fff);
+  border: none;
   text-decoration: none;
   transition: background .2s ease, color .2s ease, transform .15s ease, filter .2s ease;
   transform: translateY(calc(var(--hex-offset) + var(--hex-bob))) scale(var(--hex-scale));

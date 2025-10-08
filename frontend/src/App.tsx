@@ -83,7 +83,6 @@ function App() {
             <NavLink to="/" end className={navClass} aria-label="Home"><Home size={24} /></NavLink>
             <NavLink to="/projects" className={navClass} aria-label="Projects"><FolderGit2 size={24} /></NavLink>
             <NavLink to="/about-me" className={navClass} aria-label="About"><User2 size={24} /></NavLink>
-            {/* Contact opens modal */}
             <button type="button" className="sidebar-nav__link" aria-label="Contact" onClick={() => setContactOpen(true)}>
               <Mail size={24} />
             </button>
