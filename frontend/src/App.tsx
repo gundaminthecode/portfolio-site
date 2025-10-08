@@ -58,6 +58,9 @@ function App() {
           "var(--header-colour)",
           "var(--bs-col-1)",
         ];
+
+        const getRandomOpacity = () => Math.random(); // Generates a random opacity between 0 and 1
+        
         const rand = (min: number, max: number) => Math.random() * (max - min) + min;
         const irand = (min: number, max: number) => Math.floor(rand(min, max + 1));
         const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
@@ -69,9 +72,10 @@ function App() {
           strokeWidth: irand(4, 8),
           bendAt: rand(0.5, 0.9),
           direction: pick(["up", "down"]) as "up" | "down",
+          opacity: getRandomOpacity()
         });
 
-        const lines = Array.from({ length: 35 }, makeLine);
+        const lines = Array.from({ length: 15 }, makeLine);
 
         return (
           <div id="site-bg" aria-hidden="true">
