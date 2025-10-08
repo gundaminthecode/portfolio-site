@@ -9,7 +9,7 @@ import { useEffect, useRef, useState, useId } from "react";
 
 import { CONFIG } from "../config";
 import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
-import headshot from "../assets/portfolio-project/headshot.jpg";
+import headshot from "../assets/portfolio-project/headshot.png";
 
 const username = CONFIG.GITHUB_USERNAME;
 

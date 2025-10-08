@@ -82,6 +82,13 @@ function App() {
         return (
           <div id="site-bg" aria-hidden="true">
             <SeamlessSweep lines={lines} />
+            {/* <BrokenShapeEl
+              cols={12}
+              rows={14}
+              amp={15}
+              speed={0.1}
+              colors="var(--bs-col-1) var(--bs-col-2) var(--bs-col-3) var(--bs-col-4)"
+            /> */}
           </div>
         );
       })()}
