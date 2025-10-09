@@ -19,6 +19,7 @@ import {
     initialRedesignImage,
     refinementConcepts
 } from '../assets/portfolio-project/index.ts';
+import KeenImageCarousel from '../components/Carousel/KeenImageCarousel.tsx';
 
 
 export default function PortfolioProject() {    
@@ -40,6 +41,10 @@ export default function PortfolioProject() {
                 <div className='slice-content'>
                     <h1>Development</h1>
                     <div className='development-slice'>
+                        <h2>Ideation</h2>
+                            <p>
+                                The project began with the concept of building a custom-coded interactive portfolio to act as a central hub for showcasing my technical expertise and aligning with employer expectations. During this phase, I researched existing developer portfolios, identified gaps in template-driven solutions, and outlined the value of creating a scalable, hand-built site. During this phase, I also begun development of my own visual style, leaning heavily into the aesthetics of late 90s and early 2000s vector-aesthetics. 
+                            </p>
                         <h2>Mood Board</h2>
                             <div className='image-container'>
                                 <img src={moodBoardImage} alt="Mood Board" />
@@ -49,14 +54,17 @@ export default function PortfolioProject() {
                         <h2>Concepts</h2>
                             <h3>Initial Wireframes</h3>
                                 <div className='image-container'>
-                                    <img src={wireframe1} alt="Wireframe 1" />
-                                    <img src={wireframe2} alt="Wireframe 2" />
-                                </div>
-                                
+                                    <KeenImageCarousel images={[
+                                        wireframe1,
+                                        wireframe2,
+                                    ]} /> 
+                                </div>                                
                             <h3>Potential Styleguide</h3>
                                 <div className='image-container'>
-                                    <img src={potStyleGuideImage1} alt="Potential Styleguide" />
-                                    <img src={potStyleGuideImage2} alt="Potential Styleguide" />
+                                    <KeenImageCarousel images={[
+                                        potStyleGuideImage1,
+                                        potStyleGuideImage2,
+                                    ]} /> 
                                 </div>
                         <h2>Post Pitch Redesign</h2>
                             <h3>Initial Homepage Redesign</h3>
@@ -69,20 +77,28 @@ export default function PortfolioProject() {
                                 </div>
                     </div>
                     <div className='development-slice'>
-                        <h2>Development Outcomes</h2>
+                        <h2>Creation</h2>
+                            <p>
+                                The creation phase involved coding the site from scratch using React, Vite, TypeScript, CSS, and Python for backend integration. I implemented core features such as GitHub repository fetching, a project carousel, and responsive design. This phase also included backend deployment via Render and domain setup through Cloudflare, ensuring the site functions as a professional, deployable product rather than a static prototype. 
+                            </p>
+                        
                             <h3>Pitch Product</h3>
                                 <div className='text-container'>
                                     <p>This was the version of the site used within the pitch presentation in Week 8.</p>
                                 </div>
                                 <div className='image-container'>
-                                    <img src={pitchOutcomeImageMobile1} alt="Mobile Outcome 1" />
-                                    <img src={pitchOutcomeImageMobile2} alt="Mobile Outcome 2" />
+                                    <KeenImageCarousel images={[
+                                        pitchOutcomeImageMobile1,
+                                        pitchOutcomeImageMobile2,
+                                        pitchOutcomeImageDesktop1,
+                                        pitchOutcomeImageDesktop2,
+                                    ]} /> 
                                 </div>
-                                <div className='image-container'>
-                                    <img src={pitchOutcomeImageDesktop1} alt="Desktop Outcome 1" />
-                                    <img src={pitchOutcomeImageDesktop2} alt="Desktop Outcome 2" />
-                                </div>
-                                
+                                                       
+                        <h2>Refinement</h2>
+                            <p>
+                                Mentor feedback emphasized experimenting with visual identity and improving navigation clarity, which I addressed by refining my UI elements and layout. This included reconsidering colour usage for stronger hierarchy, adjusting navigation/button positioning, and exploring scalable structures for project display. This stage ensures the portfolio not only demonstrates technical competence but also feels user-friendly and reflective of my individual brand. 
+                            </p>
 
                     </div>
                 </div>
