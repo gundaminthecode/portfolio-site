@@ -6,9 +6,10 @@ import { useState } from "react"
 type Props = {
   images: string[]
   alt?: string
+  onImageClick?: (src: string, alt?: string) => void
 }
 
-export default function KeenImageCarousel({ images, alt = "carousel image" }: Props) {
+export default function KeenImageCarousel({ images, alt = "carousel image", onImageClick }: Props) {
   const [current, setCurrent] = useState(0)
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -29,7 +30,7 @@ export default function KeenImageCarousel({ images, alt = "carousel image" }: Pr
     <div className="keen-image-carousel">
       <div ref={sliderRef} className="keen-slider">
         {images.map((src, i) => (
-          <div className="keen-slider__slide" key={i}>
+          <div className={`keen-slider__slide horizontal-keen-slider__slide`} key={i}>
             <img
               src={src}
               alt={alt}
@@ -38,8 +39,10 @@ export default function KeenImageCarousel({ images, alt = "carousel image" }: Pr
                 height: "auto",
                 borderRadius: "8px",
                 objectFit: "contain",
-                background: "#fff"
+                background: "#fff",
+                cursor: onImageClick ? "pointer" : undefined,
               }}
+              onClick={() => onImageClick?.(src, alt)}
             />
           </div>
         ))}

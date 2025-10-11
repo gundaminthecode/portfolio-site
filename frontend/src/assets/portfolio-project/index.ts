@@ -14,3 +14,8 @@ export { default as pitchOutcomeImageDesktop2 } from "./nickmathiasen.dev_Projec
 
 export { default as initialRedesignImage } from "./intital-redesign.png";
 export { default as refinementConcepts } from "./new-wireframe.png";
+
+export { default as feedbackFormImage1 } from "./feedback1.png";
+export { default as feedbackFormImage2 } from "./feedback2.png";
+export { default as feedbackFormImage3 } from "./feedback3.png";
+export { default as feedbackFormImage4 } from "./feedback4.png";
