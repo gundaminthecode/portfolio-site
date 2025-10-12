@@ -52,6 +52,9 @@ export default function PortfolioProject() {
                 <DiagonalHexBackground route="BR_TL" zIndex={-1} />
                 <div className='slice-content'>
                     <h1>About This Project</h1>
+                    <div className='image-container'>
+                        <iframe className='youtube-embeded' src="https://www.youtube.com/embed/vtQ4ap-RJg4" title="s5186757 - Web-Portfolio Demo" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                    </div>
                 </div>
             </div>
 
