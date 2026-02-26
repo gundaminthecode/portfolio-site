@@ -11,7 +11,7 @@ import { useCaseStudy } from "../hooks/useCaseStudy";
 import ProjectProgress from "../components/Progress/ProjectProgress";
 import "../styles/project-info.css";
 import { CONFIG } from "../config";
-import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
+// import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 import { deriveLiveUrl } from "../hooks/deriveLiveURL";
 
 type OutletCtx = { repos?: Repo[] };
@@ -57,7 +57,7 @@ export default function ProjectInfoPage() {
       <Link to="/projects" className='back-link'>Back</Link>
       {/* Hero */}
       <div className="content-slice" id="project-info-hero-slice">
-        <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+        {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
 
         <div className="slice-content">
           <nav className="crumbs" style={{ marginBottom: ".5rem" }}>
@@ -71,7 +71,7 @@ export default function ProjectInfoPage() {
 
       {/* Info slice (summary + body) */}
       <div className="content-slice" id="project-info-slice">
-        <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+        {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
         <div className="slice-content">
           <aside className="filter-panel filter-panel--desktop app-divs">
             <aside className="projects-filters">
@@ -132,7 +132,7 @@ export default function ProjectInfoPage() {
       </div>
 
       <div className="content-slice" id="project-progress-slice">
-        <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+        {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
         <div className="slice-content">
           <h1>Project Progress</h1>
           <p>Commit activity and notes from progress.md for {project.owner?.login}/{project.name}</p>

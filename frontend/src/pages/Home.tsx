@@ -2,33 +2,33 @@
 
 // This component displays the home page with a headshot, introduction, and project previews.
 
-import GithubProjects from "../components/Projects/GithubProjects";
+// import GithubProjects from "../components/Projects/GithubProjects";
 import "../styles/Home.css";
 import { NavLink } from "react-router-dom";
-import { useEffect, useRef, useState, useId } from "react";
+// import { useEffect, useRef, useState, useId } from "react";
 
-import { CONFIG } from "../config";
-import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
-import headshot from "../assets/portfolio-project/headshot.png";
+// import { CONFIG } from "../config";
+// import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
+// import headshot from "../assets/portfolio-project/headshot.png";
 
-const username = CONFIG.GITHUB_USERNAME;
+// const username = CONFIG.GITHUB_USERNAME;
 
 export default function Home() {
-  const ringPathId = useId();
-  const pathRef = useRef<SVGPathElement>(null);
-  const [ringLen, setRingLen] = useState<number | undefined>(undefined);
+  // const ringPathId = useId();
+  // const pathRef = useRef<SVGPathElement>(null);
+  // const [ringLen, setRingLen] = useState<number | undefined>(undefined);
 
-  useEffect(() => {
-    const p = pathRef.current;
-    if (!p) return;
-    const L = p.getTotalLength();
-    setRingLen(Math.max(0, L - 4)); // small padding so ends don’t clip
-  }, []);
+  // useEffect(() => {
+  //   const p = pathRef.current;
+  //   if (!p) return;
+  //   const L = p.getTotalLength();
+  //   setRingLen(Math.max(0, L - 4)); // small padding so ends don’t clip
+  // }, []);
 
   return (
     <>
     <div id="content-stack">
-      <div id="headshot-slice">
+      {/* <div id="headshot-slice">
         <div id="headshot-circle" aria-label="Headshot">
           <img src={headshot} alt="Nick Mathiasen" />
           <svg className="headshot-ring" viewBox="-6 -6 112 112" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
@@ -46,9 +46,9 @@ export default function Home() {
             </text>
           </svg>
         </div>
-      </div>
+      </div> */}
       <div className="content-slice" id="intro-slice">
-        <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+        {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
         <div className="slice-content">
           <div id="intro-text" className="align-center-col">
             <h1>Hi, I'm Nick</h1>
@@ -58,9 +58,9 @@ export default function Home() {
         </div>
       </div>
       <div className="content-slice" id="projects-slice">
-        <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+        {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
         <div className="slice-content">
-          <div id="project-previews">
+          {/* <div id="project-previews">
             <GithubProjects
               username={username}
               includeForks={false}
@@ -68,7 +68,7 @@ export default function Home() {
               sortBy="updated"
               max={5}
             />
-          </div>
+          </div> */}
           <div id="this-project">
             <h2>Want to learn more about this portfolio project?</h2>
             <NavLink to="/portfolio-project" className="home_link_button">View Project Breakdown</NavLink>

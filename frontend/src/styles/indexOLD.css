@@ -1,0 +1,126 @@
+/* styles/index.css */
+/* Global Styles */
+
+/* Root variables (consolidated) */
+:root {
+  --header-colour: #001974;
+  --bg: #dedede;
+  --r4-yellow: #fbc726;
+
+  /* BrokenShapes colours */
+  --bs-col-stroke: var(--bg);
+  --bs-col-1: hsla(0, 0%, 38%, 0.397);
+  --bs-col-2: hsla(0, 0%, 47%, 0.404);
+  --bs-col-3: hsla(0, 0%, 78%, 0.459);
+  --bs-col-4: hsla(0, 0%, 87%, 0.473);
+
+  /* UI sizing (fluid, no per-range overrides needed) */
+  --hex-size: clamp(56px, 6vw, 96px);
+  --app-pad: clamp(1rem, 2vw, 2.25rem);
+
+  /* Container */
+  --max-w: 80rem; /* ~1280px */
+
+  /* Fluid spacing scale */
+  --space-1: clamp(4px, 0.5vw, 8px);
+  --space-2: clamp(8px, 0.8vw, 12px);
+  --space-3: clamp(12px, 1.1vw, 16px);
+  --space-4: clamp(16px, 1.6vw, 24px);
+  --space-5: clamp(24px, 2.4vw, 36px);
+  --space-6: clamp(32px, 3.2vw, 48px);
+
+  /* Radius */
+  --radius-1: 8px;
+  --radius-2: 12px;
+
+  /* Fluid type scale */
+  --fs-300: clamp(0.82rem, 0.20vw + 0.78rem, 0.95rem);
+  --fs-400: clamp(0.95rem, 0.35vw + 0.86rem, 1.05rem);
+  --fs-500: clamp(1.05rem, 0.55vw + 0.92rem, 1.20rem);
+  --fs-600: clamp(1.20rem, 0.85vw + 1.00rem, 1.44rem);
+  --fs-700: clamp(1.44rem, 1.25vw + 1.10rem, 1.80rem);
+  --fs-800: clamp(1.80rem, 2.00vw + 1.10rem, 2.25rem);
+  --fs-900: clamp(2.10rem, 3.00vw + 1.00rem, 3.00rem);
+}
+
+
+/* Base + reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; width: 100%; }
+html, body { width: 100%; margin: 0; overflow-x: hidden; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  line-height: 1.6;
+  font-size: var(--fs-400);
+  text-rendering: optimizeLegibility;
+
+  font-family: "Play", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+h1 { font-size: var(--fs-900); line-height: 1.1; }
+h2 { font-size: var(--fs-800); line-height: 1.15; }
+h3 { font-size: var(--fs-700); line-height: 1.2; }
+h4 { font-size: var(--fs-600); line-height: 1.25; }
+h5 { font-size: var(--fs-500); line-height: 1.3; }
+h6 { font-size: var(--fs-500); line-height: 1.35; }
+
+p, li, dd, dt, label, input, button { font-size: var(--fs-400); }
+small, .hud { font-size: var(--fs-300); opacity: .9; }
+
+img, picture, video, canvas { display: block; max-width: 100%; height: auto; }
+
+/* Layout helpers */
+main { width: 100%; margin: 0 auto; padding: var(--app-pad); box-sizing: border-box; }
+.container { width: min(100% - 2rem, var(--max-w)); margin-inline: auto; }
+.section { padding-block: var(--space-6); }
+.grid { display: grid; gap: var(--space-4); }
+.grid.auto-fit { grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); }
+.align-center-col { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+
+#app, #app-shell, main { width: 100%; }
+
+/* Motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* Compact type on small screens (keep) */
+@media (max-width: 600px) {
+  :root {
+    --fs-300: clamp(0.76rem, 0.25vw + 0.68rem, 0.9rem);
+    --fs-400: clamp(0.88rem, 0.35vw + 0.78rem, 1.0rem);
+    --fs-500: clamp(0.98rem, 0.5vw + 0.84rem, 1.12rem);
+    --fs-600: clamp(1.08rem, 0.8vw + 0.9rem, 1.28rem);
+    --fs-700: clamp(1.28rem, 1.2vw + 1.0rem, 1.58rem);
+    --fs-800: clamp(1.58rem, 1.8vw + 1.05rem, 2.0rem);
+    --fs-900: clamp(1.9rem, 2.6vw + 1.0rem, 2.5rem);
+  }
+  body { line-height: 1.55; }
+}
+
+/* ≥1080p/4K: upscale type a bit (keep) */
+@media (min-width: 1920px) {
+  :root {
+    --fs-300: clamp(0.92rem, 0.20vw + 0.86rem, 1.05rem);
+    --fs-400: clamp(1.05rem, 0.35vw + 0.98rem, 1.20rem);
+    --fs-500: clamp(1.20rem, 0.55vw + 1.05rem, 1.34rem);
+    --fs-600: clamp(1.34rem, 0.85vw + 1.14rem, 1.61rem);
+    --fs-700: clamp(1.61rem, 1.25vw + 1.20rem, 2.02rem);
+    --fs-800: clamp(2.02rem, 2.00vw + 1.18rem, 2.52rem);
+    --fs-900: clamp(2.40rem, 3.00vw + 1.10rem, 3.36rem);
+  }
+}
+
+/* Ultra-wide bump (optional, keep) */
+@media (min-width: 2560px) {
+  :root {
+    --fs-400: clamp(1.12rem, 0.35vw + 1.05rem, 1.30rem);
+    --fs-700: clamp(1.75rem, 1.25vw + 1.32rem, 2.20rem);
+    --fs-900: clamp(2.60rem, 3.00vw + 1.20rem, 3.60rem);
+  }
+}

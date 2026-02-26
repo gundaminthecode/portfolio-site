@@ -10,7 +10,7 @@ import ProjectFilters, {
   uniqueLanguages,
 } from "../components/Projects/ProjectFilters";
 import { useState } from "react";
-import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
+// import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 import "../styles/projects.css";
 import { Link } from 'react-router-dom';
 import { useGithubUser } from "../hooks/useGithubUser";
@@ -54,7 +54,7 @@ export default function Projects(props: Props) {
       <div id="content-stack">
         <Link to="/" className='back-link'>Back</Link>
         <div className="content-slice" id="projects-hero-slice">
-          <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+          {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
           <div className="slice-content">
             {user ? (
               <section className="github-profile-panel app-divs">
@@ -91,7 +91,7 @@ export default function Projects(props: Props) {
         </div>
 
         <div className="content-slice" id="projects-grid-slice">
-          <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+          {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
           <div className="slice-content">
             <aside
               id="projects-filters"

@@ -26,7 +26,7 @@ import {
     feedbackFormImage4,
 } from '../assets/portfolio-project/index.ts';
 import KeenImageCarousel from '../components/Carousel/KeenImageCarousel.tsx';
-import DiagonalHexBackground from '../components/Background/DiagonalHexBackground.tsx';
+// import DiagonalHexBackground from '../components/Background/DiagonalHexBackground.tsx';
 
 
 export default function PortfolioProject() {
@@ -49,7 +49,7 @@ export default function PortfolioProject() {
                 </div>
             </div>
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <h1>About This Project</h1>
                     <div className='image-container'>
@@ -59,7 +59,7 @@ export default function PortfolioProject() {
             </div>
 
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <div className='development-slice'>
                         <h2>IDEATION</h2>
@@ -74,7 +74,7 @@ export default function PortfolioProject() {
             </div>
 
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <div className='development-slice'>
                         <h2>MOOD BOARD</h2>
@@ -91,7 +91,7 @@ export default function PortfolioProject() {
             </div>
 
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <div className='development-slice'>
                         <h2>CONCEPTS</h2>
@@ -122,7 +122,7 @@ export default function PortfolioProject() {
             </div>
 
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <div className='development-slice'>
                         <h2>POST PITCH REDESIGN</h2>
@@ -149,7 +149,7 @@ export default function PortfolioProject() {
             </div>
 
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <div className='development-slice'>
                         <h2>CREATION</h2>
@@ -179,7 +179,7 @@ export default function PortfolioProject() {
             </div>
 
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <div className='development-slice'>
                         <h2>REFINEMENT</h2>
@@ -192,7 +192,7 @@ export default function PortfolioProject() {
                 </div>
             </div>
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <h1>FEEDBACK</h1>
                     <h2>Feedback Round 1</h2>
@@ -282,7 +282,7 @@ export default function PortfolioProject() {
                 </div>
             </div>
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <h1>REFLECTION</h1>
                     <div className='text-container'>
@@ -301,7 +301,7 @@ export default function PortfolioProject() {
                 </div>
             </div>
             <div className='content-slice portfolio-info-slices'>
-                <DiagonalHexBackground route="BR_TL" zIndex={-1} />
+                {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
                 <div className='slice-content'>
                     <h1>FUTURE PLAN</h1>
                     <div className='text-container'>

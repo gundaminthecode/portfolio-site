@@ -1,0 +1,41 @@
+/* styles/contentstack.css */
+/* Content Stack Styles */
+
+:root {
+  --slice-gap: 2rem;
+  --slice-bg: var(--r4-yellow);
+  --slice-skew: 2deg;
+  --slice-safe-bottom: 2rem;
+}
+
+#content-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--slice-gap);
+}
+
+.content-slice {
+  position: relative;
+  z-index: 0;
+  overflow: visible;
+  background: var(--slice-bg);
+  transform: skewY(var(--slice-skew));
+  transform-origin: top left;
+  padding: 2rem;
+}
+
+.content-slice > .slice-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: skewY(calc(-1 * var(--slice-skew)));
+  padding-block-end: var(--slice-safe-bottom);
+}
+
+@media (max-width: 600px) {
+  #content-stack { gap: 1rem; }
+}
