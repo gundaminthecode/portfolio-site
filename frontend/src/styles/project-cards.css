@@ -24,6 +24,33 @@
     gap: .75rem;
 }
 
+.project-slide__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: auto;
+}
+
+.project-slide__actions a {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    text-decoration: none;
+    color: #fff;
+    border: 2px solid currentColor;
+    background: var(--header-colour);
+    padding: .45rem .9rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color .2s, color .2s, box-shadow .2s;
+}
+
+.project-slide__actions a:hover {
+    background: var(--r4-yellow);
+    color: #0d1b3d;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+}
+
 .project-slide__header {
     margin: 0;
     font-size: 1.1rem;

@@ -108,6 +108,34 @@ body {
   color: var(--text);
 }
 
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid color-mix(in oklab, var(--header-colour) 24%, transparent);
+  background: color-mix(in oklab, var(--header-colour) 10%, transparent);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.back-link:hover {
+  background: color-mix(in oklab, var(--r4-yellow) 24%, transparent);
+  border-color: color-mix(in oklab, var(--r4-yellow) 55%, transparent);
+  color: var(--r4-yellow);
+  transform: translateY(-1px);
+}
+
+.back-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--r4-yellow) 45%, transparent);
+}
+
 header h1, header #nav-container-right, header #nav-container-left {
   margin: 0 10%;
 }
