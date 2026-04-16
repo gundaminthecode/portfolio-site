@@ -3,7 +3,7 @@
 
 import { NavLink, Outlet } from "react-router-dom";
 import "./styles/App.css";
-import { House, FolderGit2, User2, Linkedin, FlaskConical} from "lucide-react"; //Mail
+import { House, FolderGit2, User2, Linkedin, Newspaper} from "lucide-react"; //Mail
 import { SiGithub, SiInstagram } from "@icons-pack/react-simple-icons";
 import { useEffect, useState } from "react";
 import ContactModal from "./components/ContactModal";
@@ -77,7 +77,7 @@ function App() {
         <div id="nav-container-right">
           <nav id="navBar">
             <NavLink to="/about-me" className="navClass" aria-label="About"><User2/></NavLink>
-            <NavLink to="/about-me" className="navClass" aria-label="About"><FlaskConical/></NavLink>
+            <NavLink to="/about-me" className="navClass" aria-label="Blog"><Newspaper/></NavLink>
           </nav>
         </div>
       </header>

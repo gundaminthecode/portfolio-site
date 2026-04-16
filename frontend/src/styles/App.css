@@ -162,3 +162,33 @@ nav svg {
 #hero-slice {
   position: relative;
 }
+
+#parent-stack {
+  display: flex;
+  gap: 2rem;
+}
+
+#parent-stack > #content-stack {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+#content-sidebar {
+  flex: 0 0 min(24rem, 32vw);
+  width: min(24rem, 32vw);
+}
+
+#content-sidebar .content-slice {
+  align-items: stretch;
+}
+
+@media (max-width: 960px) {
+  #parent-stack {
+    flex-direction: column;
+  }
+
+  #content-sidebar {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}
