@@ -92,14 +92,14 @@ function App() {
       <footer>
         <p>Made by Nick Mathiasen</p>
         <a className="social-link" href="https://www.instagram.com/gundaminthewindow/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <SiInstagram />
-          </a>
-          <a className="social-link" href="https://www.linkedin.com/in/nick-mathiasen-704580368/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <Linkedin />
-          </a>
-          <a className="social-link" href={`https://github.com/${CONFIG.GITHUB_USERNAME}`} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <SiGithub />
-          </a>
+          <SiInstagram />
+        </a>
+        <a className="social-link" href="https://www.linkedin.com/in/nick-mathiasen-704580368/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <Linkedin />
+        </a>
+        <a className="social-link" href={`https://github.com/${CONFIG.GITHUB_USERNAME}`} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <SiGithub />
+        </a>
       </footer>
     </div>
   );

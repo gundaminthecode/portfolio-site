@@ -47,7 +47,7 @@ export default function Home() {
           </svg>
         </div>
       </div> */}
-      <div className="content-slice" id="intro-slice">
+      <div className="content-slice" id="hero-slice">
         {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
         <div className="slice-content">
           <div id="intro-text" className="align-center-col">
@@ -55,7 +55,13 @@ export default function Home() {
             <p>I'm an emerging developer specializing in web applications and interactive experiences. Welcome to my portfolio site!</p>
             <NavLink to="/about-me" className="home_link_button">Learn More About Me</NavLink>
           </div>
+          <div>
+            <img  alt="Nick Mathiasen" id="intro-headshot" />
+          </div>
         </div>
+      </div>
+      <div className="content-slice" id="blog-slice">
+        <h2 style={{ fontStyle: "italic" }}>Blog Entries Placeholder</h2>
       </div>
       <div className="content-slice" id="projects-slice">
         {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
@@ -70,7 +76,7 @@ export default function Home() {
             />
           </div> */}
           <div id="this-project">
-            <h2>Want to learn more about this portfolio project?</h2>
+            <h2>Want to learn more about my projects?</h2>
             <NavLink to="/portfolio-project" className="home_link_button">View Project Breakdown</NavLink>
           </div>
         </div>

@@ -1,6 +1,14 @@
 /* styles/App.css */
 /* Main Stylesheet */
 
+/* Icon wiggle keyframes (rotate a few degrees each way) */
+@keyframes nav-icon-wiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25%      { transform: rotate(8deg)  scale(1.12); }
+  50%      { transform: rotate(0deg)  scale(1); }
+  75%      { transform: rotate(-8deg) scale(1.12); }
+}
+
 .App { display: flex; flex-direction: column; }
 .App > main {
   flex: 1 1 auto;
@@ -45,6 +53,7 @@ header, #app-shell {
   margin: 0 3rem clamp(2rem, 5vw, 5rem) 3rem;
   box-sizing: border-box;
   z-index: 2;
+  align-self: center;
 }
 
 header {
@@ -58,6 +67,34 @@ header {
     align-items: center;
     background-color: var(--colour-1);
     height: 7.5rem;
+}
+
+footer {
+    padding: 2rem;
+    text-align: center;
+    background-color: var(--colour-1);
+    color: var(--text);
+}
+
+footer a {
+    color: var(--text);
+    margin: 0 0.5rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-link svg {
+  transform-origin: center;
+}
+
+footer a:hover {
+  color: var(--r4-yellow);
+}
+
+footer a:hover svg {
+  animation: nav-icon-wiggle 2s ease-in-out infinite;
 }
 
 body {
@@ -88,13 +125,7 @@ header h1, header #nav-container-right, header #nav-container-left {
 
 }
 
-/* Icon wiggle keyframes (rotate a few degrees each way) */
-@keyframes nav-icon-wiggle {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  25%      { transform: rotate(8deg)  scale(1.12); }
-  50%      { transform: rotate(0deg)  scale(1); }
-  75%      { transform: rotate(-8deg) scale(1.12); }
-}
+
 
 .navClass:hover {
   color: var(--r4-yellow);
@@ -112,7 +143,22 @@ nav svg {
   margin: 4rem 0;
 }
 
+#content-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
 
 .content-slice {
-  margin-bottom: 4rem;
+  background-color: var(--colour-1-dim);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  width: auto;
+  border-radius: 2rem;
+}
+
+#hero-slice {
+  position: relative;
 }
