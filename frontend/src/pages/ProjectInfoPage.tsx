@@ -3,7 +3,7 @@
 // This component displays detailed information about a specific GitHub project,
 // including a case study if available, and a live preview if the project has a live URL.
 
-import { Link, useOutletContext, useParams, useSearchParams} from "react-router-dom";
+import { useNavigate, useOutletContext, useParams, useSearchParams} from "react-router-dom";
 import { useGithubRepos } from "../hooks/useGithubRepos";
 import type { Repo } from "../components/Projects/ProjectCard";
 import CaseStudy from "../components/Projects/CaseStudy";
@@ -23,6 +23,7 @@ function formatK(n: number | undefined) {
 }
 
 export default function ProjectInfoPage() {
+  const navigate = useNavigate();
 
   const [qp] = useSearchParams();
   const repoParam = qp.get("repo");
@@ -54,7 +55,7 @@ export default function ProjectInfoPage() {
 
   return (
     <div id="content-stack">
-      <Link to="/projects" className='back-link'>Back</Link>
+      <button type="button" className='back-link' onClick={() => navigate(-1)}>Previous Page</button>
       {/* Hero */}
       <div className="content-slice" id="project-info-hero-slice">
         {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}

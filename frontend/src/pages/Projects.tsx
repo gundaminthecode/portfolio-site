@@ -12,7 +12,7 @@ import ProjectFilters, {
 import { useState } from "react";
 // import DiagonalHexBackground from "../components/Background/DiagonalHexBackground";
 import "../styles/projects.css";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import GithubProfilePanel from "../components/GithubProfilePanel";
 
 type Props = {
@@ -24,6 +24,7 @@ type Props = {
 };
 
 export default function Projects(props: Props) {
+  const navigate = useNavigate();
 
   const {
     username,
@@ -48,7 +49,7 @@ export default function Projects(props: Props) {
 
   return (
     <>
-      <Link to="/" className='back-link'>Back</Link>
+      <button type="button" className='back-link' onClick={() => navigate(-1)}>Previous Page</button>
 
       <div id="parent-stack">
         <div id="content-stack">

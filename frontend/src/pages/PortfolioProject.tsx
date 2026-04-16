@@ -3,7 +3,7 @@
 // This component displays a detailed breakdown of the custom developed web-portfolio project.
 // Basic hard-coded structure for ease of implementation, future versions may pull from markdown files
 
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "../styles/portfolio-project-page.css"
 import { useState } from "react";
 import ImageModal from "../components/ImageModal";
@@ -30,6 +30,7 @@ import KeenImageCarousel from '../components/Carousel/KeenImageCarousel.tsx';
 
 
 export default function PortfolioProject() {
+    const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImg, setModalImg] = useState<{src: string, alt?: string} | null>(null);
 
@@ -42,7 +43,7 @@ export default function PortfolioProject() {
 
     return (
         <div id='content-stack'>
-            <Link to="/" className='back-link'>Back</Link>
+            <button type="button" className='back-link' onClick={() => navigate(-1)}>Previous Page</button>
             <div className='content-slice portfolio-info-slices'>
                 <div className='slice-content'>
                     <h1>Custom Developed Web-Portfolio</h1>

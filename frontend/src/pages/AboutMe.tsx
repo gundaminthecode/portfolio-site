@@ -1,13 +1,16 @@
 // pages/AboutMe.tsx
 // This component displays an "About Me" page with GitHub profile information.
 
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import GithubProfilePanel from '../components/GithubProfilePanel';
 
 export default function AboutMe() {
+  const navigate = useNavigate();
+
   return (
     <>
-      <Link to="/" className='back-link'>Back</Link>
+      <button type="button" className='back-link' onClick={() => navigate(-1)}>Previous Page</button>
+
 
       <div id='parent-stack'>
 
