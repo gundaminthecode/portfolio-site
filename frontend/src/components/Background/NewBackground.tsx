@@ -26,16 +26,16 @@ type Props = {
 
 export default function SeamlessSweep({
   lines,
-  count = 4,
-  duration = 8,
+  count = 20,
+  duration = 6,
   bendAt = 0.72,
   bendDepth = 0.8,
   strokeWidth = 6,
   colors = [
     "var(--r4-yellow)",
-    "var(--color-1)",
-    "var(--color-2)",
-    "var(--color-3)",
+    "var(--colour-1)",
+    "var(--colour-2)",
+    "var(--colour-3)",
   ],
   direction = "down",
 }: Props) {
@@ -57,7 +57,7 @@ export default function SeamlessSweep({
     Array.from({ length: count }).map((_, i) => {
       const t = count > 1 ? i / (count - 1) : 0;
       return {
-        yPct: 0.2 + t * 0.6,                        // spread vertically
+        yPct: 0.05 + t * 0.9,                       // spread across more of the width
         duration: duration * (0.75 + t * 0.7),      // varied speed
         bendAt,
         bendDepth: 0.65 + t * 0.35,                 // slightly different diagonals
@@ -86,12 +86,12 @@ export default function SeamlessSweep({
         xmlns="http://www.w3.org/2000/svg"
       >
         {specs.map((s, i) => {
-          const yp = Math.min(1, Math.max(0, s.yPct ?? 0.5));
-          const y0 = Math.round(h * yp);
-          const xBend = Math.round(w * (s.bendAt ?? bendAt));
-          const diag = Math.round(h * (s.bendDepth ?? bendDepth));
+          const xp = Math.min(1, Math.max(0, s.yPct ?? 0.5));
+          const x0 = Math.round(w * xp);
+          const yBend = Math.round(h * (s.bendAt ?? bendAt));
+          const diag = Math.round(Math.min(w, h) * (s.bendDepth ?? bendDepth) * 0.35);
           const dir = (s.direction ?? direction) === "down" ? 1 : -1;
-          const d = `M 0 ${y0} H ${xBend} L ${xBend + diag} ${y0 + dir * diag}`;
+          const d = `M ${x0} 0 V ${yBend} L ${x0 + dir * diag} ${yBend + diag}`;
           return (
             <motion.path
               key={i}

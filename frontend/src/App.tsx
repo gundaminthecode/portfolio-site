@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import ContactModal from "./components/ContactModal";
 import ScrollToTop from "./components/ScrollToTop";
 import { CONFIG } from './config';
-// import SeamlessSweep from "./components/Background/NewBackground";
+import SeamlessSweep from "./components/Background/NewBackground";
 
 // const navClass = ({ isActive }: { isActive: boolean }) =>
 //   isActive ? "sidebar-nav__link is-active" : "sidebar-nav__link";
@@ -48,7 +48,7 @@ function App() {
       {(() => {
         return (
           <div id="site-bg" aria-hidden="true">
-            {/* <SeamlessSweep /> */}
+            <SeamlessSweep />
           </div>
         );
       })()}
@@ -89,7 +89,7 @@ function App() {
       {/* Contact modal */}
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} contactEmail="nmath2211@outlook.com" />
 
-      <footer id="app-footer">
+      <footer>
         <p>Made by Nick Mathiasen</p>
         <a className="social-link" href="https://www.instagram.com/gundaminthewindow/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <SiInstagram />
