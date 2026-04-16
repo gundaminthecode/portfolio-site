@@ -187,11 +187,15 @@ nav svg {
   width: auto;
   border-radius: 1rem;
   border: 2px solid transparent;
-  transition: border-color 0.3s ease;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s ease, -webkit-backdrop-filter 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 .content-slice:hover {
   border: 2px solid var(--r4-yellow);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
 }
 
 #hero-slice {
