@@ -1,3 +1,25 @@
 /* styles/index.css */
 /* Global Styles */
 
+/* Root variables (consolidated) */
+:root {
+    /* scheme  https://colorhunt.co/palette/d7df710e5f76083d56081e3f*/
+    --colour-1: #292937;
+    --colour-2: #083D56;
+    --colour-3: #0E5F76;
+    --colour-4: #fbc726;
+
+    --text: #f4f6fd;
+
+    --header-colour: #001974;
+    /* bluish black */
+    --bg: #1a1a1d; 
+    /* r4 yellow */
+    --r4-yellow: #fbc726;
+
+    --icon-size: 48px;
+}
+
+.dot {
+    color: var(--r4-yellow);
+}

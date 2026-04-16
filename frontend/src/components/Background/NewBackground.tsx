@@ -20,17 +20,23 @@ type Props = {
   bendDepth?: number;
   strokeWidth?: number;
   color?: string;
+  colors?: string[];
   direction?: "down" | "up";
 };
 
 export default function SeamlessSweep({
   lines,
   count = 4,
-  duration = 2.8,
+  duration = 8,
   bendAt = 0.72,
   bendDepth = 0.8,
   strokeWidth = 6,
-  color = "var(--r4-yellow)",
+  colors = [
+    "var(--r4-yellow)",
+    "var(--color-1)",
+    "var(--color-2)",
+    "var(--color-3)",
+  ],
   direction = "down",
 }: Props) {
   const [w, setW] = useState(0);
@@ -56,7 +62,7 @@ export default function SeamlessSweep({
         bendAt,
         bendDepth: 0.65 + t * 0.35,                 // slightly different diagonals
         strokeWidth,
-        color,
+        color: colors[i % colors.length],           // cycle through colors
         direction: i % 2 ? "up" : direction,        // alternate up/down
         delay: i * (duration / count) * 0.6,        // slight stagger
       };
@@ -90,12 +96,12 @@ export default function SeamlessSweep({
             <motion.path
               key={i}
               d={d}
-              stroke={s.color ?? color}
+              stroke={s.color ?? colors[i % colors.length]}
               strokeWidth={s.strokeWidth ?? strokeWidth}
               strokeLinecap="round"
               fill="none"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: [0, 1, 1, 0] }}
+              animate={{ pathLength: 1, opacity: [0, 0.3, 0.3, 0] }}
               transition={{
                 duration: s.duration ?? duration,
                 ease: "easeOut",
