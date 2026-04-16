@@ -78,7 +78,7 @@ type Props = {
 };
 
 export default function ProjectFilters({ languages, value, onChange, onReset }: Props) {
-  const [isDropdownOpen, setDropdownOpen] = useState(true); // State for dropdown visibility
+  const [isDropdownOpen, setDropdownOpen] = useState(false); // State for dropdown visibility
 
   const toggleLang = (lang: string) => {
     const has = value.languages.includes(lang);

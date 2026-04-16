@@ -77,7 +77,8 @@ export default function Home() {
           </div> */}
           <div id="this-project">
             <h2>Want to learn more about my projects?</h2>
-            <NavLink to="/portfolio-project" className="home_link_button">View Project Breakdown</NavLink>
+            <NavLink to="/projects" className="home_link_button">View Project Breakdown</NavLink>
+            <h2>Highlighted Project</h2>
           </div>
         </div>
         

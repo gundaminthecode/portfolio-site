@@ -55,17 +55,6 @@ export default function Projects(props: Props) {
           <div className="content-slice" id="projects-grid-slice">
             {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
             <div className="slice-content">
-              <aside
-                id="projects-filters"
-                className="projects-filters filter-panel filter-panel--desktop app-divs"
-              >
-                <ProjectFilters
-                  languages={languages}
-                  value={filters}
-                  onChange={setFilters}
-                  onReset={() => setFilters({ ...DEFAULT_FILTERS })}
-                />
-              </aside>
 
               <div className="projects-grid-container">
                 <div className="project-grid-wrapper app-divs">
@@ -79,13 +68,32 @@ export default function Projects(props: Props) {
         </div>
 
         <div id="content-sidebar">
+          <div className="content-slice">
+            <div className="slice-content">
+              <aside
+                id="projects-filters"
+                className="projects-filters filter-panel filter-panel--desktop app-divs"
+              >
+                <ProjectFilters
+                  languages={languages}
+                  value={filters}
+                  onChange={setFilters}
+                  onReset={() => setFilters({ ...DEFAULT_FILTERS })}
+                />
+              </aside>
+            </div>
+          </div>
+
           <div className="content-slice" id="projects-hero-slice">
             {/* <DiagonalHexBackground route="BR_TL" zIndex={-1} /> */}
             <div className="slice-content">
               <GithubProfilePanel />
             </div>
           </div>
+
+          
         </div>
+
       </div>
     </>
   );

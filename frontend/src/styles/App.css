@@ -156,7 +156,13 @@ nav svg {
   align-items: center;
   padding: 4rem;
   width: auto;
-  border-radius: 2rem;
+  border-radius: 1rem;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.content-slice:hover {
+  border: 2px solid var(--r4-yellow);
 }
 
 #hero-slice {
@@ -174,8 +180,11 @@ nav svg {
 }
 
 #content-sidebar {
+  display: flex;
+  flex-direction: column;
   flex: 0 0 min(24rem, 32vw);
   width: min(24rem, 32vw);
+  gap: 4rem;
 }
 
 #content-sidebar .content-slice {
