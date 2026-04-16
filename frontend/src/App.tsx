@@ -53,7 +53,7 @@ function App() {
         );
       })()}
 
-      <header>
+      <header id="app-header">
         {/* <div id="logo-container">
           <a href="/" className="logo" aria-label="Home">NICK.DEV</a>
         </div>
@@ -89,7 +89,7 @@ function App() {
       {/* Contact modal */}
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} contactEmail="nmath2211@outlook.com" />
 
-      <footer>
+      <footer id="app-footer">
         <p>Made by Nick Mathiasen</p>
         <a className="social-link" href="https://www.instagram.com/gundaminthewindow/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <SiInstagram />

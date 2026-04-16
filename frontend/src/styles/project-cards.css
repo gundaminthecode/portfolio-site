@@ -1,0 +1,32 @@
+.projects-grid article {
+    border-radius: 12px;
+    border: 3px solid var(--colour-3);
+    background: var(--colour-2);
+    width: 90%;
+    max-width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.project-slide__content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.project-slide__details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.project-slide__header {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    /* padding: 0; */
+}

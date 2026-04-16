@@ -68,20 +68,13 @@ export default function Projects(props: Props) {
         </div>
 
         <div id="content-sidebar">
-          <div className="content-slice">
-            <div className="slice-content">
-              <aside
-                id="projects-filters"
-                className="projects-filters filter-panel filter-panel--desktop app-divs"
-              >
-                <ProjectFilters
-                  languages={languages}
-                  value={filters}
-                  onChange={setFilters}
-                  onReset={() => setFilters({ ...DEFAULT_FILTERS })}
-                />
-              </aside>
-            </div>
+          <div id="projects-filters" className="content-slice filter-panel filter-panel--desktop">
+            <ProjectFilters
+              languages={languages}
+              value={filters}
+              onChange={setFilters}
+              onReset={() => setFilters({ ...DEFAULT_FILTERS })}
+            />
           </div>
 
           <div className="content-slice" id="projects-hero-slice">

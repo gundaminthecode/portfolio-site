@@ -78,7 +78,7 @@ type Props = {
 };
 
 export default function ProjectFilters({ languages, value, onChange, onReset }: Props) {
-  const [isDropdownOpen, setDropdownOpen] = useState(false); // State for dropdown visibility
+  const [isDropdownOpen, setDropdownOpen] = useState(true); // State for dropdown visibility
 
   const toggleLang = (lang: string) => {
     const has = value.languages.includes(lang);
@@ -90,7 +90,7 @@ export default function ProjectFilters({ languages, value, onChange, onReset }: 
 
   return (
     <div className="filters">
-      <button onClick={() => setDropdownOpen(!isDropdownOpen)} className="filters__chip">
+      <button onClick={() => setDropdownOpen(!isDropdownOpen)} id="filters-toggle" className="filters__chip">
         {isDropdownOpen ? 'Hide Filters' : 'Show Filters'}
       </button>
       {isDropdownOpen && (
@@ -100,9 +100,6 @@ export default function ProjectFilters({ languages, value, onChange, onReset }: 
           {/* Languages */}
           <div className="filters__group">
             <div className="filters__label">Language</div>
-            <button onClick={() => setDropdownOpen(!isDropdownOpen)} className="filters__chip">
-              {value.languages.length > 0 ? value.languages.join(', ') : 'Select Languages'}
-            </button>
             <ul className="filters__list">
               {languages.map((lang) => (
                 <li key={lang}>

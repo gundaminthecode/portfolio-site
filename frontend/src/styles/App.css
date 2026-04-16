@@ -47,7 +47,7 @@ header, #app-shell {
 
 #app-shell {
   flex: 1; /* Fill available vertical space */
-  padding: 10rem;
+  padding: 10rem 3rem;
   max-width: min(80%, 100%);
   width: 100%;
   margin: 0 3rem clamp(2rem, 5vw, 5rem) 3rem;
@@ -69,14 +69,14 @@ header {
     height: 7.5rem;
 }
 
-footer {
+#app-footer {
     padding: 2rem;
     text-align: center;
     background-color: var(--colour-1);
     color: var(--text);
 }
 
-footer a {
+#app-footer a {
     color: var(--text);
     margin: 0 0.5rem;
     text-decoration: none;
@@ -89,11 +89,11 @@ footer a {
   transform-origin: center;
 }
 
-footer a:hover {
+#app-footer a:hover {
   color: var(--r4-yellow);
 }
 
-footer a:hover svg {
+#app-footer a:hover svg {
   animation: nav-icon-wiggle 2s ease-in-out infinite;
 }
 
