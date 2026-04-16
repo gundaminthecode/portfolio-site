@@ -97,7 +97,7 @@ export default function ProgressHeatmap({ countsByDate, onSelect, start, end, mo
     }
 
     // Build month segments spanning weeks; mark whether the month has any commits
-    type MonthSeg = { label: string; span: number; year: number; hasCommits: boolean }
+    type MonthSeg = { label: string; span: number; year: number; hasCommits: boolean; startWeek: number }
     const monthSegments: MonthSeg[] = []
     if (weeks.length) {
       let segStart = 0
@@ -118,6 +118,7 @@ export default function ProgressHeatmap({ countsByDate, onSelect, start, end, mo
             span: i - segStart,
             year: segYear,
             hasCommits: monthHasCommits(segStart, i),
+            startWeek: segStart,
           })
           segStart = i
           segLabel = monthLabelForWeek(weeks[i])
@@ -130,29 +131,38 @@ export default function ProgressHeatmap({ countsByDate, onSelect, start, end, mo
         span: weeks.length - segStart,
         year: segYear,
         hasCommits: monthHasCommits(segStart, weeks.length),
+        startWeek: segStart,
       })
     }
 
-    // Build year segments based on month segments
+    // Ignore full month blocks that have no commits.
+    const visibleMonths = monthSegments.filter((m) => m.hasCommits)
+    const visibleWeeks = visibleMonths.flatMap((m) =>
+      weeks
+        .slice(m.startWeek, m.startWeek + m.span)
+        .map((w, idx) => ({ ...w, isMonthStart: idx === 0 }))
+    )
+
+    // Build year segments based on visible month segments only
     const yearSegments: { year: number; span: number; hasCommits: boolean }[] = []
-    if (monthSegments.length) {
+    if (visibleMonths.length) {
       let segStart = 0
-      let currentYear = monthSegments[0].year
-      for (let i = 1; i < monthSegments.length; i++) {
-        if (monthSegments[i].year !== currentYear) {
-          const span = monthSegments.slice(segStart, i).reduce((s, m) => s + m.span, 0)
-          const hasCommits = monthSegments.slice(segStart, i).some(m => m.hasCommits)
+      let currentYear = visibleMonths[0].year
+      for (let i = 1; i < visibleMonths.length; i++) {
+        if (visibleMonths[i].year !== currentYear) {
+          const span = visibleMonths.slice(segStart, i).reduce((s, m) => s + m.span, 0)
+          const hasCommits = visibleMonths.slice(segStart, i).some(m => m.hasCommits)
           yearSegments.push({ year: currentYear, span, hasCommits })
           segStart = i
-          currentYear = monthSegments[i].year
+          currentYear = visibleMonths[i].year
         }
       }
-      const span = monthSegments.slice(segStart).reduce((s, m) => s + m.span, 0)
-      const hasCommits = monthSegments.slice(segStart).some(m => m.hasCommits)
+      const span = visibleMonths.slice(segStart).reduce((s, m) => s + m.span, 0)
+      const hasCommits = visibleMonths.slice(segStart).some(m => m.hasCommits)
       yearSegments.push({ year: currentYear, span, hasCommits })
     }
 
-    return { weeks, monthSegments, yearSegments }
+    return { weeks: visibleWeeks, monthSegments: visibleMonths, yearSegments }
   }, [countsByDate, start, end, monthsWindow])
 
   const level = (n: number) => (n === 0 ? 0 : n <= 1 ? 1 : n <= 3 ? 2 : n <= 6 ? 3 : 4)
