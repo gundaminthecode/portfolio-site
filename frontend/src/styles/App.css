@@ -234,3 +234,9 @@ nav svg {
     width: 100%;
   }
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10rem;
+}
