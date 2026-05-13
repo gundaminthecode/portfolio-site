@@ -52,7 +52,7 @@ export default function Home() {
                 </defs>
                 <text lengthAdjust="spacingAndGlyphs" textLength={ringLen}>
                   <textPath href={`#${ringPathId}`} startOffset="0%">
-                    Nick Mathiasen  •  Full Stack  •  Web Dev  •  Portfolio  •
+                    Nick Mathiasen  •  Dev  •  Portfolio  •
                   </textPath>
                 </text>
               </svg>
@@ -77,7 +77,7 @@ export default function Home() {
           </div> */}
           <div id="this-project">
             <h2>Want to learn more about my projects?</h2>
-            <NavLink to="/projects" className="home_link_button">View Project Breakdown</NavLink>
+            <NavLink to="/projects" className="home_link_button">View Public Projects</NavLink>
             <h2>Highlighted Project</h2>
           </div>
         </div>

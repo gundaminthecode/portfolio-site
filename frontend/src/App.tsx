@@ -77,7 +77,7 @@ function App() {
         <div id="nav-container-right">
           <nav id="navBar">
             <NavLink to="/about-me" className="navClass" aria-label="About"><User2/></NavLink>
-            <NavLink to="/about-me" className="navClass" aria-label="Blog"><Newspaper/></NavLink>
+            <NavLink to="/blog" className="navClass" aria-label="Blog"><Newspaper/></NavLink>
           </nav>
         </div>
       </header>

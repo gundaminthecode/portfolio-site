@@ -14,7 +14,7 @@
   --ring-color: var(--header-colour);
   --ring-speed: 18s;
   --ring-outset: 20%;     /* more visible outside the photo */
-  --ring-font-size: 7px;  /* bump text size */
+  --ring-font-size: 9px;  /* bump text size */
 
   position: relative;
   width: clamp(140px, 18vh, 240px);

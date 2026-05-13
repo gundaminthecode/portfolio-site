@@ -9,6 +9,8 @@ import NotFound from "./pages/NotFound";
 import ProjectInfoPage from "./pages/ProjectInfoPage";
 import PortfolioProject from "./pages/PortfolioProject";
 import AboutMe from "./pages/AboutMe";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import "./styles/index.css";
 
 import { CONFIG } from "./config";
@@ -27,6 +29,8 @@ createRoot(document.getElementById("root")!).render(
           <Route path="*" element={<NotFound />} />
           <Route path="portfolio-project" element={<PortfolioProject />} />
           <Route path="about-me" element={<AboutMe />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="blog/:id" element={<BlogPost />} />
         </Route>
       </Routes>
     </BrowserRouter>
