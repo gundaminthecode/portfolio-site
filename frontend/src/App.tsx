@@ -90,7 +90,6 @@ function App() {
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} contactEmail="nmath2211@outlook.com" />
 
       <footer>
-        <p>Made by Nick Mathiasen</p>
         <a className="social-link" href="https://www.instagram.com/gundaminthewindow/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <SiInstagram />
         </a>
